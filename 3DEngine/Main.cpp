@@ -8,9 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image/stb_image.h"
-
+#include <ImageTexture.h>
 #include <camera.h>
 #include <Shader.h>
 
@@ -20,7 +18,6 @@ void processInput(GLFWwindow *window);
 GLFWwindow* create_window();
 void mouse_update(GLFWwindow * window, double xpos, double ypos);
 void scroll_update(GLFWwindow* window, double xoffset, double yoffset);
-
 
 
 const char *vertexShaderSource = "#version 330 core\n"
@@ -60,29 +57,7 @@ int main()
     /*********************
         IMAGE SECTION
     **********************/
-    unsigned int texture1;
-    glGenTextures(1, &texture1);
-    glBindTexture(GL_TEXTURE_2D, texture1);
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    int width, height, nrChannels;
-    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-    unsigned char *data = stbi_load("../Assets/container.jpg", &width, &height, &nrChannels, 0);
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
+    ImageTexture imageTexure("../Assets/container.jpg");
 
     /*********************
         SHADER SECTION
@@ -206,8 +181,7 @@ int main()
         glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
         for (unsigned int i = 0; i < 10; i++)
         {
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, texture1);
+            imageTexure.Enable();
             //glUseProgram(shader._shaderProgram);
 
             // calculate the model matrix for each object and pass it to shader before drawing
