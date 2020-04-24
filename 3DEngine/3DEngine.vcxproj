@@ -71,11 +71,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>C:\Users\guibe\source\repos\3DEngine\OpenGL\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Users\guibe\source\repos\3DEngine\OpenGL\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\guibe\source\repos\3DEngine\3DEngine;C:\Users\guibe\source\repos\3DEngine\OpenGL\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>C:\Users\guibe\source\repos\3DEngine\OpenGL\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Users\guibe\source\repos\3DEngine\OpenGL\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\guibe\source\repos\3DEngine\3DEngine;C:\Users\guibe\source\repos\3DEngine\OpenGL\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -127,10 +127,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Projects\GameEngine\GameEngine\GameEngine\glad.c" />
+    <ClCompile Include="camera.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\container.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="camera.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

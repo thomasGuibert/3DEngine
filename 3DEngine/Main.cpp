@@ -11,26 +11,16 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image/stb_image.h"
 
+#include <camera.h>
+
 void end_iteration(GLFWwindow * window);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 GLFWwindow* create_window();
-void mouse_callback(GLFWwindow * window, double xpos, double ypos);
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+void mouse_update(GLFWwindow * window, double xpos, double ypos);
+void scroll_update(GLFWwindow* window, double xoffset, double yoffset);
 
-struct Camera_struct {
-    glm::vec3 pos = glm::vec3(0.0f, 0.0f, 3.0f);
-    glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f);
-    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-    float yaw = -90.0f;
-    float pitch = 0.0f;
-    float fov = 45.0f;
-};
-Camera_struct camera;
 
-// settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
 
 const char *vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
@@ -55,7 +45,7 @@ const char *fragmentShaderSource = "#version 330 core\n"
 
 float deltaTime = 0.0f; // Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
-
+Camera camera;
 int main()
 {
     glfwInit();
@@ -222,7 +212,7 @@ int main()
     glm::mat4 projection = glm::mat4(1.0f);
     model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-    projection = glm::perspective(glm::radians(camera.fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
     unsigned int modelLoc = glGetUniformLocation(shaderProgram, "model");
     unsigned int viewLoc = glGetUniformLocation(shaderProgram, "view");
     unsigned int projectionLoc = glGetUniformLocation(shaderProgram, "projection");
@@ -238,7 +228,7 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         end_iteration(window);
-        projection = glm::perspective(glm::radians(camera.fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        projection = camera.perspective();
         glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -261,7 +251,7 @@ int main()
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
-        view = glm::lookAt(camera.pos, camera.pos + camera.front, camera.up);
+        view = camera.lookAt();
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 
         glEnable(GL_DEPTH_TEST);
@@ -302,7 +292,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
 }
-bool firstMouse = true;
+
 void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -314,78 +304,34 @@ void processInput(GLFWwindow *window)
 
     const float cameraSpeed = 2.0f * deltaTime; // adjust accordingly
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.pos += cameraSpeed * camera.front;
+        camera.ProcessKeyboard(Direction::FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.pos -= cameraSpeed * camera.front;
+        camera.ProcessKeyboard(Direction::BACKWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.pos -= glm::normalize(glm::cross(camera.front, camera.up)) * cameraSpeed;
+        camera.ProcessKeyboard(Direction::LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.pos += glm::normalize(glm::cross(camera.front, camera.up)) * cameraSpeed;
+        camera.ProcessKeyboard(Direction::RIGHT, deltaTime);
 
     int state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT);
     if (state == GLFW_PRESS)
-        glfwSetCursorPosCallback(window, mouse_callback);
+        glfwSetCursorPosCallback(window, mouse_update);
     else {
-        firstMouse = true;
+        camera.firstMouse = true;
         glfwSetCursorPosCallback(window, NULL);
     }
 
-    glfwSetScrollCallback(window, scroll_callback);
-}
-
-struct MousePosition {
-    double x = 400.0;
-    double y = 300.0;
-    double z = 0.0;
-};
-MousePosition lastMousePosition;
-
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-{
-    if (camera.fov >= 1.0f && camera.fov <= 45.0f)
-        camera.fov -= yoffset;
-    else if (camera.fov < 1.0f)
-        camera.fov = 1.0f;
-    else if (camera.fov > 45.0f)
-        camera.fov = 45.0f;
-}
-
-void mouse_callback(GLFWwindow * window, double xpos, double ypos) {
-    if (firstMouse) // initially set to true
-    {
-        lastMousePosition.x = xpos;
-        lastMousePosition.y = ypos;
-        firstMouse = false;
-    }
-
-    double xOffset = lastMousePosition.x - xpos;
-    double yOffset = lastMousePosition.y - ypos;
-    lastMousePosition.x = xpos;
-    lastMousePosition.y = ypos;
-
-    const float sensitivity = 0.05f;
-    xOffset *= sensitivity;
-    yOffset *= sensitivity;
-
-    camera.yaw += xOffset;
-    camera.pitch -= yOffset;
-
-    if (camera.pitch > 89.0f)
-        camera.pitch = 89.0f;
-    if (camera.pitch < -89.0f)
-        camera.pitch = -89.0f;
-    std::cout << std::endl;
-    std::cout << std::endl;
-
-    glm::vec3 direction;
-    direction.x = glm::cos(glm::radians(camera.yaw)) * glm::cos(glm::radians(camera.pitch));
-    direction.y = glm::sin(glm::radians(camera.pitch));
-    direction.z = glm::sin(glm::radians(camera.yaw)) * glm::cos(glm::radians(camera.pitch));
-    camera.front = glm::normalize(direction);
+    glfwSetScrollCallback(window, scroll_update);
 }
 
 void  initialize_iteration(GLFWwindow * window) {
     processInput(window);
+}
+
+void scroll_update(GLFWwindow* window, double xoffset, double yoffset) {
+    camera.scrollUpdate(yoffset);
+};
+void mouse_update(GLFWwindow * window, double xpos, double ypos) {
+    camera.mouseUpdate(xpos, ypos);
 }
 
 void end_iteration(GLFWwindow * window)
