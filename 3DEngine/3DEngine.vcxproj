@@ -129,12 +129,14 @@
     <ClCompile Include="..\..\..\..\Projects\GameEngine\GameEngine\GameEngine\glad.c" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\container.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
+    <ClInclude Include="Shader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
