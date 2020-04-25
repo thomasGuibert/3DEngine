@@ -85,18 +85,21 @@ int main()
     GLFWwindow* window = create_window();
 
     ImageTexture imageTexture("../Assets/container.jpg");
+    imageTexture.Enable();
+
     Shader shader("./shaders/CubeVertexShader.glsl", "./shaders/CubeFragmentShader.glsl");
     Model model3d(vertices, sizeof(vertices) / sizeof(float), shader);
-    glm::mat4 view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+
+    glm::mat4 view;
+    glm::mat4 projection;
 
     while (!glfwWindowShouldClose(window))
     {
-        model3d.DrawOnPositions(cubePositions, imageTexture);
+        model3d.DrawOnPositions(cubePositions);
         projection = camera.perspective();
-        shader.UpdateUniformMat4("projection", projection);
+        shader.updateUniformMat4("projection", projection);
         view = camera.lookAt();
-        shader.UpdateUniformMat4("view", view);
+        shader.updateUniformMat4("view", view);
 
         glEnable(GL_DEPTH_TEST);
         Sleep(100);
@@ -169,7 +172,7 @@ void processInputForNextIteration(GLFWwindow *window)
     if (state == GLFW_PRESS)
         glfwSetCursorPosCallback(window, mouse_callback);
     else {
-        camera.firstMouse = true;
+        camera.isMousePressed = false;
         glfwSetCursorPosCallback(window, NULL);
     }
 
