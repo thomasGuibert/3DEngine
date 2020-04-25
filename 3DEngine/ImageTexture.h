@@ -9,8 +9,8 @@ public:
     ImageTexture();
     ImageTexture(const char *name) {
         
-        glGenTextures(1, &_texture);
-        glBindTexture(GL_TEXTURE_2D, _texture);
+        glGenTextures(1, &_textureId);
+        glBindTexture(GL_TEXTURE_2D, _textureId);
         // set the texture wrapping parameters
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -35,9 +35,12 @@ public:
     ~ImageTexture();
     void Enable() {
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, _texture);
+        glBindTexture(GL_TEXTURE_2D, _textureId);
+    };
+    unsigned int Id() {
+        return _textureId;
     };
 private:
-    unsigned int _texture;
+    unsigned int _textureId;
 };
 
