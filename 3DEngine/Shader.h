@@ -13,6 +13,7 @@ class Shader
 public:
     Shader(std::string vertexShaderPath, std::string fragmentShaderPath);
     void updateUniformMat4(const GLchar *name, glm::mat4 &value);
+    void updateUniformVec3(const GLchar* name, glm::vec3 &value);
 
 private:
     unsigned int _shaderProgramId;

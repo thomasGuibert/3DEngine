@@ -17,6 +17,12 @@ void Shader::updateUniformMat4(const GLchar* name, glm::mat4 &value) {
     glUniformMatrix4fv(uniformId, 1, GL_FALSE, glm::value_ptr(value));
 };
 
+void Shader::updateUniformVec3(const GLchar* name, glm::vec3 &value) {
+    glUseProgram(_shaderProgramId);
+    unsigned int uniformId = glGetUniformLocation(_shaderProgramId, name);
+    glUniform3fv(uniformId, 1, glm::value_ptr(value));
+};
+
 std::string Shader::_readShaderFile(std::string shaderPath) {
     std::string shaderCode;
     std::ifstream shaderFileReader;
@@ -30,7 +36,7 @@ std::string Shader::_readShaderFile(std::string shaderPath) {
     }
     catch (std::ifstream::failure& e)
     {
-        std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+        std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ: "<< shaderPath << std::endl;
     }
     return shaderCode;
 };

@@ -67,6 +67,7 @@ float vertices[] = {
             -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
             -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 };
+
 glm::vec3 cubePositions[] = {
     glm::vec3(0.0f,  0.0f,  0.0f),
     glm::vec3(2.0f,  5.0f, -15.0f),
@@ -80,26 +81,44 @@ glm::vec3 cubePositions[] = {
     glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
+glm::vec3 lightPositions[] = {
+    glm::vec3(0.75f, 0.75f, 0.0f)
+};
+
 int main()
 {
     GLFWwindow* window = create_window();
 
-    ImageTexture imageTexture("../Assets/container.jpg");
-    imageTexture.Enable();
+    glm::vec3 lightColor = glm::vec3(0.0, 1.0, 1.0);
 
-    Shader shader("./shaders/CubeVertexShader.glsl", "./shaders/CubeFragmentShader.glsl");
-    Model model3d(vertices, sizeof(vertices) / sizeof(float), shader);
+    ImageTexture crateTexture("../Assets/container.jpg");
+    crateTexture.Enable();
+    Shader crateShader("./shaders/CubeVertexShader.glsl", "./shaders/CubeFragmentShader.glsl");
+    crateShader.updateUniformVec3("lightColor", lightColor);
+    Model crate(vertices, sizeof(vertices) / sizeof(float), crateShader);
+
+    Shader lightSourceShader("./shaders/LightSourceVertexShader.glsl", "./shaders/LightSourceFragmentShader.glsl");
+  
+    lightSourceShader.updateUniformVec3("lightColor", lightColor);
+    Model lightSource(vertices, sizeof(vertices) / sizeof(float), lightSourceShader);
+    lightSource.setScale(glm::vec3(0.2f));
 
     glm::mat4 view;
     glm::mat4 projection;
 
     while (!glfwWindowShouldClose(window))
     {
-        model3d.DrawOnPositions(cubePositions);
         projection = camera.perspective();
-        shader.updateUniformMat4("projection", projection);
         view = camera.lookAt();
-        shader.updateUniformMat4("view", view);
+
+        lightSource.drawOnPositions(lightPositions, sizeof(lightPositions) / sizeof(glm::vec3));
+        crate.drawOnPositions(cubePositions, sizeof(cubePositions) / sizeof(glm::vec3));
+
+        crateShader.updateUniformMat4("projection", projection);
+        crateShader.updateUniformMat4("view", view);
+
+        lightSourceShader.updateUniformMat4("projection", projection);
+        lightSourceShader.updateUniformMat4("view", view);
 
         glEnable(GL_DEPTH_TEST);
         Sleep(100);
