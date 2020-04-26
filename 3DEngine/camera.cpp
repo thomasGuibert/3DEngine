@@ -1,5 +1,5 @@
 #include "Camera.h"
-
+#include <iostream>
 Camera::Camera() {}
 
 Camera::~Camera() {}
@@ -12,7 +12,11 @@ glm::mat4 Camera::perspective() {
     return glm::perspective(glm::radians(_fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 };
 
-void Camera::ProcessKeyboard(Direction direction, float deltaTime)
+glm::vec3 Camera::getPosition() {
+    return _position;
+}; 
+
+void Camera::processKeyboard(Direction direction, float deltaTime)
 {
     float velocity = _speed * deltaTime;
     if (direction == FORWARD)
