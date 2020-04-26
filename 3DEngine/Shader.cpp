@@ -23,6 +23,12 @@ void Shader::updateUniformVec3(const GLchar* name, glm::vec3 &value) {
     glUniform3fv(uniformId, 1, glm::value_ptr(value));
 };
 
+void Shader::updateUniformFloat(const GLchar* name, float value) {
+    glUseProgram(_shaderProgramId);
+    unsigned int uniformId = glGetUniformLocation(_shaderProgramId, name);
+    glUniform1fv(uniformId, 1, &value);
+};
+
 std::string Shader::_readShaderFile(std::string shaderPath) {
     std::string shaderCode;
     std::ifstream shaderFileReader;

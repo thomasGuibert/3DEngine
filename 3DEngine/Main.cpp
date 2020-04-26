@@ -89,12 +89,23 @@ int main()
 {
     GLFWwindow* window = create_window();
 
-    glm::vec3 lightColor = glm::vec3(0.0, 1.0, 1.0);
+    glm::vec3 lightColor = glm::vec3(0.0f, 1.0f, 1.0f);
+    glm::vec3 materialColor = glm::vec3(1.0f, 0.5f, 0.31f);
 
     ImageTexture crateTexture("../Assets/container.jpg");
     crateTexture.Enable();
     Shader crateShader("./shaders/CubeVertexShader.glsl", "./shaders/CubeFragmentShader.glsl");
-    crateShader.updateUniformVec3("lightColor", lightColor);
+    crateShader.updateUniformVec3("material.ambient", materialColor);
+    crateShader.updateUniformVec3("material.diffuse", materialColor);
+    glm::vec3 materilaSpecular = glm::vec3(0.5f, 0.5f, 0.5f);
+    crateShader.updateUniformVec3("material.specular", materilaSpecular);
+    crateShader.updateUniformFloat("material.shininess", 8.0f);
+
+    crateShader.updateUniformVec3("light.ambient", lightColor);
+    crateShader.updateUniformVec3("light.diffuse", lightColor);
+    glm::vec3 lightSpecular = glm::vec3(0.7f, 1.0f, 1.0f);
+    crateShader.updateUniformVec3("light.specular", lightSpecular);
+
     glm::vec3 cameraPosition = camera.getPosition();
     crateShader.updateUniformVec3("viewPos", cameraPosition);
 
