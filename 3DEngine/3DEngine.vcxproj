@@ -134,6 +134,7 @@
     <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Assets\containerWithIron.png" />
     <Image Include="..\container.jpg" />
   </ItemGroup>
   <ItemGroup>

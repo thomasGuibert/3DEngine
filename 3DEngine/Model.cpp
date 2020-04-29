@@ -6,7 +6,6 @@ Model::Model(const float vertices[], unsigned int bufferSize, Shader shader) : _
     glBindVertexArray(_VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, _VBO);
-    //float vertices[] = _vertices;
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * bufferSize, vertices, GL_STATIC_DRAW);
 
     // position attribute

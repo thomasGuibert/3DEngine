@@ -92,18 +92,23 @@ int main()
     glm::vec3 lightColor = glm::vec3(0.0f, 1.0f, 1.0f);
     glm::vec3 materialColor = glm::vec3(1.0f, 0.5f, 0.31f);
 
-    ImageTexture crateTexture("../Assets/container.jpg");
-    crateTexture.Enable();
+    ImageTexture crateTexture("../Assets/containerWithIron.png");
+    ImageTexture steelCrateTexture("../Assets/containerWithIron_specular.png");
+    crateTexture.EnableTexture0();
+    steelCrateTexture.EnableTexture1();
     Shader crateShader("./shaders/CubeVertexShader.glsl", "./shaders/CubeFragmentShader.glsl");
-    crateShader.updateUniformVec3("material.ambient", materialColor);
-    crateShader.updateUniformVec3("material.diffuse", materialColor);
+    crateShader.updateUniformInt("material.diffuse", 0);
+    crateShader.updateUniformInt("material.specular", 1);
     glm::vec3 materilaSpecular = glm::vec3(0.5f, 0.5f, 0.5f);
     crateShader.updateUniformVec3("material.specular", materilaSpecular);
     crateShader.updateUniformFloat("material.shininess", 8.0f);
+    crateShader.updateUniformFloat("light.constant", 1.0f);
+    crateShader.updateUniformFloat("light.linear", 0.17f);
+    crateShader.updateUniformFloat("light.quadratic", 0.07f);
 
     crateShader.updateUniformVec3("light.ambient", lightColor);
     crateShader.updateUniformVec3("light.diffuse", lightColor);
-    glm::vec3 lightSpecular = glm::vec3(0.7f, 1.0f, 1.0f);
+    glm::vec3 lightSpecular = glm::vec3(0.2f, 1.0f, 1.0f);
     crateShader.updateUniformVec3("light.specular", lightSpecular);
 
     glm::vec3 cameraPosition = camera.getPosition();
@@ -132,7 +137,9 @@ int main()
 
         crateShader.updateUniformMat4("projection", projection);
         crateShader.updateUniformMat4("view", view);
-        crateShader.updateUniformVec3("lightPos", lightPositions[0]);
+        crateShader.updateUniformVec3("light.position", lightPositions[0]);
+        glm::vec3 globalLightDirection = glm::vec3(-0.2f, -1.0f, -0.3f);
+        crateShader.updateUniformVec3("globalLightDirection", globalLightDirection);
         crateShader.updateUniformVec3("viewPos", cameraPosition);
 
         lightSourceShader.updateUniformMat4("projection", projection);

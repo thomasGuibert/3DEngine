@@ -15,6 +15,7 @@ public:
     void updateUniformMat4(const GLchar *name, glm::mat4 &value);
     void updateUniformVec3(const GLchar *name, glm::vec3 &value);
     void updateUniformFloat(const GLchar *name, float value);
+    void updateUniformInt(const GLchar* name, int value);
 
 private:
     unsigned int _shaderProgramId;

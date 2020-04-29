@@ -41,6 +41,9 @@
     <Image Include="..\container.jpg">
       <Filter>Fichiers de ressources</Filter>
     </Image>
+    <Image Include="..\Assets\containerWithIron.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
