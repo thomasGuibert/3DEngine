@@ -144,10 +144,10 @@
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\CubeFragmentShader.glsl" />
-    <None Include="shaders\CubeVertexShader.glsl" />
-    <None Include="shaders\LightSourceVertexShader.glsl" />
-    <None Include="shaders\LightSourceFragmentShader.glsl" />
+    <None Include="shaders\CubeFragmentShader.fs" />
+    <None Include="shaders\CubeVertexShader.vs" />
+    <None Include="shaders\LightSourceVertexShader.vs" />
+    <None Include="shaders\LightSourceFragmentShader.fs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

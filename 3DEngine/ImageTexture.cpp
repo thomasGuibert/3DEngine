@@ -34,12 +34,15 @@ ImageTexture::ImageTexture(const char *name) {
     }
 };
 
-void ImageTexture::EnableTexture0() {
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _textureId);
-};
-
-void ImageTexture::EnableTexture1() {
-    glActiveTexture(GL_TEXTURE1);
+void ImageTexture::Enable(const unsigned int uniteId) {
+    switch (uniteId)
+    {
+    case 0:
+        glActiveTexture(GL_TEXTURE0);
+    case 1:
+        glActiveTexture(GL_TEXTURE1);
+    default:
+        break;
+    }
     glBindTexture(GL_TEXTURE_2D, _textureId);
 };

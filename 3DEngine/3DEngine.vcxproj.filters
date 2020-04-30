@@ -60,16 +60,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\CubeFragmentShader.glsl">
+    <None Include="shaders\CubeFragmentShader.fs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="shaders\CubeVertexShader.glsl">
+    <None Include="shaders\CubeVertexShader.vs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="shaders\LightSourceVertexShader.glsl">
+    <None Include="shaders\LightSourceFragmentShader.fs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="shaders\LightSourceFragmentShader.glsl">
+    <None Include="shaders\LightSourceVertexShader.vs">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

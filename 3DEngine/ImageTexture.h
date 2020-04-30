@@ -7,8 +7,7 @@ class ImageTexture
 {
 public:
     ImageTexture(const char *name);
-    void EnableTexture0();
-    void EnableTexture1();
+    void Enable(const unsigned int uniteId);
 
 private:
     unsigned int _textureId;

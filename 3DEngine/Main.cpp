@@ -82,43 +82,54 @@ glm::vec3 cubePositions[] = {
 };
 
 glm::vec3 lightPositions[] = {
-    glm::vec3(0.0f, 0.75f, -1.0f)
+    glm::vec3(0.7f,  0.2f,  2.0f),
+    glm::vec3(2.3f, -3.3f, -4.0f),
+    glm::vec3(-4.0f,  2.0f, -12.0f),
+    glm::vec3(0.0f,  0.0f, -3.0f)
 };
 
 int main()
 {
     GLFWwindow* window = create_window();
 
-    glm::vec3 lightColor = glm::vec3(0.0f, 1.0f, 1.0f);
-    glm::vec3 materialColor = glm::vec3(1.0f, 0.5f, 0.31f);
+    glm::vec3 pointLightColor = glm::vec3(0.0f, 1.0f, 1.0f);
+    glm::vec3 globalLight = glm::vec3(1.0f, 1.0f, 1.0f);
 
     ImageTexture crateTexture("../Assets/containerWithIron.png");
+    crateTexture.Enable(0);
+
     ImageTexture steelCrateTexture("../Assets/containerWithIron_specular.png");
-    crateTexture.EnableTexture0();
-    steelCrateTexture.EnableTexture1();
-    Shader crateShader("./shaders/CubeVertexShader.glsl", "./shaders/CubeFragmentShader.glsl");
+    steelCrateTexture.Enable(1);
+
+    Shader crateShader("./shaders/CubeVertexShader.vs", "./shaders/CubeFragmentShader.fs");
     crateShader.updateUniformInt("material.diffuse", 0);
     crateShader.updateUniformInt("material.specular", 1);
-    glm::vec3 materilaSpecular = glm::vec3(0.5f, 0.5f, 0.5f);
-    crateShader.updateUniformVec3("material.specular", materilaSpecular);
+    crateShader.updateUniformVec3("material.specular", 0.5f, 0.5f, 0.5f);
     crateShader.updateUniformFloat("material.shininess", 8.0f);
-    crateShader.updateUniformFloat("light.constant", 1.0f);
-    crateShader.updateUniformFloat("light.linear", 0.17f);
-    crateShader.updateUniformFloat("light.quadratic", 0.07f);
 
-    crateShader.updateUniformVec3("light.ambient", lightColor);
-    crateShader.updateUniformVec3("light.diffuse", lightColor);
-    glm::vec3 lightSpecular = glm::vec3(0.2f, 1.0f, 1.0f);
-    crateShader.updateUniformVec3("light.specular", lightSpecular);
+    for (int i = 0, lightPointsCount = sizeof(lightPositions) / sizeof(glm::vec3); i < lightPointsCount; ++i) {
+        std::string currentLight = "light[" + std::to_string(i) + "]";
+        crateShader.updateUniformVec3(currentLight + "position", lightPositions[i]);
+        crateShader.updateUniformVec3(currentLight + ".ambient", pointLightColor);
+        crateShader.updateUniformVec3(currentLight + ".diffuse", pointLightColor);
+        crateShader.updateUniformVec3(currentLight + ".specular", 0.2f, 1.0f, 1.0f);
+        crateShader.updateUniformFloat(currentLight + ".constant", 1.0f);
+        crateShader.updateUniformFloat(currentLight + ".linear", 0.07f);
+        crateShader.updateUniformFloat(currentLight + ".quadratic", 0.017f);
+    }
 
-    glm::vec3 cameraPosition = camera.getPosition();
-    crateShader.updateUniformVec3("viewPos", cameraPosition);
+    crateShader.updateUniformVec3("globalLight.direction", -0.2f, -1.0f, -0.3f);
+    crateShader.updateUniformVec3("globalLight.ambient", globalLight);
+    crateShader.updateUniformVec3("globalLight.diffuse", globalLight);
+    crateShader.updateUniformVec3("globalLight.specular", globalLight);
+
+    crateShader.updateUniformVec3("viewPos", camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
+
+    Shader lightSourceShader("./shaders/LightSourceVertexShader.vs", "./shaders/LightSourceFragmentShader.fs");
+    lightSourceShader.updateUniformVec3("lightColor", pointLightColor);
 
     Model crate(vertices, sizeof(vertices) / sizeof(float), crateShader);
 
-    Shader lightSourceShader("./shaders/LightSourceVertexShader.glsl", "./shaders/LightSourceFragmentShader.glsl");
-
-    lightSourceShader.updateUniformVec3("lightColor", lightColor);
     Model lightSource(vertices, sizeof(vertices) / sizeof(float), lightSourceShader);
     lightSource.setScale(glm::vec3(0.2f));
 
@@ -128,22 +139,19 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         projection = camera.perspective();
+        crateShader.updateUniformMat4("projection", projection);
+        lightSourceShader.updateUniformMat4("projection", projection);
+
         view = camera.lookAt();
+        crateShader.updateUniformMat4("view", view);
+        lightSourceShader.updateUniformMat4("view", view);
+
 
         lightSource.drawOnPositions(lightPositions, sizeof(lightPositions) / sizeof(glm::vec3));
         crate.drawOnPositions(cubePositions, sizeof(cubePositions) / sizeof(glm::vec3));
 
         glm::vec3 cameraPosition = camera.getPosition();
-
-        crateShader.updateUniformMat4("projection", projection);
-        crateShader.updateUniformMat4("view", view);
-        crateShader.updateUniformVec3("light.position", lightPositions[0]);
-        glm::vec3 globalLightDirection = glm::vec3(-0.2f, -1.0f, -0.3f);
-        crateShader.updateUniformVec3("globalLightDirection", globalLightDirection);
         crateShader.updateUniformVec3("viewPos", cameraPosition);
-
-        lightSourceShader.updateUniformMat4("projection", projection);
-        lightSourceShader.updateUniformMat4("view", view);
 
         glEnable(GL_DEPTH_TEST);
         Sleep(100);
@@ -195,7 +203,7 @@ void processInputForNextIteration(GLFWwindow *window)
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
-    float currentFrame = glfwGetTime();
+    double currentFrame = glfwGetTime();
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
 
