@@ -13,6 +13,10 @@
 #include <Shader.h>
 #include <Model.h>
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 GLFWwindow* create_window();
 void cleanup(GLFWwindow * window);
 void processInputForNextIteration(GLFWwindow *window);
