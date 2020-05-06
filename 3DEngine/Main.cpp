@@ -12,6 +12,7 @@
 #include <camera.h>
 #include <Shader.h>
 #include <Model.h>
+#include <ImportedModel.h>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -99,10 +100,10 @@ int main()
     glm::vec3 pointLightColor = glm::vec3(0.0f, 1.0f, 1.0f);
     glm::vec3 globalLight = glm::vec3(1.0f, 1.0f, 1.0f);
 
-    ImageTexture crateTexture("../Assets/containerWithIron.png");
+    ImageTexture crateTexture("../Assets/containerWithIron.png", "texture_diffuse");
     crateTexture.Enable(0);
 
-    ImageTexture steelCrateTexture("../Assets/containerWithIron_specular.png");
+    ImageTexture steelCrateTexture("../Assets/containerWithIron_specular.png", "texture_specular");
     steelCrateTexture.Enable(1);
 
     Shader crateShader("./shaders/CubeVertexShader.vs", "./shaders/CubeFragmentShader.fs");
@@ -129,6 +130,31 @@ int main()
 
     crateShader.updateUniformVec3("viewPos", camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
 
+    Shader teapotShader("./shaders/teapotVertexShader.vs", "./shaders/teapotFragmentShader.fs");
+    teapotShader.updateUniformVec3("material.ambient", 0.1f, 0.0f, 0.3f);
+    teapotShader.updateUniformVec3("material.diffuse", 0.3f, 0.0f, 0.3f);
+    teapotShader.updateUniformVec3("material.specular", 1.0f, 0.2f, 1.0f);
+    teapotShader.updateUniformFloat("material.shininess", 8.0f);
+
+    for (int i = 0, lightPointsCount = sizeof(lightPositions) / sizeof(glm::vec3); i < lightPointsCount; ++i) {
+        std::string currentLight = "light[" + std::to_string(i) + "]";
+        teapotShader.updateUniformVec3(currentLight + "position", lightPositions[i]);
+        teapotShader.updateUniformVec3(currentLight + ".ambient", pointLightColor);
+        teapotShader.updateUniformVec3(currentLight + ".diffuse", pointLightColor);
+        teapotShader.updateUniformVec3(currentLight + ".specular", 0.2f, 1.0f, 1.0f);
+        teapotShader.updateUniformFloat(currentLight + ".constant", 1.0f);
+        teapotShader.updateUniformFloat(currentLight + ".linear", 0.07f);
+        teapotShader.updateUniformFloat(currentLight + ".quadratic", 0.017f);
+    }
+
+    teapotShader.updateUniformVec3("globalLight.direction", -0.2f, -1.0f, -0.3f);
+    teapotShader.updateUniformVec3("globalLight.ambient", globalLight);
+    teapotShader.updateUniformVec3("globalLight.diffuse", globalLight);
+    teapotShader.updateUniformVec3("globalLight.specular", globalLight);
+
+    teapotShader.updateUniformVec3("viewPos", camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
+    ImportedModel teapot("../Assets/teapot.obj", teapotShader);
+
     Shader lightSourceShader("./shaders/LightSourceVertexShader.vs", "./shaders/LightSourceFragmentShader.fs");
     lightSourceShader.updateUniformVec3("lightColor", pointLightColor);
 
@@ -145,17 +171,20 @@ int main()
         projection = camera.perspective();
         crateShader.updateUniformMat4("projection", projection);
         lightSourceShader.updateUniformMat4("projection", projection);
+        teapotShader.updateUniformMat4("projection", projection);
 
         view = camera.lookAt();
         crateShader.updateUniformMat4("view", view);
         lightSourceShader.updateUniformMat4("view", view);
-
+        teapotShader.updateUniformMat4("view", view);
 
         lightSource.drawOnPositions(lightPositions, sizeof(lightPositions) / sizeof(glm::vec3));
         crate.drawOnPositions(cubePositions, sizeof(cubePositions) / sizeof(glm::vec3));
 
         glm::vec3 cameraPosition = camera.getPosition();
         crateShader.updateUniformVec3("viewPos", cameraPosition);
+
+        teapot.draw();
 
         glEnable(GL_DEPTH_TEST);
         Sleep(100);

@@ -1,7 +1,9 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "ImageTexture.h"
 
-ImageTexture::ImageTexture(const char *name) {
+ImageTexture::ImageTexture(const char *name, std::string type) {
+    this->type = type;
+
     glGenTextures(1, &_textureId);
 
     int width, height, nrComponents;

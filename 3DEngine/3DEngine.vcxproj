@@ -129,7 +129,9 @@
     <ClCompile Include="..\..\..\..\Projects\GameEngine\GameEngine\GameEngine\glad.c" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ImageTexture.cpp" />
+    <ClCompile Include="ImportedModel.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Shader.cpp" />
   </ItemGroup>
@@ -140,6 +142,8 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ImageTexture.h" />
+    <ClInclude Include="ImportedModel.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Shader.h" />
   </ItemGroup>
@@ -148,6 +152,8 @@
     <None Include="shaders\CubeVertexShader.vs" />
     <None Include="shaders\LightSourceVertexShader.vs" />
     <None Include="shaders\LightSourceFragmentShader.fs" />
+    <None Include="shaders\TeapotFragmentShader.fs" />
+    <None Include="shaders\TeapotVertexShader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

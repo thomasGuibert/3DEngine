@@ -6,7 +6,9 @@
 class ImageTexture
 {
 public:
-    ImageTexture(const char *name);
+    std::string type;
+
+    ImageTexture(const char *name, std::string type);
     void Enable(const unsigned int uniteId);
 
 private:

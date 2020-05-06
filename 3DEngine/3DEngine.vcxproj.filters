@@ -36,6 +36,12 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportedModel.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\container.jpg">
@@ -58,6 +64,12 @@
     <ClInclude Include="Camera.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportedModel.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\CubeFragmentShader.fs">
@@ -70,6 +82,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="shaders\LightSourceVertexShader.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\TeapotFragmentShader.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\TeapotVertexShader.vs">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

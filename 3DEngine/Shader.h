@@ -17,10 +17,10 @@ public:
     void updateUniformVec3(const std::string name, float x, float y, float z);
     void updateUniformFloat(const std::string name, float value);
     void updateUniformInt(const std::string name, int value);
+    unsigned int shaderProgramId;
 
 private:
-    unsigned int _shaderProgramId;
-
+    
     std::string _readShaderFile(std::string shaderPath);
     int _compileShader(const char *shaderSource, GLenum shaderType);
     int _createShaderProgram(int vertexShaderId, int fragmentShaderId);
