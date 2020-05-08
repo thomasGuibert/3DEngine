@@ -27,6 +27,8 @@ void Camera::processKeyboard(Direction direction, float deltaTime)
         _position -= glm::normalize(glm::cross(_front, _up)) * velocity;
     if (direction == RIGHT)
         _position += glm::normalize(glm::cross(_front, _up)) * velocity;
+
+    std::cout << "camera: " <<_position.x << _position.y << _position.z << std::endl;
 };
 
 void Camera::scrollUpdate(double yoffset) {
@@ -51,12 +53,12 @@ void Camera::mouseUpdate(double xpos, double ypos) {
     _lastMousePosition.x = xpos;
     _lastMousePosition.y = ypos;
 
-    const float sensitivity = 0.05f;
+    const float sensitivity = 0.1f;
     xOffset *= sensitivity;
     yOffset *= sensitivity;
 
-    _yaw += xOffset;
-    _pitch -= yOffset;
+    _yaw -= xOffset;
+    _pitch += yOffset;
 
     if (_pitch > 89.0f)
         _pitch = 89.0f;
