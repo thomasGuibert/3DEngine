@@ -108,5 +108,11 @@
     <None Include="shaders\TeapotVertexShader.vs">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="shaders\HighlightFragmentShader.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\HighlightVertexShader.vs">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

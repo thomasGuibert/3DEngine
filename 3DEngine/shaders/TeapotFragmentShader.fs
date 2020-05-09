@@ -45,8 +45,9 @@ void main()
     FragColor = vec4(0.0f);
     FragColor += computeGlobalLight();
     for (int i = 0; i < NR_POINT_LIGHTS; ++i) {
-        FragColor += computePointLight(light[i]) * 2.0f;
+        FragColor +=  computePointLight(light[i]) * 2.0f;
     }
+    FragColor = vec4(FragColor.r, FragColor.g, FragColor.b, 0.5f);
 }
 
 vec4 computeGlobalLight(){
@@ -66,7 +67,7 @@ vec4 computeGlobalLight(){
     float lightSpec = pow(max(dot(viewDir, lightReflection), 0.0f), material.shininess);
     vec3 specular = lightSpec * globalLight.specular * material.specular;
 
-    return vec4(ambient + diffuse + specular, 1.0f);
+    return vec4(ambient + diffuse + specular, 0.5f);
 }
 
 vec4 computePointLight(PointLight light){
@@ -88,5 +89,5 @@ vec4 computePointLight(PointLight light){
     float lightSpec = pow(max(dot(viewDir, lightReflection), 0.0f), material.shininess);
     vec3 specular = lightSpec * attenuation * light.specular * material.specular;
 
-    return vec4(ambient + diffuse + specular, 1.0f);
+    return vec4(ambient + diffuse + specular, 0.5f);
 }

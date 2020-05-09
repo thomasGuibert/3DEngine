@@ -10,6 +10,7 @@ class DefaultScene: public Scene
 {
 public:
     ImportedModel* teapot;
+    ImportedModel* teapotHighlight;
     Model* crate;
     Model* lightSource;
 
@@ -21,6 +22,7 @@ private:
     ImageTexture* _crateTexture;
     ImageTexture* _steelCrateTexture;
     Shader _lightSourceShader;
+    Shader _teapotHighlightShader;
     Shader _teapotShader;
     Shader _crateShader;
     float _vertices[288] = {

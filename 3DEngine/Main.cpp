@@ -114,6 +114,9 @@ void UpdateCameraPosition(GLFWwindow * window)
     if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
         scene = new DefaultScene(camera);
 
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        camera.processKeyboard(Direction::FORWARD, deltaTime);
+
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
         camera.processKeyboard(Direction::BACKWARD, deltaTime);
 
@@ -129,7 +132,7 @@ void cleanup(GLFWwindow * window)
     glfwSwapBuffers(window);
     glfwPollEvents();
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {

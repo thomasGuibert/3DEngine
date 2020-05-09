@@ -36,15 +36,7 @@ void Mesh::Draw(Shader shader)
         glUniform1i(glGetUniformLocation(shader.shaderProgramId, (name + number).c_str()), i);
         textures[i].Enable(i);
     }
-
-    glm::mat4 model = glm::mat4(1.0f);
-    glm::vec3 scale = glm::vec3(0.1f);
-    model = glm::scale(model, scale);
-    glm::vec3 translate = glm::vec3(0.0f, 5.0f, 0.0f);
-    model = glm::translate(model, translate);
-    shader.updateUniformMat4("model", model);
-    
-
+    glUseProgram(shader.shaderProgramId);
     // draw mesh
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);

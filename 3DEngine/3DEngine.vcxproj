@@ -156,6 +156,8 @@
   <ItemGroup>
     <None Include="shaders\CubeFragmentShader.fs" />
     <None Include="shaders\CubeVertexShader.vs" />
+    <None Include="shaders\HighlightFragmentShader.fs" />
+    <None Include="shaders\HighlightVertexShader.vs" />
     <None Include="shaders\LightSourceVertexShader.vs" />
     <None Include="shaders\LightSourceFragmentShader.fs" />
     <None Include="shaders\TeapotFragmentShader.fs" />
