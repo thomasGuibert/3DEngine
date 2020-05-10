@@ -1,24 +1,14 @@
 #include "DefaultScene.h"
 
-DefaultScene::DefaultScene(Camera &camera): Scene(camera),
+DefaultScene::DefaultScene(Camera &camera) : Scene(camera),
 _crateShader("./shaders/CubeVertexShader.vs", "./shaders/CubeFragmentShader.fs"),
 _teapotShader("./shaders/teapotVertexShader.vs", "./shaders/teapotFragmentShader.fs"),
 _teapotHighlightShader("./shaders/HighlightVertexShader.vs", "./shaders/HighlightFragmentShader.fs"),
 _lightSourceShader("./shaders/LightSourceVertexShader.vs", "./shaders/LightSourceFragmentShader.fs")
 {
-   // configure global opengl state
-   // -----------------------------
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
-    glEnable(GL_STENCIL_TEST);
-    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
     glm::vec3 pointLightColor = glm::vec3(0.0f, 1.0f, 1.0f);
     glm::vec3 globalLight = glm::vec3(1.0f, 1.0f, 1.0f);
-  
+
     _crateTexture = new ImageTexture("../Assets/containerWithIron.png", "texture_diffuse");
     _crateTexture->Enable(0);
     _steelCrateTexture = new ImageTexture("../Assets/containerWithIron_specular.png", "texture_specular"),
@@ -26,8 +16,7 @@ _lightSourceShader("./shaders/LightSourceVertexShader.vs", "./shaders/LightSourc
 
     _crateShader.updateUniformInt("material.diffuse", 0);
     _crateShader.updateUniformInt("material.specular", 1);
-    _crateShader.updateUniformVec3("material.specular", 0.5f, 0.5f, 0.5f);
-    _crateShader.updateUniformFloat("material.shininess", 8.0f);
+    _crateShader.updateUniformFloat("material.shininess", 128.0f);
 
     for (int i = 0, lightPointsCount = sizeof(_lightPositions) / sizeof(glm::vec3); i < lightPointsCount; ++i) {
         std::string currentLight = "light[" + std::to_string(i) + "]";
@@ -57,7 +46,7 @@ _lightSourceShader("./shaders/LightSourceVertexShader.vs", "./shaders/LightSourc
     glm::vec3 translate = glm::vec3(0.0f, 5.0f, 0.0f);
     model = glm::translate(model, translate);
     _teapotShader.updateUniformMat4("model", model);
-    
+
     for (int i = 0, lightPointsCount = sizeof(_lightPositions) / sizeof(glm::vec3); i < lightPointsCount; ++i) {
         std::string currentLight = "light[" + std::to_string(i) + "]";
         _teapotShader.updateUniformVec3(currentLight + ".position", _lightPositions[i]);
@@ -68,7 +57,7 @@ _lightSourceShader("./shaders/LightSourceVertexShader.vs", "./shaders/LightSourc
         _teapotShader.updateUniformFloat(currentLight + ".linear", 0.07f);
         _teapotShader.updateUniformFloat(currentLight + ".quadratic", 0.017f);
     }
-    
+
     _teapotShader.updateUniformVec3("globalLight.direction", -0.2f, -1.0f, -0.3f);
     _teapotShader.updateUniformVec3("globalLight.ambient", globalLight);
     _teapotShader.updateUniformVec3("globalLight.diffuse", globalLight);
@@ -88,8 +77,8 @@ _lightSourceShader("./shaders/LightSourceVertexShader.vs", "./shaders/LightSourc
 
     teapot = new ImportedModel("../Assets/teapot.obj", _teapotShader);
     teapotHighlight = new ImportedModel("../Assets/teapot.obj", _teapotHighlightShader);
-    crate = new Model(_vertices, sizeof(_vertices) / sizeof(float), _crateShader);
-    lightSource = new Model(_vertices, sizeof(_vertices) / sizeof(float), _lightSourceShader);
+    crate = new Model(_vertices, sizeof(_vertices), 3, _crateShader);
+    lightSource = new Model(_vertices, sizeof(_vertices), 3, _lightSourceShader);
     lightSource->setScale(glm::vec3(0.2f));
 }
 
@@ -98,7 +87,7 @@ void DefaultScene::render()
     glm::mat4 view;
     glm::mat4 projection;
     glm::vec3 cameraPosition;
-    
+
     projection = _camera.perspective();
     _crateShader.updateUniformMat4("projection", projection);
     _lightSourceShader.updateUniformMat4("projection", projection);
@@ -117,6 +106,8 @@ void DefaultScene::render()
 
     glStencilFunc(GL_ALWAYS, 1, 0xFF);
     glStencilMask(0xFF);
+    _crateTexture->Enable(0);
+    _steelCrateTexture->Enable(1);
     teapot->draw();
 
     glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
@@ -126,9 +117,10 @@ void DefaultScene::render()
 
     glStencilMask(0xFF);
     glEnable(GL_DEPTH_TEST);
- 
+    glClear(GL_STENCIL_BUFFER_BIT);
+
     cameraPosition = _camera.getPosition();
-    
+
     _crateShader.updateUniformVec3("viewPos", cameraPosition);
 }
 

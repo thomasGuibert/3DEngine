@@ -51,6 +51,9 @@
     <ClCompile Include="EmptyScene.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="PostProcessedScene.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\container.jpg">
@@ -88,6 +91,9 @@
     <ClInclude Include="EmptyScene.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="PostProcessedScene.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\CubeFragmentShader.fs">
@@ -112,6 +118,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="shaders\HighlightVertexShader.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\ScreenFragmentShader.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\ScreenVertexShader.vs">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

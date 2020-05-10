@@ -15,6 +15,7 @@
 #include <ImportedModel.h>
 #include <DefaultScene.h>
 #include <EmptyScene.h>
+#include <PostProcessedScene.h>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -36,14 +37,19 @@ Scene* scene;
 int main()
 {
     GLFWwindow* window = create_window();
-    scene = new DefaultScene(camera);
+    scene = new PostProcessedScene(camera);
 
     while (!glfwWindowShouldClose(window))
     {
         glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LESS);
+        glEnable(GL_STENCIL_TEST);
+        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         scene->render();
-
 
         Sleep(100);
 
@@ -113,6 +119,9 @@ void UpdateCameraPosition(GLFWwindow * window)
 
     if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
         scene = new DefaultScene(camera);
+
+    if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+        scene = new PostProcessedScene(camera);
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera.processKeyboard(Direction::FORWARD, deltaTime);

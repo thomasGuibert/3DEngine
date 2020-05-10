@@ -41,8 +41,13 @@ void ImageTexture::Enable(const unsigned int uniteId) {
     {
     case 0:
         glActiveTexture(GL_TEXTURE0);
+        break;
     case 1:
         glActiveTexture(GL_TEXTURE1);
+        break;
+    case 2:
+        glActiveTexture(GL_TEXTURE2);
+        break;
     default:
         break;
     }
