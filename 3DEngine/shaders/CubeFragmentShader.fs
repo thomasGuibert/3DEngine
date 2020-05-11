@@ -32,6 +32,7 @@ in vec2 TexCoords;
 in vec3 Normal;
 in vec3 FragPos;
 
+uniform samplerCube skybox;
 uniform vec3 viewPos;
 uniform Material material;
 uniform DirectionalLight globalLight;
@@ -42,11 +43,14 @@ vec4 computeGlobalLight();
 vec4 computePointLight(PointLight light);
 void main()
 {
-    FragColor = vec4(0.0f);
-    FragColor += computeGlobalLight();
-    for (int i = 0; i < NR_POINT_LIGHTS; ++i) {
-        FragColor += computePointLight(light[i]) * 2.0f;
-    }
+    //FragColor = vec4(0.0f);
+    //FragColor += computeGlobalLight();
+    //for (int i = 0; i < NR_POINT_LIGHTS; ++i) {
+    //    FragColor += computePointLight(light[i]) * 2.0f;
+    //}
+    vec3 I = normalize(FragPos - viewPos);
+    vec3 R = reflect(I, normalize(Normal));
+    FragColor = vec4(texture(skybox, R).rgb, 1.0);
 }
 
 vec4 computeGlobalLight(){

@@ -5,6 +5,7 @@
 #include <Shader.h>
 #include <Model.h>
 #include <ImportedModel.h>
+#include <Skybox.h>
 
 class DefaultScene: public Scene
 {
@@ -13,6 +14,7 @@ public:
     ImportedModel* teapotHighlight;
     Model* crate;
     Model* lightSource;
+    Skybox* skybox;
 
     DefaultScene(Camera & camera);
     void render();

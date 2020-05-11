@@ -138,6 +138,7 @@
     <ClCompile Include="PostProcessedScene.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="SkyBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Assets\containerWithIron.png" />
@@ -154,6 +155,7 @@
     <ClInclude Include="PostProcessedScene.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="SkyBox.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\CubeFragmentShader.fs" />
@@ -164,6 +166,8 @@
     <None Include="shaders\LightSourceFragmentShader.fs" />
     <None Include="shaders\ScreenFragmentShader.fs" />
     <None Include="shaders\ScreenVertexShader.vs" />
+    <None Include="shaders\SkyboxFragmentShader.fs" />
+    <None Include="shaders\SkyboxVertexShader.vs" />
     <None Include="shaders\TeapotFragmentShader.fs" />
     <None Include="shaders\TeapotVertexShader.vs" />
   </ItemGroup>

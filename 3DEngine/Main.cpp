@@ -37,7 +37,7 @@ Scene* scene;
 int main()
 {
     GLFWwindow* window = create_window();
-    scene = new PostProcessedScene(camera);
+    scene = new DefaultScene(camera);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -114,6 +114,11 @@ void UpdateCameraPosition(GLFWwindow * window)
     lastFrame = currentFrame;
 
     const float cameraSpeed = 2.0f * deltaTime;
+    if (glfwGetKey(window, GLFW_KEY_F1) == GLFW_PRESS)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    if (glfwGetKey(window, GLFW_KEY_F2) == GLFW_PRESS)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
     if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
         scene = new EmptyScene(camera);
 

@@ -80,6 +80,11 @@ _lightSourceShader("./shaders/LightSourceVertexShader.vs", "./shaders/LightSourc
     crate = new Model(_vertices, sizeof(_vertices), 3, _crateShader);
     lightSource = new Model(_vertices, sizeof(_vertices), 3, _lightSourceShader);
     lightSource->setScale(glm::vec3(0.2f));
+
+    skybox = new Skybox("../Assets/skybox/", _camera);
+
+    _crateShader.updateUniformInt("skybox", 0);
+
 }
 
 void DefaultScene::render()
@@ -104,6 +109,7 @@ void DefaultScene::render()
     lightSource->drawOnPositions(_lightPositions, sizeof(_lightPositions) / sizeof(glm::vec3));
     crate->drawOnPositions(_cubePositions, sizeof(_cubePositions) / sizeof(glm::vec3));
 
+    skybox->render();
     glStencilFunc(GL_ALWAYS, 1, 0xFF);
     glStencilMask(0xFF);
     _crateTexture->Enable(0);
@@ -119,6 +125,7 @@ void DefaultScene::render()
     glEnable(GL_DEPTH_TEST);
     glClear(GL_STENCIL_BUFFER_BIT);
 
+   
     cameraPosition = _camera.getPosition();
 
     _crateShader.updateUniformVec3("viewPos", cameraPosition);
