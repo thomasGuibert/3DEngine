@@ -126,10 +126,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Projects\GameEngine\GameEngine\GameEngine\glad.c" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
     <ClCompile Include="EmptyScene.cpp" />
+    <ClCompile Include="glad.c" />
     <ClCompile Include="ImageTexture.cpp" />
     <ClCompile Include="ImportedModel.cpp" />
     <ClCompile Include="Main.cpp" />
