@@ -16,6 +16,7 @@
 #include <DefaultScene.h>
 #include <EmptyScene.h>
 #include <PostProcessedScene.h>
+#include <VoxelScene.h>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -37,7 +38,7 @@ Scene* scene;
 int main()
 {
     GLFWwindow* window = create_window();
-    scene = new DefaultScene(camera);
+    scene = new VoxelScene(camera);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -127,6 +128,9 @@ void UpdateCameraPosition(GLFWwindow * window)
 
     if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
         scene = new PostProcessedScene(camera);
+
+    if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+        scene = new VoxelScene(camera);
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera.processKeyboard(Direction::FORWARD, deltaTime);

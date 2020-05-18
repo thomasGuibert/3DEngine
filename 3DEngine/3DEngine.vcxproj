@@ -139,6 +139,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="VoxelScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Assets\containerWithIron.png" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="VoxelScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\CubeFragmentShader.fs" />

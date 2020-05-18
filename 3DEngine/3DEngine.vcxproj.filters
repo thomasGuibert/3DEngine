@@ -69,6 +69,9 @@
     <ClCompile Include="SkyBox.cpp">
       <Filter>Fichiers sources\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="VoxelScene.cpp">
+      <Filter>Fichiers sources\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\container.jpg">
@@ -110,6 +113,9 @@
       <Filter>Fichiers d%27en-tête\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="PostProcessedScene.h">
+      <Filter>Fichiers d%27en-tête\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="VoxelScene.h">
       <Filter>Fichiers d%27en-tête\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
