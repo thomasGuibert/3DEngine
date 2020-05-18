@@ -14,7 +14,12 @@ glm::mat4 Camera::perspective() {
 
 glm::vec3 Camera::getPosition() {
     return _position;
-}; 
+}
+
+glm::vec3 Camera::getDirection()
+{
+    return _front;
+}
 
 void Camera::processKeyboard(Direction direction, float deltaTime)
 {
@@ -28,7 +33,7 @@ void Camera::processKeyboard(Direction direction, float deltaTime)
     if (direction == RIGHT)
         _position += glm::normalize(glm::cross(_front, _up)) * velocity;
 
-    std::cout << "camera: " <<_position.x << _position.y << _position.z << std::endl;
+    std::cout << "camera: " << _position.x << _position.y << _position.z << std::endl;
 };
 
 void Camera::scrollUpdate(double yoffset) {
@@ -48,16 +53,16 @@ void Camera::mouseUpdate(double xpos, double ypos) {
         isMousePressed = true;
     }
 
-    double xOffset = _lastMousePosition.x - xpos;
+    double xOffset = xpos- _lastMousePosition.x;
     double yOffset = _lastMousePosition.y - ypos;
     _lastMousePosition.x = xpos;
     _lastMousePosition.y = ypos;
 
-    const float sensitivity = 0.1f;
+    const float sensitivity = 0.8f;
     xOffset *= sensitivity;
     yOffset *= sensitivity;
 
-    _yaw -= xOffset;
+    _yaw += xOffset;
     _pitch += yOffset;
 
     if (_pitch > 89.0f)

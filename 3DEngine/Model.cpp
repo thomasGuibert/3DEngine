@@ -40,6 +40,16 @@ void Model::drawOnPositions(const glm::vec3 cubePositions[], const int size) {
 
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
+}
+void Model::drawOnPosition(const float x, const float y, const float z)
+{
+    glm::mat4 model = glm::mat4(1.0f);
+    glm::vec3 position = glm::vec3(x, y, z);
+    model = glm::translate(model, position);
+    model = glm::scale(model, _scale);
+    _shader.updateUniformMat4("model", model);
+
+    glDrawArrays(GL_TRIANGLES, 0, 36);
 };
 
 void Model::setScale(const glm::vec3 scale) {

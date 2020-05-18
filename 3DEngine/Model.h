@@ -14,6 +14,7 @@ private:
 public:
     Model(const float vertices[], unsigned int bufferSize, unsigned int attributeCount, Shader shader);
     void drawOnPositions(const glm::vec3 cubePositions[], const int size);
+    void drawOnPosition(const float x, const float y, const float z);
     void setScale(const glm::vec3 scale);
 };
 

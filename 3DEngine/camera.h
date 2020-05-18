@@ -27,12 +27,13 @@ public:
     glm::mat4 lookAt();
     glm::mat4 perspective();
     glm::vec3 getPosition();
+    glm::vec3 getDirection();
     void processKeyboard(Direction direction, float deltaTime);
     void scrollUpdate(double yoffset);
     void mouseUpdate(double xpos, double ypos);
 
 private:
-    glm::vec3 _position = glm::vec3(1.2768, 1.57704, 3.64732);
+    glm::vec3 _position = glm::vec3(0.0f, 0.5f, 0.0f);
     glm::vec3 _front = glm::vec3(0.0f, 0.0f, -1.0f);
     glm::vec3 _up = glm::vec3(0.0f, 1.0f, 0.0f);
     float _yaw = -90.0f;

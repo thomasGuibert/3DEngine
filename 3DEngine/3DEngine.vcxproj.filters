@@ -156,5 +156,11 @@
     <None Include="shaders\SkyboxVertexShader.vs">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="shaders\VoxelFragmentShader.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\VoxelVertexShader.vs">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -89,6 +89,9 @@ _lightSourceShader("./shaders/LightSourceVertexShader.vs", "./shaders/LightSourc
 
 void DefaultScene::render()
 {
+    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+
     glm::mat4 view;
     glm::mat4 projection;
     glm::vec3 cameraPosition;
@@ -125,6 +128,8 @@ void DefaultScene::render()
     glEnable(GL_DEPTH_TEST);
     glClear(GL_STENCIL_BUFFER_BIT);
 
+    glStencilFunc(GL_ALWAYS, 1, 0xFF);
+    glStencilMask(0xFF);
    
     cameraPosition = _camera.getPosition();
 
