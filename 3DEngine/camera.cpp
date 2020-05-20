@@ -33,7 +33,7 @@ void Camera::processKeyboard(Direction direction, float deltaTime)
     if (direction == RIGHT)
         _position += glm::normalize(glm::cross(_front, _up)) * velocity;
 
-    std::cout << "camera: " << _position.x << _position.y << _position.z << std::endl;
+    std::cout << "camera: " << _position.x  << " " << _position.y << " " << _position.z << std::endl;
 };
 
 void Camera::scrollUpdate(double yoffset) {

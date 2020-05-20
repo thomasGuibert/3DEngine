@@ -72,6 +72,18 @@
     <ClCompile Include="VoxelScene.cpp">
       <Filter>Fichiers sources\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Chunk.cpp">
+      <Filter>Fichiers sources\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Fichiers sources\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="ChunkManager.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GL_Block.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\container.jpg">
@@ -117,6 +129,18 @@
     </ClInclude>
     <ClInclude Include="VoxelScene.h">
       <Filter>Fichiers d%27en-tête\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Fichiers d%27en-tête\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Chunk.h">
+      <Filter>Fichiers d%27en-tête\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="ChunkManager.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="GL_Block.h">
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
