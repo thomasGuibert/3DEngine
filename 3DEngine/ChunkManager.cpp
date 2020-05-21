@@ -6,7 +6,8 @@ ChunkManager::ChunkManager()
 
 void ChunkManager::AddChunk(Shader& shader, glm::vec3 position) {
     Chunk chunk(shader, position);
-    chunk.Setup_Sphere();
+    //chunk.Setup_Sphere();
+    chunk.Setup_Landscape();
     chunk.CreateMesh();
     _chunks.push_back(chunk);
 }

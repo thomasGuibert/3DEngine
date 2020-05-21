@@ -3,10 +3,21 @@
 #include "GL_Block.h"
 #include <glm/ext.hpp>
 
+class VoxelFace {
+
+public:
+    bool transparent;
+    int type;
+    int side;
+
+    bool equals(VoxelFace* face) { return face->transparent == transparent && face->type == type; }
+};
+
+
 class Chunk
 {
 public:
-    Chunk (Shader& shader, glm::vec3 position);
+    Chunk(Shader& shader, glm::vec3 position);
     ~Chunk();
 
     void CreateMesh();
@@ -21,6 +32,19 @@ public:
 
     void Render();
 
+    void greedy();
+
+    VoxelFace* getVoxelFace(int x, int y, int z, int side);
+
+    void quad(glm::vec3 bottomLeft,
+        glm::vec3 topLeft,
+        glm::vec3 topRight,
+        glm::vec3 bottomRight,
+        int width,
+        int height,
+        VoxelFace* voxel,
+        bool backFace);
+
     static const int CHUNK_SIZE = 16;
 
     GL_Block* blockRenderer;
@@ -29,5 +53,7 @@ private:
     Block*** m_pBlocks;
     Shader _shader;
     glm::vec3 _position;
+    VoxelFace*** _voxelsFace;
+    GL_Block* _blockRenderer;
 };
 

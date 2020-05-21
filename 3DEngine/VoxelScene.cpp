@@ -11,12 +11,12 @@ _texture()
     _voxelShader.updateUniformInt("voxelTexture", 0);
     chunkManager = new ChunkManager();
     glm::vec3 pos = glm::vec3(0, 0, 0);
-    //for (float x = 0.0f; x < 2; ++x) {
-    //    for (float z = 0.0f; z < 2; ++z) {
-    //        pos = glm::vec3(x * 16, 0, z * 16);
+    for (float x = 0.0f; x < 20; ++x) {
+        for (float z = 0.0f; z < 20; ++z) {
+            pos = glm::vec3(x * 16, 0, z * 16);
             chunkManager->AddChunk(_voxelShader, pos);
-    //    }
-    //}
+        }
+    }
 }
 
 void VoxelScene::render()

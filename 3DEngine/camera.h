@@ -33,13 +33,13 @@ public:
     void mouseUpdate(double xpos, double ypos);
 
 private:
-    glm::vec3 _position = glm::vec3(-6.0f, 23.5f, 11.0f);
+    glm::vec3 _position = glm::vec3(67.0f, 9.5f, 98.0f);
     glm::vec3 _front = glm::vec3(0.0f, 0.0f, -1.0f);
     glm::vec3 _up = glm::vec3(0.0f, 1.0f, 0.0f);
     float _yaw = -90.0f;
     float _pitch = 0.0f;
     float _fov = 45.0f;
-    float _speed = 2.0f;
+    float _speed = 5.0f;
     MousePosition _lastMousePosition;
 };
 
