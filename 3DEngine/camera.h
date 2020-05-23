@@ -33,7 +33,7 @@ public:
     void mouseUpdate(double xpos, double ypos);
 
 private:
-    glm::vec3 _position = glm::vec3(67.0f, 9.5f, 98.0f);
+    glm::vec3 _position = glm::vec3(77.0f, 9.5f, 69.0f);
     glm::vec3 _front = glm::vec3(0.0f, 0.0f, -1.0f);
     glm::vec3 _up = glm::vec3(0.0f, 1.0f, 0.0f);
     float _yaw = -90.0f;

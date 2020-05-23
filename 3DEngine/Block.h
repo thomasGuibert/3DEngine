@@ -1,11 +1,10 @@
 #pragma once
 enum BlockType
 {
-    BlockType_Default = 0,
-
-    BlockType_Grass,
+    BlockType_Grass = 0,
+    BlockType_Ston = 1,
+    BlockType_Water = 2,
     BlockType_Dirt,
-    BlockType_Water,
     BlockType_Stone,
     BlockType_Wood,
     BlockType_Sand,
@@ -21,7 +20,8 @@ public:
 
     bool IsActive();
     void SetActive(bool active);
-
+    void SetBlockType(BlockType m_blockType);
+    BlockType GetBlockType();
 private:
     bool m_active = false;
 

@@ -33,7 +33,7 @@ const Normals NORMALS;
 class GL_Block
 {
 public:
-    void addFace(const float* faceVertices, const float* faceNormal, glm::vec3 offset);
+    void addFace(const float* faceVertices, const float* faceNormal, glm::vec3 offset, int type);
     void build();
     void render(Shader& shader, glm::vec3 position);
     void translate(const float vertices[], float outVertices[], glm::vec3 offset);

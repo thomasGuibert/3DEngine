@@ -55,7 +55,9 @@ void Chunk::CreateMesh()
                 glm::vec3 offset(x, y, z);
                 //CreateCube(*blockRenderer, x, y, z, offset);
                 face = new VoxelFace();
+                face->type = m_pBlocks[x][y][z].GetBlockType();
                 _voxelsFace[x][y][z] = *face;
+
                 //CreateCube(*blockRenderer, x, y, z, offset);
             }
         }
@@ -334,7 +336,7 @@ void Chunk::quad(glm::vec3 bottomLeft,
     topRight.x, topRight.y, topRight.z,
     bottomRight.x, bottomRight.y, bottomRight.z };
 
-    glm::vec3 directionRight =  bottomRight - bottomLeft;
+    glm::vec3 directionRight = bottomRight - bottomLeft;
     glm::vec3 directionTop = topRight - bottomRight;
     glm::vec3 normal;
 
@@ -353,7 +355,7 @@ void Chunk::quad(glm::vec3 bottomLeft,
     };
 
     glm::vec3 pos(1, 1, 1);
-    _blockRenderer->addFace(vertexBuffer, normalBuffer, pos);
+    _blockRenderer->addFace(vertexBuffer, normalBuffer, pos, voxel->type);
 }
 
 /**
@@ -377,24 +379,24 @@ VoxelFace* Chunk::getVoxelFace(int x, int y, int z, int side) {
 
 void Chunk::CreateCube(GL_Block& blockRenderer, int x, int y, int z, glm::vec3 offset)
 {
-    if (x < CHUNK_SIZE - 1 && !m_pBlocks[x + 1][y][z].IsActive() || x == CHUNK_SIZE - 1)
-        //_voxelsFace[x][y][z] = new VoxelFace();
-        blockRenderer.addFace(FACE.RIGHT_FACE, NORMALS.RIGHT_FACE, offset);
-
-    if (x > 0 && !m_pBlocks[x - 1][y][z].IsActive() || x == 0)
-        blockRenderer.addFace(FACE.LEFT_FACE, NORMALS.LEFT_FACE, offset);
-
-    if (z > 0 && !m_pBlocks[x][y][z - 1].IsActive() || z == 0)
-        blockRenderer.addFace(FACE.BACK_FACE, NORMALS.BACK_FACE, offset);
-
-    if (z < CHUNK_SIZE - 1 && !m_pBlocks[x][y][z + 1].IsActive() || z == CHUNK_SIZE - 1)
-        blockRenderer.addFace(FACE.FRONT_FACE, NORMALS.FRONT_FACE, offset);
-
-    if (y > 0 && !m_pBlocks[x][y - 1][z].IsActive() || y == 0)
-        blockRenderer.addFace(FACE.BOTTOM_FACE, NORMALS.BOTTOM_FACE, offset);
-
-    if (y < CHUNK_SIZE - 1 && !m_pBlocks[x][y + 1][z].IsActive() || y == CHUNK_SIZE - 1)
-        blockRenderer.addFace(FACE.TOP_FACE, NORMALS.TOP_FACE, offset);
+    //  if (x < CHUNK_SIZE - 1 && !m_pBlocks[x + 1][y][z].IsActive() || x == CHUNK_SIZE - 1)
+    //      //_voxelsFace[x][y][z] = new VoxelFace();
+    //      blockRenderer.addFace(FACE.RIGHT_FACE, NORMALS.RIGHT_FACE, offset);
+    //
+    //  if (x > 0 && !m_pBlocks[x - 1][y][z].IsActive() || x == 0)
+    //      blockRenderer.addFace(FACE.LEFT_FACE, NORMALS.LEFT_FACE, offset);
+    //
+    //  if (z > 0 && !m_pBlocks[x][y][z - 1].IsActive() || z == 0)
+    //      blockRenderer.addFace(FACE.BACK_FACE, NORMALS.BACK_FACE, offset);
+    //
+    //  if (z < CHUNK_SIZE - 1 && !m_pBlocks[x][y][z + 1].IsActive() || z == CHUNK_SIZE - 1)
+    //      blockRenderer.addFace(FACE.FRONT_FACE, NORMALS.FRONT_FACE, offset);
+    //
+    //  if (y > 0 && !m_pBlocks[x][y - 1][z].IsActive() || y == 0)
+    //      blockRenderer.addFace(FACE.BOTTOM_FACE, NORMALS.BOTTOM_FACE, offset);
+    //
+    //  if (y < CHUNK_SIZE - 1 && !m_pBlocks[x][y + 1][z].IsActive() || y == CHUNK_SIZE - 1)
+    //      blockRenderer.addFace(FACE.TOP_FACE, NORMALS.TOP_FACE, offset);
 
 
 
@@ -448,7 +450,17 @@ void Chunk::Setup_Landscape()
             for (int y = 0; y < height; y++)
             {
                 m_pBlocks[x][y][z].SetActive(true);
-                //m_pBlocks[x][y][z].SetBlockType(BlockType_Grass);
+                if (y < 1) {
+                    m_pBlocks[x][y][z].SetBlockType(BlockType_Water);
+                }
+                else {
+                    if (y < 2) {
+                        m_pBlocks[x][y][z].SetBlockType(BlockType_Ston);
+                    }
+                    else {
+                        m_pBlocks[x][y][z].SetBlockType(BlockType_Grass);
+                    }
+                }
             }
         }
     }

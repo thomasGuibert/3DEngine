@@ -1,6 +1,6 @@
 #include "GL_Block.h"
 
-void GL_Block::addFace(const float* faceVertices, const float* faceNormals, glm::vec3 offset)
+void GL_Block::addFace(const float* faceVertices, const float* faceNormals, glm::vec3 offset, int type)
 {
     unsigned int verticesCount = 6;
     unsigned int faceVerticeIndex = 0;
@@ -20,6 +20,8 @@ void GL_Block::addFace(const float* faceVertices, const float* faceNormals, glm:
         _vertices.push_back(faceNormals[normalVerticeIndex++]);
         _vertices.push_back(faceNormals[normalVerticeIndex++]);
         _vertices.push_back(faceNormals[normalVerticeIndex++]);
+
+        _vertices.push_back(type);
     }
 }
 
@@ -41,12 +43,14 @@ void GL_Block::build()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(float), _vertices.data(), GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(5 * sizeof(float)));
     glEnableVertexAttribArray(2);
+    glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(8 * sizeof(float)));
+    glEnableVertexAttribArray(3);
 }
 
 void GL_Block::render(Shader& shader, glm::vec3 position)

@@ -6,13 +6,15 @@ _voxelShader("./shaders/voxelVertexShader.vs", "./shaders/voxelFragmentShader.fs
 _texture()
 {
     //_texture = new ImageTexture("../Assets/containerWithIron.png", "texture_diffuse");
-    _texture = new ImageTexture("../Assets/minecraft/textures/block/green_concrete_powder.png", "texture_diffuse");
+    //_texture = new ImageTexture("../Assets/minecraft/textures/block/green_concrete_powder.png", "texture_diffuse");
+    _texture = new ImageTexture("../Assets/terrain.png", "texture_diffuse");
+
     _texture->Enable(0);
     _voxelShader.updateUniformInt("voxelTexture", 0);
     chunkManager = new ChunkManager();
     glm::vec3 pos = glm::vec3(0, 0, 0);
-    for (float x = 0.0f; x < 20; ++x) {
-        for (float z = 0.0f; z < 20; ++z) {
+    for (float x = 0.0f; x < 5; ++x) {
+        for (float z = 0.0f; z < 5; ++z) {
             pos = glm::vec3(x * 16, 0, z * 16);
             chunkManager->AddChunk(_voxelShader, pos);
         }
