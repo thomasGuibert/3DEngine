@@ -17,7 +17,7 @@ public:
 class Chunk
 {
 public:
-    Chunk(Shader& shader, glm::vec3 position);
+    Chunk(Shader& shader, Shader& shaderHighlight, glm::vec3 position);
     ~Chunk();
 
     void CreateMesh();
@@ -31,6 +31,8 @@ public:
     void Setup_Landscape();
 
     void Render();
+
+    void setHighlightedBlock(int x, int y, int z);
 
     void greedy();
 
@@ -46,12 +48,14 @@ public:
         bool backFace);
 
     static const int CHUNK_SIZE = 16;
+    Block* getBlock(const unsigned int x, const unsigned int y, const unsigned int z);
 
     GL_Block* blockRenderer;
 private:
     // The blocks data
     Block*** m_pBlocks;
     Shader _shader;
+    Shader _shaderHighlight;
     glm::vec3 _position;
     VoxelFace*** _voxelsFace;
     GL_Block* _blockRenderer;

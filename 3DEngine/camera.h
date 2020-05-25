@@ -17,6 +17,8 @@ struct MousePosition {
     double z = 0.0;
 };
 
+
+
 class Camera
 {
 public:
@@ -28,18 +30,23 @@ public:
     glm::mat4 perspective();
     glm::vec3 getPosition();
     glm::vec3 getDirection();
-    void processKeyboard(Direction direction, float deltaTime);
-    void scrollUpdate(double yoffset);
-    void mouseUpdate(double xpos, double ypos);
+    virtual void processKeyboard(Direction direction, float deltaTime);
+    virtual void scrollUpdate(double yoffset);
+    virtual void mouseUpdate(double xpos, double ypos);
+    bool ENABLE_HIHGLIGHT = false;
 
-private:
-    glm::vec3 _position = glm::vec3(77.0f, 9.5f, 69.0f);
+protected:
+    glm::vec3 _position = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec3 _front = glm::vec3(0.0f, 0.0f, -1.0f);
     glm::vec3 _up = glm::vec3(0.0f, 1.0f, 0.0f);
+    float _speed = 10.0f;
+
+private:
+
     float _yaw = -90.0f;
     float _pitch = 0.0f;
     float _fov = 45.0f;
-    float _speed = 5.0f;
+    
     MousePosition _lastMousePosition;
 };
 

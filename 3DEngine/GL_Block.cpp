@@ -1,6 +1,6 @@
 #include "GL_Block.h"
 
-void GL_Block::addFace(const float* faceVertices, const float* faceNormals, glm::vec3 offset, int type)
+void GL_Block::addFace(const float* faceVertices, const float* faceNormals, int type)
 {
     unsigned int verticesCount = 6;
     unsigned int faceVerticeIndex = 0;
@@ -8,11 +8,10 @@ void GL_Block::addFace(const float* faceVertices, const float* faceNormals, glm:
     unsigned int normalVerticeIndex = 0;
 
     float outVertices[18];
-    translate(faceVertices, outVertices, offset);
     for (unsigned int i = 0; i < verticesCount; ++i) {
-        _vertices.push_back(outVertices[faceVerticeIndex++]);
-        _vertices.push_back(outVertices[faceVerticeIndex++]);
-        _vertices.push_back(outVertices[faceVerticeIndex++]);
+        _vertices.push_back(faceVertices[faceVerticeIndex++]);
+        _vertices.push_back(faceVertices[faceVerticeIndex++]);
+        _vertices.push_back(faceVertices[faceVerticeIndex++]);
 
         _vertices.push_back(TEXTURE.COORDS[textureVerticeIndex++]);
         _vertices.push_back(TEXTURE.COORDS[textureVerticeIndex++]);
@@ -23,6 +22,15 @@ void GL_Block::addFace(const float* faceVertices, const float* faceNormals, glm:
 
         _vertices.push_back(type);
     }
+}
+
+void GL_Block::addHighlight(const float * faceVertices)
+{
+    _verticesHighlight.clear();
+    for (unsigned int i = 0; i < 288; ++i) {
+        _verticesHighlight.push_back(faceVertices[i]);
+    }
+    buildHighlight();
 }
 
 void GL_Block::translate(const float vertices[], float outVertices[], glm::vec3 offset) {
@@ -53,13 +61,45 @@ void GL_Block::build()
     glEnableVertexAttribArray(3);
 }
 
-void GL_Block::render(Shader& shader, glm::vec3 position)
+void GL_Block::buildHighlight()
 {
+    unsigned int VBO;
+    glGenVertexArrays(1, &_VAOHighlight);
+    glGenBuffers(1, &VBO);
+
+    glBindVertexArray(_VAOHighlight);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, _verticesHighlight.size() * sizeof(float), _verticesHighlight.data(), GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+}
+
+void GL_Block::render(Shader& shader, Shader& shaderHighlight, glm::vec3 position)
+{
+    glStencilFunc(GL_ALWAYS, 1, 0xFF);
+    glStencilMask(0xFF);
+
     glBindVertexArray(_VAO);
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, position);
     shader.updateUniformMat4("model", model);
     glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
+
+    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+    glStencilMask(0x00);
+    glDisable(GL_DEPTH_TEST);
+    //model = glm::scale(model, glm::vec3(1.5, 1.5, 1.5));
+    shaderHighlight.updateUniformMat4("model", model);
+    glBindVertexArray(_VAOHighlight);
+    glDrawArrays(GL_TRIANGLES, 0, _verticesHighlight.size());
+
+    glStencilMask(0xFF);
+    glEnable(GL_DEPTH_TEST);
+    glClear(GL_STENCIL_BUFFER_BIT);
+
+    glStencilFunc(GL_ALWAYS, 1, 0xFF);
+    glStencilMask(0xFF);
 }
 
 

@@ -6,7 +6,6 @@ in vec2 TexCoords;
 in vec3 Normal;
 in float Type;
 
-uniform sampler2D ourTexture;
 uniform sampler2D Texture;
 
 float getIntencityBasedOnNormal();
@@ -14,7 +13,6 @@ vec2 getTypePosition();
 
 void main()
 {
-   FragColor = texture(ourTexture, TexCoords);
    float intencity = getIntencityBasedOnNormal();
    
    vec2 tileOffset = getTypePosition();

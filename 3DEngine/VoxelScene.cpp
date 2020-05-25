@@ -1,8 +1,9 @@
 #include "VoxelScene.h"
 #include <glm/ext.hpp>
 
-VoxelScene::VoxelScene(Camera & camera) : Scene(camera),
+VoxelScene::VoxelScene(CameraFPS & camera) : Scene(camera),
 _voxelShader("./shaders/voxelVertexShader.vs", "./shaders/voxelFragmentShader.fs"),
+_voxelshaderHighlight("./shaders/voxelVertexShaderHighlight.vs", "./shaders/voxelFragmentShaderHighlight.fs"),
 _texture()
 {
     //_texture = new ImageTexture("../Assets/containerWithIron.png", "texture_diffuse");
@@ -13,12 +14,14 @@ _texture()
     _voxelShader.updateUniformInt("voxelTexture", 0);
     chunkManager = new ChunkManager();
     glm::vec3 pos = glm::vec3(0, 0, 0);
-    for (float x = 0.0f; x < 5; ++x) {
-        for (float z = 0.0f; z < 5; ++z) {
+    for (float x = 0.0f; x < chunkManager->SIZE; ++x) {
+        for (float z = 0.0f; z < chunkManager->SIZE; ++z) {
             pos = glm::vec3(x * 16, 0, z * 16);
-            chunkManager->AddChunk(_voxelShader, pos);
+            chunkManager->AddChunk(_voxelShader, _voxelshaderHighlight, pos);
         }
     }
+    camera.setChunkManager(*chunkManager);
+
 }
 
 void VoxelScene::render()
@@ -28,10 +31,10 @@ void VoxelScene::render()
 
     projection = _camera.perspective();
     view = _camera.lookAt();
-    glm::vec3 pos = _camera.getPosition();
-    glm::vec3 direction = _camera.getDirection();
     _voxelShader.updateUniformMat4("projection", projection);
     _voxelShader.updateUniformMat4("view", view);
+    _voxelshaderHighlight.updateUniformMat4("projection", projection);
+    _voxelshaderHighlight.updateUniformMat4("view", view);
 
     chunkManager->Update();
     for (float x = 0.0f; x < 10; x += 0.4f) {

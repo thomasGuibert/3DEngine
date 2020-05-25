@@ -33,13 +33,17 @@ const Normals NORMALS;
 class GL_Block
 {
 public:
-    void addFace(const float* faceVertices, const float* faceNormal, glm::vec3 offset, int type);
+    void addFace(const float* faceVertices, const float* faceNormal, int type);
+    void addHighlight(const float* faceVertices);
     void build();
-    void render(Shader& shader, glm::vec3 position);
+    void buildHighlight();
+    void render(Shader& shader, Shader& shaderHighlight, glm::vec3 position);
     void translate(const float vertices[], float outVertices[], glm::vec3 offset);
     ~GL_Block();
 private:
-    unsigned int _VAO;
+    unsigned int _VAO, _VAOHighlight;
     std::vector<float> _vertices;
+    std::vector<float> _verticesHighlight;
+
 };
 

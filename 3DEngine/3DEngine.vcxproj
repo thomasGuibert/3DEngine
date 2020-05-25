@@ -128,6 +128,7 @@
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraFPS.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="ChunkManager.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
@@ -152,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="Block.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraFPS.h" />
     <ClInclude Include="Chunk.h" />
     <ClInclude Include="ChunkManager.h" />
     <ClInclude Include="DefaultScene.h" />
@@ -181,7 +183,9 @@
     <None Include="shaders\TeapotFragmentShader.fs" />
     <None Include="shaders\TeapotVertexShader.vs" />
     <None Include="shaders\VoxelFragmentShader.fs" />
+    <None Include="shaders\VoxelFragmentShaderHighlight.fs" />
     <None Include="shaders\VoxelVertexShader.vs" />
+    <None Include="shaders\VoxelVertexShaderHighlight.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

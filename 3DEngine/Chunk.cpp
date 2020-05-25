@@ -9,7 +9,7 @@ static int WEST = 3;
 static int TOP = 4;
 static int BOTTOM = 5;
 
-Chunk::Chunk(Shader& shader, glm::vec3 position) : _shader(shader), _position(position)
+Chunk::Chunk(Shader& shader, Shader& shaderHighlight, glm::vec3 position) : _shader(shader), _shaderHighlight(shaderHighlight), _position(position)
 {
     // Create the blocks
     m_pBlocks = new Block**[CHUNK_SIZE];
@@ -52,67 +52,16 @@ void Chunk::CreateMesh()
                     continue;
                 }
 
-                glm::vec3 offset(x, y, z);
+                //glm::vec3 offset(x, y, z);
                 //CreateCube(*blockRenderer, x, y, z, offset);
                 face = new VoxelFace();
                 face->type = m_pBlocks[x][y][z].GetBlockType();
                 _voxelsFace[x][y][z] = *face;
 
-                //CreateCube(*blockRenderer, x, y, z, offset);
             }
         }
     }
-    //
-    //blockRenderer->build();
 
-    //VoxelFace* face;
-    //
-    //for (int i = 0; i < CHUNK_SIZE; i++) {
-    //
-    //    for (int j = 0; j < CHUNK_SIZE; j++) {
-    //
-    //        for (int k = 0; k < CHUNK_SIZE; k++) {
-    //
-    //            if (i > CHUNK_SIZE / 2 && i < CHUNK_SIZE*0.75 &&
-    //                j > CHUNK_SIZE / 2 && j < CHUNK_SIZE*0.75 &&
-    //                k > CHUNK_SIZE / 2 && k < CHUNK_SIZE*0.75) {
-    //
-    //                /*
-    //                 * We add a set of voxels of type 1 at the top-right of the chunk.
-    //                 *
-    //                 */
-    //                face = new VoxelFace();
-    //                face->type = 1;
-    //
-    //                /*
-    //                 * To see an example of face culling being used in combination with
-    //                 * greedy meshing, you could set the trasparent attribute to true.
-    //                 */
-    //                 //                        face.transparent = true;
-    //
-    //            }
-    //            else if (i == 0) {
-    //
-    //                /*
-    //                 * We add a set of voxels of type 2 on the left of the chunk.
-    //                 */
-    //                face = new VoxelFace();
-    //                face->type = 2;
-    //
-    //            }
-    //            else {
-    //
-    //                /*
-    //                 * And the rest are set to type 3.
-    //                 */
-    //                face = new VoxelFace();
-    //                face->type = 3;
-    //            }
-    //
-    //            _voxelsFace[i][j][k] = *face;
-    //        }
-    //    }
-    //}
     greedy();
     _blockRenderer->build();
 }
@@ -327,7 +276,6 @@ void Chunk::quad(glm::vec3 bottomLeft,
     VoxelFace* voxel,
     bool backFace) {
 
-
     float vertexBuffer[18] = {
     bottomRight.x, bottomRight.y, bottomRight.z,
     bottomLeft.x, bottomLeft.y, bottomLeft.z,
@@ -354,8 +302,13 @@ void Chunk::quad(glm::vec3 bottomLeft,
         normal.x,normal.y,normal.z
     };
 
-    glm::vec3 pos(1, 1, 1);
-    _blockRenderer->addFace(vertexBuffer, normalBuffer, pos, voxel->type);
+    _blockRenderer->addFace(vertexBuffer, normalBuffer, voxel->type);
+}
+
+Block* Chunk::getBlock(const unsigned int x, const unsigned int y, const unsigned int z)
+{
+    //if(x > -1 && x < CHUNK_SIZE && z > -1 && z < CHUNK_SIZE && z > -1 && z < CHUNK_SIZE)
+    return &m_pBlocks[x][y][z];
 }
 
 /**
@@ -468,7 +421,7 @@ void Chunk::Setup_Landscape()
 
 void Chunk::Render()
 {
-    _blockRenderer->render(_shader, _position);
+    _blockRenderer->render(_shader, _shaderHighlight, _position);
 
     //pRenderer->PushMatrix();
     //pRenderer->ImmediateColourAlpha(1.0f, 1.0f, 1.0f, 1.0f);
@@ -484,6 +437,60 @@ void Chunk::Render()
     //    pRenderer->RenderMesh(m_meshID);
     //}
     //pRenderer->PopMatrix();
+}
+
+void Chunk::setHighlightedBlock(int x, int y, int z)
+{
+    std::cout << "Block " << x << " " << y << " " << z << std::endl;
+
+    float vertexBuffer[288] = {
+        //FRONT
+        0 + x, 0 + y, 0 + z,
+        1 + x, 0 + y, 0 + z,
+        1 + x, 1 + y, 0 + z,
+        1 + x, 1 + y, 0 + z,
+        0 + x, 1 + y, 0 + z,
+        0 + x, 0 + y, 0 + z,
+
+        //BACK
+        0 + x, 0 + y, 1 + z,
+        1 + x, 0 + y, 1 + z,
+        1 + x, 1 + y, 1 + z,
+        1 + x, 1 + y, 1 + z,
+        0 + x, 1 + y, 1 + z,
+        0 + x, 0 + y, 1 + z,
+
+        //
+        0 + x, 1 + y, 1 + z,
+        0 + x, 1 + y, 0 + z,
+        0 + x, 0 + y, 0 + z,
+        0 + x, 0 + y, 0 + z,
+        0 + x, 0 + y, 1 + z,
+        0 + x, 1 + y, 1 + z,
+
+        1 + x, 1 + y, 1 + z,
+        1 + x, 1 + y, 0 + z,
+        1 + x, 0 + y, 0 + z,
+        1 + x, 0 + y, 0 + z,
+        1 + x, 0 + y, 1 + z,
+        1 + x, 1 + y, 1 + z,
+
+        0 + x, 0 + y, 0 + z,
+        1 + x, 0 + y, 0 + z,
+        1 + x, 0 + y, 1 + z,
+        1 + x, 0 + y, 1 + z,
+        0 + x, 0 + y, 1 + z,
+        0 + x, 0 + y, 0 + z,
+
+        0 + x, 1 + y, 0 + z,
+        1 + x, 1 + y, 0 + z,
+        1 + x, 1 + y, 1 + z,
+        1 + x, 1 + y, 1 + z,
+        0 + x, 1 + y, 1 + z,
+        0 + x, 1 + y, 0 + z
+    };
+
+    _blockRenderer->addHighlight(vertexBuffer);
 }
 
 Chunk::~Chunk()

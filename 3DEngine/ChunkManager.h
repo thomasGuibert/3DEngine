@@ -6,9 +6,11 @@ class ChunkManager
 public:
     ChunkManager();
     ~ChunkManager();
+    static const unsigned int SIZE = 1;
+ 
 
     void Update();
-    void AddChunk(Shader& shader, glm::vec3 position);
+    void AddChunk(Shader& shader, Shader& shaderHighlight, glm::vec3 position);
     //void Update(float dt, glm::vec3 cameraPosition, glm::vec3 cameraView);
     //void UpdateLoadList();
     //void UpdateSetupList();
@@ -16,10 +18,11 @@ public:
     //void UpdateUnloadList();
     //void UpdateVisibleList();
     //void UpdateRenderList();
+    void setHighlightedBlock(const glm::vec3 position);
 
+    glm::vec4 getBlock(const glm::vec3 position);
+    bool isActivatedBlock(const glm::vec3 position);
 private:
-    glm::vec3 _cameraPosition;
-    glm::vec3 _cameraView;
     std::vector<Chunk>_chunks;
 };
 

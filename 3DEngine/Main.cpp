@@ -32,8 +32,9 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 float deltaTime = 0.0f; // Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
-Camera camera;
+CameraFPS camera;
 Scene* scene;
+
 
 int main()
 {
@@ -117,6 +118,8 @@ void UpdateCameraPosition(GLFWwindow * window)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     if (glfwGetKey(window, GLFW_KEY_F2) == GLFW_PRESS)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    if (glfwGetKey(window, GLFW_KEY_F3) == GLFW_PRESS)
+        camera.ENABLE_HIHGLIGHT  = !camera.ENABLE_HIHGLIGHT;
 
     if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
         scene = new EmptyScene(camera);
