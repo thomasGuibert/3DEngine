@@ -18,11 +18,12 @@ public:
     //void UpdateUnloadList();
     //void UpdateVisibleList();
     //void UpdateRenderList();
-    void setHighlightedBlock(const glm::vec3 position);
-
+    bool setHighlightedBlock(const glm::vec3 position);
+    void disableBlock(const glm::vec3 position);
     glm::vec4 getBlock(const glm::vec3 position);
     bool isActivatedBlock(const glm::vec3 position);
 private:
     std::vector<Chunk>_chunks;
+    //Camera& came
 };
 

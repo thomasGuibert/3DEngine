@@ -39,6 +39,28 @@ Chunk::Chunk(Shader& shader, Shader& shaderHighlight, glm::vec3 position) : _sha
 void Chunk::CreateMesh()
 {
     VoxelFace* face;
+    for (int i = 0; i < CHUNK_SIZE; ++i)
+    {
+        for (int j = 0; j < CHUNK_SIZE; ++j)
+        {
+            delete[] _voxelsFace[i][j];
+        }
+    
+        delete[] _voxelsFace[i];
+    }
+    delete[] _voxelsFace;
+
+    _voxelsFace = new VoxelFace**[CHUNK_SIZE];
+    for (int i = 0; i < CHUNK_SIZE; i++)
+    {
+        _voxelsFace[i] = new VoxelFace*[CHUNK_SIZE];
+
+        for (int j = 0; j < CHUNK_SIZE; j++)
+        {
+            _voxelsFace[i][j] = new VoxelFace[CHUNK_SIZE];
+        }
+    }
+
     //blockRenderer = new GL_Block();
     for (int x = 0; x < CHUNK_SIZE; x++)
     {
@@ -65,8 +87,6 @@ void Chunk::CreateMesh()
     greedy();
     _blockRenderer->build();
 }
-
-
 
 void Chunk::greedy() {
 
@@ -307,8 +327,20 @@ void Chunk::quad(glm::vec3 bottomLeft,
 
 Block* Chunk::getBlock(const unsigned int x, const unsigned int y, const unsigned int z)
 {
-    //if(x > -1 && x < CHUNK_SIZE && z > -1 && z < CHUNK_SIZE && z > -1 && z < CHUNK_SIZE)
-    return &m_pBlocks[x][y][z];
+    if ((int)x > -1 && (int)x < CHUNK_SIZE && (int)z > -1 && (int)z < CHUNK_SIZE) {
+        std::cout << "Block: "<< x << " " << y << " " << z << std::endl;
+        return &m_pBlocks[x][y][z];
+    }
+}
+
+void Chunk::setHasChanged(bool hasChanged)
+{
+    _hasChanged = hasChanged;
+}
+
+bool Chunk::getHasChanged()
+{
+    return _hasChanged;
 }
 
 /**
@@ -374,6 +406,20 @@ void Chunk::Setup_Sphere()
     }
 }
 
+void Chunk::Setup_Cube()
+{
+    for (int z = 0; z < CHUNK_SIZE; z++)
+    {
+        for (int y = 0; y < 10; y++)
+        {
+            for (int x = 0; x < CHUNK_SIZE; x++)
+            {
+                m_pBlocks[x][y][z].SetActive(true);
+            }
+        }
+    }
+}
+
 void Chunk::Setup_Landscape()
 {
     const unsigned int size = 50;
@@ -421,6 +467,11 @@ void Chunk::Setup_Landscape()
 
 void Chunk::Render()
 {
+
+    if (_hasChanged) {
+        _blockRenderer->_vertices.clear();
+        CreateMesh();
+    }
     _blockRenderer->render(_shader, _shaderHighlight, _position);
 
     //pRenderer->PushMatrix();

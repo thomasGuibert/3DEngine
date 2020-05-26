@@ -6,10 +6,10 @@ class CameraFPS: public Camera
 {
 public:
     CameraFPS();
-    void setChunkManager(ChunkManager& chunckManager);
+    void setChunkManager(ChunkManager* chunckManager);
     void processKeyboard(Direction direction, float deltaTime);
     ~CameraFPS();
 private:
-    ChunkManager _chunckManager;
+    ChunkManager* _chunkManager;
 };
 

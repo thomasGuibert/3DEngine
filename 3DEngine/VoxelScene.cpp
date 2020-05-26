@@ -20,7 +20,7 @@ _texture()
             chunkManager->AddChunk(_voxelShader, _voxelshaderHighlight, pos);
         }
     }
-    camera.setChunkManager(*chunkManager);
+    camera.setChunkManager(chunkManager);
 
 }
 

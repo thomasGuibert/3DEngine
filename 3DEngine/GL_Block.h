@@ -40,9 +40,10 @@ public:
     void render(Shader& shader, Shader& shaderHighlight, glm::vec3 position);
     void translate(const float vertices[], float outVertices[], glm::vec3 offset);
     ~GL_Block();
+    std::vector<float> _vertices;
+
 private:
     unsigned int _VAO, _VAOHighlight;
-    std::vector<float> _vertices;
     std::vector<float> _verticesHighlight;
 
 };

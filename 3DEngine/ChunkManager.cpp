@@ -2,17 +2,19 @@
 
 ChunkManager::ChunkManager()
 {
+
 }
 
 void ChunkManager::AddChunk(Shader& shader, Shader& shaderHighlight, glm::vec3 position) {
     Chunk chunk(shader, shaderHighlight, position);
     //chunk.Setup_Sphere();
     chunk.Setup_Landscape();
+    //chunk.Setup_Cube();
     chunk.CreateMesh();
     _chunks.push_back(chunk);
 }
 
-void ChunkManager::setHighlightedBlock(const glm::vec3 position)
+bool ChunkManager::setHighlightedBlock(const glm::vec3 position)
 {
     float chunkPostionX = (position.x / (SIZE * Chunk::CHUNK_SIZE))*SIZE;
     float chunkPostionZ = (position.z / (SIZE * Chunk::CHUNK_SIZE))*SIZE;
@@ -25,11 +27,22 @@ void ChunkManager::setHighlightedBlock(const glm::vec3 position)
 
     std::cout << "Chunk " << ChunkIdX << " " << ChunkIdZ << std::endl;
 
-    if(isActivatedBlock(position))
+    if (isActivatedBlock(position)) {
         _chunks[ChunkIdX + ChunkIdZ * SIZE].setHighlightedBlock(BlockIdX, position.y, BlockIdZ);
+        return true;
+    }
     std::cout << "Activated " << isActivatedBlock(position) << std::endl;
     std::cout << std::endl;
     std::cout << std::endl;
+    return false;
+}
+
+void ChunkManager::disableBlock(const glm::vec3 position)
+{
+    glm::vec4 block = getBlock(position);
+    _chunks[block.x + block.y * SIZE].setHasChanged(true);
+    return _chunks[block.x + block.y * SIZE].getBlock(block.z, position.y, block.w)->SetActive(false);
+
 }
 
 glm::vec4 ChunkManager::getBlock(const glm::vec3 position)

@@ -27,7 +27,7 @@ public:
     //void Update(float dt);
 
     void Setup_Sphere();
-
+    void Setup_Cube();
     void Setup_Landscape();
 
     void Render();
@@ -49,6 +49,9 @@ public:
 
     static const int CHUNK_SIZE = 16;
     Block* getBlock(const unsigned int x, const unsigned int y, const unsigned int z);
+    void setHasChanged(bool hasChanged); 
+    bool getHasChanged();
+
 
     GL_Block* blockRenderer;
 private:
@@ -59,5 +62,6 @@ private:
     glm::vec3 _position;
     VoxelFace*** _voxelsFace;
     GL_Block* _blockRenderer;
+    bool _hasChanged = false;
 };
 
