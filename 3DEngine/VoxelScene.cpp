@@ -21,7 +21,7 @@ _texture()
         }
     }
     camera.setChunkManager(chunkManager);
-
+    skybox = new Skybox("../Assets/skybox/", _camera);
 }
 
 void VoxelScene::render()
@@ -29,6 +29,7 @@ void VoxelScene::render()
     glm::mat4 view;
     glm::mat4 projection;
 
+    skybox->render();
     projection = _camera.perspective();
     view = _camera.lookAt();
     _voxelShader.updateUniformMat4("projection", projection);
