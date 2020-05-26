@@ -36,15 +36,15 @@ void VoxelScene::render()
     _voxelshaderHighlight.updateUniformMat4("projection", projection);
     _voxelshaderHighlight.updateUniformMat4("view", view);
 
-    chunkManager->Update();
-    for (float x = 0.0f; x < 10; x += 0.4f) {
-        for (float z = 0.0f; z < 10; z += 0.4f) {
-            float height = ((glm::simplex(glm::vec2{ x / 16, z / 16 }) + 1) / 2) * 5;
-            for (float y = 0.0f; y <= height; y += 0.4f) {
-
-            }
-        }
+    int dist = 0;
+    while (!chunkManager->setHighlightedBlock(_camera.getPosition() + _camera.getFront() * glm::vec3(dist)) && dist < 5) {
+        dist++;
     }
+    //_chunkManager->disableBlock(_position + _front * glm::vec3(dist));
+
+
+    chunkManager->Update();
+
 }
 
 

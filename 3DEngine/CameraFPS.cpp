@@ -16,20 +16,12 @@ void CameraFPS::setChunkManager(ChunkManager* chunckManager)
     std::cout << _position.x << " " << _position.y << " " << _position.z << " " << std::endl;
 }
 
-void CameraFPS::processKeyboard(Direction direction, float deltaTime)
+void CameraFPS::processKeyboardDirection(Direction direction, float deltaTime)
 {
     //_position = glm::vec3(_position.x, _position.y-1, _position.z);
+    //_chunkManager->disableBlock(_position + _front);
     float velocity = _speed * deltaTime;
     glm::vec3 nextPosition;
-    if (ENABLE_HIHGLIGHT == true) {
-        //int dist = 0;
-        //while (!_chunkManager->setHighlightedBlock(_position + _front * glm::vec3(dist)) && dist < 5) {
-        //    dist++;
-        //}
-        //_chunkManager->disableBlock(_position + _front * glm::vec3(dist));
-
-        _chunkManager->setHighlightedBlock(_position + _front * velocity);
-    }
 
     if (direction == FORWARD)
         nextPosition = _position + _front * velocity;
@@ -50,6 +42,17 @@ void CameraFPS::processKeyboard(Direction direction, float deltaTime)
         _position = glm::vec3(_position.x, _position.y + 1, _position.z);
     _position = glm::vec3(_position.x, _position.y + 1, _position.z);
     std::cout << "camera: " << _position.x << " " << _position.y << " " << _position.z << std::endl;
+}
+
+void CameraFPS::processKeyboardAction(Action action)
+{
+    if (action == Action::REMOVE) {
+        int dist = 0;
+        while (!_chunkManager->setHighlightedBlock(_position + _front * glm::vec3(dist)) && dist < 5) {
+            dist++;
+        }
+        _chunkManager->disableBlock(_position + _front * glm::vec3(dist));
+    }
 }
 
 

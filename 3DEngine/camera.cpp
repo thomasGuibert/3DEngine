@@ -21,7 +21,12 @@ glm::vec3 Camera::getDirection()
     return _front;
 }
 
-void Camera::processKeyboard(Direction direction, float deltaTime)
+glm::vec3 Camera::getFront()
+{
+    return _front;
+}
+
+void Camera::processKeyboardDirection(Direction direction, float deltaTime)
 {
     float velocity = _speed * deltaTime;
     if (direction == FORWARD)
@@ -34,7 +39,8 @@ void Camera::processKeyboard(Direction direction, float deltaTime)
         _position += glm::normalize(glm::cross(_front, _up)) * velocity;
 
     std::cout << "camera: " << _position.x  << " " << _position.y << " " << _position.z << std::endl;
-};
+}
+
 
 void Camera::scrollUpdate(double yoffset) {
     if (_fov >= 1.0f && _fov <= 45.0f)

@@ -4,6 +4,11 @@
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
+enum Action {
+    ADD,
+    REMOVE
+};
+
 enum Direction {
     FORWARD,
     BACKWARD,
@@ -30,10 +35,11 @@ public:
     glm::mat4 perspective();
     glm::vec3 getPosition();
     glm::vec3 getDirection();
-    virtual void processKeyboard(Direction direction, float deltaTime);
+    glm::vec3 getFront();
+    virtual void processKeyboardDirection(Direction direction, float deltaTime);
+    virtual void processKeyboardAction(Action action) = 0;
     virtual void scrollUpdate(double yoffset);
     virtual void mouseUpdate(double xpos, double ypos);
-    bool ENABLE_HIHGLIGHT = false;
 
 protected:
     glm::vec3 _position = glm::vec3(0.0f, 0.0f, 0.0f);

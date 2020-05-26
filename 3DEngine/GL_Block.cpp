@@ -77,29 +77,17 @@ void GL_Block::buildHighlight()
 
 void GL_Block::render(Shader& shader, Shader& shaderHighlight, glm::vec3 position)
 {
-    glStencilFunc(GL_ALWAYS, 1, 0xFF);
-    glStencilMask(0xFF);
-
-    glBindVertexArray(_VAO);
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, position);
+    glBindVertexArray(_VAO);
     shader.updateUniformMat4("model", model);
     glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
 
-    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-    glStencilMask(0x00);
-    glDisable(GL_DEPTH_TEST);
-    //model = glm::scale(model, glm::vec3(1.5, 1.5, 1.5));
-    shaderHighlight.updateUniformMat4("model", model);
     glBindVertexArray(_VAOHighlight);
+    shaderHighlight.updateUniformMat4("model", model);
     glDrawArrays(GL_TRIANGLES, 0, _verticesHighlight.size());
 
-    glStencilMask(0xFF);
-    glEnable(GL_DEPTH_TEST);
-    glClear(GL_STENCIL_BUFFER_BIT);
-
-    glStencilFunc(GL_ALWAYS, 1, 0xFF);
-    glStencilMask(0xFF);
+    _verticesHighlight.clear();
 }
 
 

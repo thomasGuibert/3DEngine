@@ -22,10 +22,12 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+
+
 GLFWwindow* create_window();
 void cleanup(GLFWwindow * window);
 void processInputForNextIteration(GLFWwindow *window);
-void UpdateCameraPosition(GLFWwindow * window);
+void ProcessKeyboardInputs(GLFWwindow * window);
 void frameBufferSize_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow * window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
@@ -102,14 +104,14 @@ void processInputForNextIteration(GLFWwindow *window)
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
-    UpdateCameraPosition(window);
+    ProcessKeyboardInputs(window);
 
     glfwSetCursorPosCallback(window, mouse_callback);
 
     glfwSetScrollCallback(window, scroll_callback);
 }
 
-void UpdateCameraPosition(GLFWwindow * window)
+void ProcessKeyboardInputs(GLFWwindow * window)
 {
     double currentFrame = glfwGetTime();
     deltaTime = currentFrame - lastFrame;
@@ -120,8 +122,7 @@ void UpdateCameraPosition(GLFWwindow * window)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     if (glfwGetKey(window, GLFW_KEY_F2) == GLFW_PRESS)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    if (glfwGetKey(window, GLFW_KEY_F3) == GLFW_PRESS)
-        camera.ENABLE_HIHGLIGHT  = !camera.ENABLE_HIHGLIGHT;
+
 
     if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
         scene = new EmptyScene(camera);
@@ -136,16 +137,21 @@ void UpdateCameraPosition(GLFWwindow * window)
         scene = new VoxelScene(camera);
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.processKeyboard(Direction::FORWARD, deltaTime);
+        camera.processKeyboardDirection(Direction::FORWARD, deltaTime);
 
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.processKeyboard(Direction::BACKWARD, deltaTime);
+        camera.processKeyboardDirection(Direction::BACKWARD, deltaTime);
 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.processKeyboard(Direction::LEFT, deltaTime);
+        camera.processKeyboardDirection(Direction::LEFT, deltaTime);
 
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.processKeyboard(Direction::RIGHT, deltaTime);
+        camera.processKeyboardDirection(Direction::RIGHT, deltaTime);
+
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+        camera.processKeyboardAction(Action::ADD);
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+        camera.processKeyboardAction(Action::REMOVE);
 }
 
 void cleanup(GLFWwindow * window)
