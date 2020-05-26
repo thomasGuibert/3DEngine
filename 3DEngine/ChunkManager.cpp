@@ -28,7 +28,7 @@ bool ChunkManager::setHighlightedBlock(const glm::vec3 position)
     std::cout << "Chunk " << ChunkIdX << " " << ChunkIdZ << std::endl;
 
     if (isActivatedBlock(position)) {
-        _chunks[ChunkIdX + ChunkIdZ * SIZE].setHighlightedBlock(BlockIdX, position.y, BlockIdZ);
+        _chunks[ChunkIdX * SIZE + ChunkIdZ].setHighlightedBlock(BlockIdX, position.y, BlockIdZ);
         return true;
     }
     std::cout << "Activated " << isActivatedBlock(position) << std::endl;
@@ -40,8 +40,8 @@ bool ChunkManager::setHighlightedBlock(const glm::vec3 position)
 void ChunkManager::disableBlock(const glm::vec3 position)
 {
     glm::vec4 block = getBlock(position);
-    _chunks[block.x + block.y * SIZE].setHasChanged(true);
-    return _chunks[block.x + block.y * SIZE].getBlock(block.z, position.y, block.w)->SetActive(false);
+    _chunks[block.x * SIZE + block.y].setHasChanged(true);
+    return _chunks[block.x * SIZE + block.y].getBlock(block.z, position.y, block.w)->SetActive(false);
 
 }
 
@@ -63,7 +63,7 @@ bool ChunkManager::isActivatedBlock(const glm::vec3 position)
 {
 
     glm::vec4 block = getBlock(position);
-    return _chunks[block.x + block.y * SIZE].getBlock(block.z, position.y, block.w)->IsActive();
+    return _chunks[block.x * SIZE + block.y].getBlock(block.z, position.y, block.w)->IsActive();
 }
 
 void ChunkManager::Update() {
