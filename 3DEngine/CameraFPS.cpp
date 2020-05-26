@@ -53,6 +53,14 @@ void CameraFPS::processKeyboardAction(Action action)
         }
         _chunkManager->disableBlock(_position + _front * glm::vec3(dist));
     }
+    if (action == Action::ADD) {
+        int dist = 0;
+        while (!_chunkManager->setHighlightedBlock(_position + _front * glm::vec3(dist)) && dist < 5) {
+            dist++;
+        }
+         glm::vec3 nextPosition(_position.x, _position.y + 1, _position.z);
+        _chunkManager->enableBlock(nextPosition + _front * glm::vec3(dist));
+    }
 }
 
 

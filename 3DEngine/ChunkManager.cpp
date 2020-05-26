@@ -45,6 +45,13 @@ void ChunkManager::disableBlock(const glm::vec3 position)
 
 }
 
+void ChunkManager::enableBlock(const glm::vec3 position)
+{
+    glm::vec4 block = getBlock(position);
+    _chunks[block.x * SIZE + block.y].setHasChanged(true);
+    return _chunks[block.x * SIZE + block.y].getBlock(block.z, position.y, block.w)->SetActive(true);
+}
+
 glm::vec4 ChunkManager::getBlock(const glm::vec3 position)
 {
     float chunkPostionX = (position.x / (SIZE * Chunk::CHUNK_SIZE))*SIZE;

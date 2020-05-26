@@ -20,6 +20,7 @@ public:
     //void UpdateRenderList();
     bool setHighlightedBlock(const glm::vec3 position);
     void disableBlock(const glm::vec3 position);
+    void enableBlock(const glm::vec3 position);
     glm::vec4 getBlock(const glm::vec3 position);
     bool isActivatedBlock(const glm::vec3 position);
 private:
