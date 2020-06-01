@@ -1,13 +1,11 @@
 #include "VoxelScene.h"
 #include <glm/ext.hpp>
 
-VoxelScene::VoxelScene(CameraFPS & camera) : Scene(camera),
+VoxelScene::VoxelScene(VoxelCameraBehavior& manipulator) : Scene(manipulator),
 _voxelShader("./shaders/voxelVertexShader.vs", "./shaders/voxelFragmentShader.fs"),
 _voxelshaderHighlight("./shaders/voxelVertexShaderHighlight.vs", "./shaders/voxelFragmentShaderHighlight.fs"),
 _texture()
 {
-    //_texture = new ImageTexture("../Assets/containerWithIron.png", "texture_diffuse");
-    //_texture = new ImageTexture("../Assets/minecraft/textures/block/green_concrete_powder.png", "texture_diffuse");
     _texture = new ImageTexture("../Assets/terrain.png", "texture_diffuse");
 
     _texture->Enable(0);
@@ -20,8 +18,8 @@ _texture()
             chunkManager->AddChunk(_voxelShader, _voxelshaderHighlight, pos);
         }
     }
-    camera.setChunkManager(chunkManager);
-    skybox = new Skybox("../Assets/skybox/", _camera);
+    manipulator.setChunkManager(chunkManager);
+    skybox = new Skybox("../Assets/skybox/", manipulator.getCamera());
 }
 
 void VoxelScene::render()
@@ -30,22 +28,19 @@ void VoxelScene::render()
     glm::mat4 projection;
 
     skybox->render();
-    projection = _camera.perspective();
-    view = _camera.lookAt();
+    projection = _manipulator.getCamera().perspective();
+    view = _manipulator.getCamera().lookAt();
     _voxelShader.updateUniformMat4("projection", projection);
     _voxelShader.updateUniformMat4("view", view);
     _voxelshaderHighlight.updateUniformMat4("projection", projection);
     _voxelshaderHighlight.updateUniformMat4("view", view);
 
     int dist = 0;
-    while (!chunkManager->setHighlightedBlock(_camera.getPosition() + _camera.getFront() * glm::vec3(dist)) && dist < 5) {
+    while (!chunkManager->setHighlightedBlock(_manipulator.getCamera().getPosition() + _manipulator.getCamera().getFront() * glm::vec3(dist)) && dist < 5) {
         dist++;
     }
-    //_chunkManager->disableBlock(_position + _front * glm::vec3(dist));
-
 
     chunkManager->Update();
-
 }
 
 

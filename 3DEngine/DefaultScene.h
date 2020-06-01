@@ -16,7 +16,7 @@ public:
     Model* lightSource;
     Skybox* skybox;
 
-    DefaultScene(Camera & camera);
+    DefaultScene(BaseCameraBehavior& manipulator);
     void render();
     ~DefaultScene();
 

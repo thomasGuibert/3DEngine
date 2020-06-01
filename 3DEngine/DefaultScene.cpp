@@ -1,6 +1,6 @@
 #include "DefaultScene.h"
 
-DefaultScene::DefaultScene(Camera &camera) : Scene(camera),
+DefaultScene::DefaultScene(BaseCameraBehavior& manipulator) : Scene(manipulator),
 _crateShader("./shaders/CubeVertexShader.vs", "./shaders/CubeFragmentShader.fs"),
 _teapotShader("./shaders/teapotVertexShader.vs", "./shaders/teapotFragmentShader.fs"),
 _teapotHighlightShader("./shaders/HighlightVertexShader.vs", "./shaders/HighlightFragmentShader.fs"),
@@ -34,7 +34,7 @@ _lightSourceShader("./shaders/LightSourceVertexShader.vs", "./shaders/LightSourc
     _crateShader.updateUniformVec3("globalLight.diffuse", globalLight);
     _crateShader.updateUniformVec3("globalLight.specular", globalLight);
 
-    _crateShader.updateUniformVec3("viewPos", _camera.getPosition().x, _camera.getPosition().y, _camera.getPosition().z);
+    _crateShader.updateUniformVec3("viewPos", _manipulator.getCamera().getPosition().x, _manipulator.getCamera().getPosition().y, _manipulator.getCamera().getPosition().z);
 
     _teapotShader.updateUniformVec3("material.ambient", 0.1f, 0.0f, 0.3f);
     _teapotShader.updateUniformVec3("material.diffuse", 0.3f, 0.0f, 0.3f);
@@ -71,7 +71,7 @@ _lightSourceShader("./shaders/LightSourceVertexShader.vs", "./shaders/LightSourc
     _teapotHighlightShader.updateUniformMat4("model", model2);
     _teapotHighlightShader.updateUniformVec3("color", 0.0, 0.0, 1.0);
 
-    _teapotShader.updateUniformVec3("viewPos", _camera.getPosition().x, _camera.getPosition().y, _camera.getPosition().z);
+    _teapotShader.updateUniformVec3("viewPos", _manipulator.getCamera().getPosition().x, _manipulator.getCamera().getPosition().y, _manipulator.getCamera().getPosition().z);
 
     _lightSourceShader.updateUniformVec3("lightColor", pointLightColor);
 
@@ -81,7 +81,7 @@ _lightSourceShader("./shaders/LightSourceVertexShader.vs", "./shaders/LightSourc
     lightSource = new Model(_vertices, sizeof(_vertices), 3, _lightSourceShader);
     lightSource->setScale(glm::vec3(0.2f));
 
-    skybox = new Skybox("../Assets/skybox/", _camera);
+    skybox = new Skybox("../Assets/skybox/", _manipulator.getCamera());
 
     _crateShader.updateUniformInt("skybox", 0);
 
@@ -96,13 +96,13 @@ void DefaultScene::render()
     glm::mat4 projection;
     glm::vec3 cameraPosition;
 
-    projection = _camera.perspective();
+    projection = _manipulator.getCamera().perspective();
     _crateShader.updateUniformMat4("projection", projection);
     _lightSourceShader.updateUniformMat4("projection", projection);
     _teapotHighlightShader.updateUniformMat4("projection", projection);
     _teapotShader.updateUniformMat4("projection", projection);
 
-    view = _camera.lookAt();
+    view = _manipulator.getCamera().lookAt();
     _crateShader.updateUniformMat4("view", view);
     _lightSourceShader.updateUniformMat4("view", view);
     _teapotHighlightShader.updateUniformMat4("view", view);
@@ -131,7 +131,7 @@ void DefaultScene::render()
     glStencilFunc(GL_ALWAYS, 1, 0xFF);
     glStencilMask(0xFF);
    
-    cameraPosition = _camera.getPosition();
+    cameraPosition = _manipulator.getCamera().getPosition();
 
     _crateShader.updateUniformVec3("viewPos", cameraPosition);
 }

@@ -18,8 +18,6 @@ void CameraFPS::setChunkManager(ChunkManager* chunckManager)
 
 void CameraFPS::processKeyboardDirection(Direction direction, float deltaTime)
 {
-    //_position = glm::vec3(_position.x, _position.y-1, _position.z);
-    //_chunkManager->disableBlock(_position + _front);
     float velocity = _speed * deltaTime;
     glm::vec3 nextPosition;
 

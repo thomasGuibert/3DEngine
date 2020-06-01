@@ -5,7 +5,7 @@
 
 unsigned int quadVAO;
 
-PostProcessedScene::PostProcessedScene(Camera &camera) : DefaultScene(camera),
+PostProcessedScene::PostProcessedScene(BaseCameraBehavior& manipulator) : DefaultScene(manipulator),
 _screenShader("shaders/ScreenVertexShader.vs", "shaders/ScreenFragmentShader.fs")
 {
     glGenFramebuffers(1, &_framebuffer);
@@ -46,6 +46,7 @@ _screenShader("shaders/ScreenVertexShader.vs", "shaders/ScreenFragmentShader.fs"
     glBindTexture(GL_TEXTURE_2D, _textureColorbuffer);
     _screenShader.updateUniformInt("screenTexture", 2);
 }
+
 
 void PostProcessedScene::render()
 {

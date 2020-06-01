@@ -11,7 +11,7 @@ class PostProcessedScene : public DefaultScene
 public:
     Model* screenSquare;
 
-    PostProcessedScene(Camera &camera);
+    PostProcessedScene(BaseCameraBehavior& manipulator);
     void render();
     ~PostProcessedScene();
 private:

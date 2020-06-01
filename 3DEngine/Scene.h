@@ -9,16 +9,16 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <Camera.h>
+#include <BaseCameraBehavior.h>
 
 class Scene
 {
 public:
-    Scene(Camera &camera);
+    Scene(BaseCameraBehavior &manipulator);
     virtual void render() = 0;
     ~Scene();
 
 protected:
-    Camera &_camera;
+    BaseCameraBehavior& _manipulator;
 };
 

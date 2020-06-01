@@ -1,15 +1,12 @@
 #include "EmptyScene.h"
 
-
-
-EmptyScene::EmptyScene(Camera &camera): Scene(camera)
+EmptyScene::EmptyScene(BaseCameraBehavior& manipulator): Scene(manipulator)
 {
 }
 
 void EmptyScene::render()
 {
 }
-
 
 EmptyScene::~EmptyScene()
 {

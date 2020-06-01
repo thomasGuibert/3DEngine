@@ -4,6 +4,7 @@
 #include "CameraFPS.h"
 #include "ChunkManager.h"
 #include "ImageTexture.h"
+#include "VoxelCameraBehavior.h"
 
 class VoxelScene :
     public Scene
@@ -11,7 +12,7 @@ class VoxelScene :
 public:
     Skybox* skybox;
 
-    VoxelScene(CameraFPS& camera);
+    VoxelScene(VoxelCameraBehavior& manipulator);
     
     void render();
     

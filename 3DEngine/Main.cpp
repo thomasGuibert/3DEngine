@@ -10,6 +10,8 @@
 
 #include <ImageTexture.h>
 #include <camera.h>
+#include <BaseCameraBehavior.h>
+#include <DefaultCameraBehavior.h>
 #include <Shader.h>
 #include <Model.h>
 #include <ImportedModel.h>
@@ -34,14 +36,16 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 float deltaTime = 0.0f; // Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
-CameraFPS camera;
+Camera camera;
+BaseCameraBehavior* manipulator;
 Scene* scene;
 
 
 int main()
 {
     GLFWwindow* window = create_window();
-    scene = new VoxelScene(camera);
+    manipulator = new DefaultCameraBehavior(camera);
+    scene = new DefaultScene(static_cast<DefaultCameraBehavior&>(*manipulator));
 
     while (!glfwWindowShouldClose(window))
     {
@@ -58,7 +62,7 @@ int main()
         Sleep(100);
 
         cleanup(window);
-       
+
     }
 
     glfwTerminate();
@@ -124,34 +128,42 @@ void ProcessKeyboardInputs(GLFWwindow * window)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 
-    if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
-        scene = new EmptyScene(camera);
+    if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS) {
+        manipulator = new DefaultCameraBehavior(camera);
+        scene = new EmptyScene(static_cast<DefaultCameraBehavior&>(*manipulator));
+    }
 
-    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
-        scene = new DefaultScene(camera);
+    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
+        manipulator = new DefaultCameraBehavior(camera);
+        scene = new DefaultScene(static_cast<DefaultCameraBehavior&>(*manipulator));
+    }
 
-    if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
-        scene = new PostProcessedScene(camera);
+    if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
+        manipulator = new DefaultCameraBehavior(camera);
+        scene = new PostProcessedScene(static_cast<DefaultCameraBehavior&>(*manipulator));
+    }
 
-    if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
-        scene = new VoxelScene(camera);
+    if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
+        manipulator = new VoxelCameraBehavior(camera);
+        scene = new VoxelScene(static_cast<VoxelCameraBehavior&>(*manipulator));
+    }
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.processKeyboardDirection(Direction::FORWARD, deltaTime);
+        manipulator->processKeyboardDirection(Direction::FORWARD, deltaTime);
 
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.processKeyboardDirection(Direction::BACKWARD, deltaTime);
+        manipulator->processKeyboardDirection(Direction::BACKWARD, deltaTime);
 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.processKeyboardDirection(Direction::LEFT, deltaTime);
+        manipulator->processKeyboardDirection(Direction::LEFT, deltaTime);
 
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.processKeyboardDirection(Direction::RIGHT, deltaTime);
+        manipulator->processKeyboardDirection(Direction::RIGHT, deltaTime);
 
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-        camera.processKeyboardAction(Action::ADD);
+        manipulator->processKeyboardAction(Action::ADD);
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-        camera.processKeyboardAction(Action::REMOVE);
+        manipulator->processKeyboardAction(Action::REMOVE);
 }
 
 void cleanup(GLFWwindow * window)
