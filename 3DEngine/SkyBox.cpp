@@ -1,6 +1,6 @@
 #include "SkyBox.h"
 
-Skybox::Skybox(const char * path, Camera& camera): _camera(camera)
+Skybox::Skybox(const char * path, Camera& camera) : _camera(camera)
 {
     loadSkyboxTexture(path);
 
@@ -11,14 +11,9 @@ Skybox::Skybox(const char * path, Camera& camera): _camera(camera)
 
 void Skybox::loadSkyboxVertices()
 {
-    unsigned int skyboxVBO;
     glGenVertexArrays(1, &_skyboxVAO);
-    glGenBuffers(1, &skyboxVBO);
-    glBindVertexArray(_skyboxVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    GL_Renderer::Instance()->fillBufferData(_skyboxVAO, skyboxVertices);
+    GL_Renderer::Instance()->bindVertexAttrib(0, AttribType::VEC3, 3, 0);
 }
 
 void Skybox::loadSkyboxTexture(std::string path)
@@ -30,7 +25,7 @@ void Skybox::loadSkyboxTexture(std::string path)
     for (unsigned int i = 0; i < _imageFaces.size(); i++)
     {
 
-        unsigned char *data = stbi_load((path+_imageFaces[i]).c_str(), &width, &height, &nrChannels, 0);
+        unsigned char *data = stbi_load((path + _imageFaces[i]).c_str(), &width, &height, &nrChannels, 0);
         if (data)
         {
             glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,

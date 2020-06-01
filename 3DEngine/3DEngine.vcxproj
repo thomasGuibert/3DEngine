@@ -134,6 +134,7 @@
     <ClCompile Include="DefaultScene.cpp" />
     <ClCompile Include="EmptyScene.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="GL_Renderer.cpp" />
     <ClCompile Include="ImageTexture.cpp" />
     <ClCompile Include="ImportedModel.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="ChunkManager.h" />
     <ClInclude Include="DefaultScene.h" />
     <ClInclude Include="EmptyScene.h" />
+    <ClInclude Include="GL_Renderer.h" />
     <ClInclude Include="ImageTexture.h" />
     <ClInclude Include="ImportedModel.h" />
     <ClInclude Include="Mesh.h" />

@@ -5,6 +5,7 @@
 #include <Shader.h>
 #include <Camera.h>
 #include "stb_image/stb_image.h"
+#include "GL_Renderer.h"
 
 class Skybox
 {
@@ -27,7 +28,7 @@ private:
         "front.jpg",
         "back.jpg"
     };
-    float skyboxVertices[118] = {
+    std::vector<float> skyboxVertices = {
         // positions          
         -1.0f,  1.0f, -1.0f,
         -1.0f, -1.0f, -1.0f,

@@ -6,7 +6,7 @@ class ChunkManager
 public:
     ChunkManager();
     ~ChunkManager();
-    static const unsigned int SIZE = 2;
+    static const unsigned int SIZE = 10;
  
 
     void Update();
