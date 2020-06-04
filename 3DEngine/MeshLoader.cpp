@@ -1,17 +1,8 @@
-#include "ImportedModel.h"
+#include "MeshLoader.h"
 
-ImportedModel::ImportedModel(std::string path, Shader shader) : _shader(shader)
-{
-    loadModel(path);
-};
+std::vector<Mesh> MeshLoader::meshes;
 
-void ImportedModel::draw()
-{
-    for (unsigned int i = 0; i < meshes.size(); i++)
-        meshes[i].Draw(_shader);
-};
-
-void ImportedModel::loadModel(std::string path)
+std::vector<Mesh> MeshLoader::loadMesh(std::string path)
 {
     Assimp::Importer import;
     const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -19,14 +10,15 @@ void ImportedModel::loadModel(std::string path)
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
         std::cout << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;
-        return;
+        throw;
     }
-    directory = path.substr(0, path.find_last_of('/'));
 
     processNode(scene->mRootNode, scene);
+
+    return meshes;
 };
 
-void ImportedModel::processNode(aiNode *node, const aiScene *scene)
+void MeshLoader::processNode(aiNode *node, const aiScene *scene)
 {
     // process all the node's meshes (if any)
     for (unsigned int i = 0; i < node->mNumMeshes; i++)
@@ -42,7 +34,7 @@ void ImportedModel::processNode(aiNode *node, const aiScene *scene)
 
 };
 
-Mesh ImportedModel::processMesh(aiMesh *mesh, const aiScene *scene)
+Mesh MeshLoader::processMesh(aiMesh *mesh, const aiScene *scene)
 {
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
@@ -99,7 +91,7 @@ Mesh ImportedModel::processMesh(aiMesh *mesh, const aiScene *scene)
     return Mesh(vertices, indices, textures);
 };
 
-std::vector<ImageTexture> ImportedModel::loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
+std::vector<ImageTexture> MeshLoader::loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
 {
     std::vector<ImageTexture> textures;
     for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
@@ -112,6 +104,6 @@ std::vector<ImageTexture> ImportedModel::loadMaterialTextures(aiMaterial *mat, a
     return textures;
 }
 
-ImportedModel::~ImportedModel()
+MeshLoader::~MeshLoader()
 {
 }

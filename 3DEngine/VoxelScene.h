@@ -5,6 +5,7 @@
 #include "ChunkManager.h"
 #include "ImageTexture.h"
 #include "VoxelCameraBehavior.h"
+#include <glm/ext.hpp>
 
 class VoxelScene :
     public Scene

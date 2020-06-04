@@ -8,6 +8,7 @@
 
 #include <Shader.h>
 #include <ImageTexture.h>
+#include <Material.h>
 
 #include <string>
 #include <vector>
@@ -28,13 +29,17 @@ struct Vertex {
 class Mesh
 {
 public:
-    std::vector<Vertex>       vertices;
-    std::vector<unsigned int> indices;
-    std::vector<ImageTexture>      textures;
+    std::vector<Vertex>       _vertices;
+    std::vector<unsigned int> _indices;
+    std::vector<ImageTexture> _textures;
     unsigned int VAO;
-
+    Mesh();
+    //Mesh(const Mesh& mesh);
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<ImageTexture> textures);
-    void Draw(Shader shader);
+    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
+
+    void Draw(Material& material, glm::mat4 model);
+
     ~Mesh();
 
 private:

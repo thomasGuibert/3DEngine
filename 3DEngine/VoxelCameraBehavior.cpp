@@ -8,7 +8,6 @@ VoxelCameraBehavior::~VoxelCameraBehavior()
 {
 }
 
-
 void VoxelCameraBehavior::setChunkManager(ChunkManager* chunckManager)
 {
     _chunkManager = chunckManager;
@@ -17,7 +16,6 @@ void VoxelCameraBehavior::setChunkManager(ChunkManager* chunckManager)
         cameraPosition = glm::vec3(cameraPosition.x, cameraPosition.y + 1, cameraPosition.z);
     cameraPosition = glm::vec3(cameraPosition.x, cameraPosition.y + 0.5, cameraPosition.z);
     _camera.setPosition(cameraPosition);
-    std::cout << _camera.getPosition().x << " " << _camera.getPosition().y << " " << _camera.getPosition().z << " " << std::endl;
 }
 
 void VoxelCameraBehavior::processKeyboardDirection(Direction direction, float deltaTime)
@@ -55,7 +53,6 @@ void VoxelCameraBehavior::processKeyboardDirection(Direction direction, float de
     currentPosition = glm::vec3(currentPosition.x, currentPosition.y + 1, currentPosition.z);
 
     _camera.setPosition(currentPosition);
-    std::cout << "camera: " << _camera.getPosition().x << " " << _camera.getPosition().y << " " << _camera.getPosition().z << std::endl;
 }
 
 void VoxelCameraBehavior::processKeyboardAction(Action action)

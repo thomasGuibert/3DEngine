@@ -28,6 +28,24 @@
     <Filter Include="Fichiers d%27en-tête\Scenes">
       <UniqueIdentifier>{c74c73dd-cc4b-419e-b196-94db36e78c8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\VoxelEngine">
+      <UniqueIdentifier>{42c66c37-ded2-4f2d-b32e-5d28c6e5807d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Tools\Camera">
+      <UniqueIdentifier>{57608de8-3b87-4c3b-995f-a7133626d215}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\VoxelEngine">
+      <UniqueIdentifier>{f3dce9c2-1c73-46cf-90e4-7e071a7a9cdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Tools\Camera">
+      <UniqueIdentifier>{568314d1-cae8-459e-8452-700e24d792b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Voxel">
+      <UniqueIdentifier>{5fd32053-cca9-4c60-99ee-e64b4e412dde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Teapot">
+      <UniqueIdentifier>{1988f994-e17e-4d14-97e3-6429c2e6f051}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -48,19 +66,7 @@
     <ClCompile Include="PostProcessedScene.cpp">
       <Filter>Fichiers sources\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Fichiers sources\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="ImageTexture.cpp">
-      <Filter>Fichiers sources\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="ImportedModel.cpp">
-      <Filter>Fichiers sources\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Fichiers sources\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
       <Filter>Fichiers sources\Tools</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
@@ -70,31 +76,46 @@
       <Filter>Fichiers sources\Tools</Filter>
     </ClCompile>
     <ClCompile Include="VoxelScene.cpp">
-      <Filter>Fichiers sources\Scenes</Filter>
+      <Filter>Fichiers sources\VoxelEngine</Filter>
     </ClCompile>
     <ClCompile Include="Chunk.cpp">
-      <Filter>Fichiers sources\Tools</Filter>
+      <Filter>Fichiers sources\VoxelEngine</Filter>
     </ClCompile>
     <ClCompile Include="Block.cpp">
+      <Filter>Fichiers sources\VoxelEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="GL_Block.cpp">
+      <Filter>Fichiers sources\VoxelEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="VoxelCameraBehavior.cpp">
+      <Filter>Fichiers sources\VoxelEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Fichiers sources\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="GL_Renderer.cpp">
       <Filter>Fichiers sources\Tools</Filter>
     </ClCompile>
     <ClCompile Include="ChunkManager.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GL_Block.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GL_Renderer.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="DefaultCameraBehavior.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\VoxelEngine</Filter>
     </ClCompile>
     <ClCompile Include="BaseCameraBehavior.cpp">
+      <Filter>Fichiers sources\Tools\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Fichiers sources\Tools\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultCameraBehavior.cpp">
+      <Filter>Fichiers sources\Tools\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="VoxelCameraBehavior.cpp">
-      <Filter>Fichiers sources</Filter>
+    <ClCompile Include="Model.cpp">
+      <Filter>Fichiers sources\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshLoader.cpp">
+      <Filter>Fichiers sources\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,15 +127,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h">
-      <Filter>Fichiers d%27en-tête\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Fichiers d%27en-tête\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Fichiers d%27en-tête\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Fichiers d%27en-tête\Tools</Filter>
     </ClInclude>
@@ -130,41 +142,53 @@
     <ClInclude Include="ImageTexture.h">
       <Filter>Fichiers d%27en-tête\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="ImportedModel.h">
-      <Filter>Fichiers d%27en-tête\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Fichiers d%27en-tête\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="PostProcessedScene.h">
       <Filter>Fichiers d%27en-tête\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="GL_Block.h">
+      <Filter>Fichiers d%27en-tête\VoxelEngine</Filter>
+    </ClInclude>
     <ClInclude Include="VoxelScene.h">
-      <Filter>Fichiers d%27en-tête\Scenes</Filter>
+      <Filter>Fichiers d%27en-tête\VoxelEngine</Filter>
     </ClInclude>
     <ClInclude Include="Block.h">
-      <Filter>Fichiers d%27en-tête\Tools</Filter>
+      <Filter>Fichiers d%27en-tête\VoxelEngine</Filter>
     </ClInclude>
     <ClInclude Include="Chunk.h">
-      <Filter>Fichiers d%27en-tête\Tools</Filter>
+      <Filter>Fichiers d%27en-tête\VoxelEngine</Filter>
     </ClInclude>
-    <ClInclude Include="ChunkManager.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="GL_Block.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="GL_Renderer.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+    <ClInclude Include="Camera.h">
+      <Filter>Fichiers d%27en-tête\Tools\Camera</Filter>
     </ClInclude>
     <ClInclude Include="BaseCameraBehavior.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Fichiers d%27en-tête\Tools\Camera</Filter>
     </ClInclude>
     <ClInclude Include="DefaultCameraBehavior.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Fichiers d%27en-tête\Tools\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="ChunkManager.h">
+      <Filter>Fichiers d%27en-tête\VoxelEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Fichiers d%27en-tête\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="GL_Renderer.h">
+      <Filter>Fichiers d%27en-tête\Tools</Filter>
     </ClInclude>
     <ClInclude Include="VoxelCameraBehavior.h">
+      <Filter>Fichiers d%27en-tête\VoxelEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
       <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Fichiers d%27en-tête\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshLoader.h">
+      <Filter>Fichiers d%27en-tête\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -180,18 +204,6 @@
     <None Include="shaders\LightSourceVertexShader.vs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="shaders\TeapotFragmentShader.fs">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="shaders\TeapotVertexShader.vs">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="shaders\HighlightFragmentShader.fs">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="shaders\HighlightVertexShader.vs">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="shaders\ScreenFragmentShader.fs">
       <Filter>Shaders</Filter>
     </None>
@@ -205,16 +217,28 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="shaders\VoxelFragmentShader.fs">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="shaders\VoxelVertexShader.vs">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\Voxel</Filter>
     </None>
     <None Include="shaders\VoxelFragmentShaderHighlight.fs">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\Voxel</Filter>
+    </None>
+    <None Include="shaders\VoxelVertexShader.vs">
+      <Filter>Shaders\Voxel</Filter>
     </None>
     <None Include="shaders\VoxelVertexShaderHighlight.vs">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\Voxel</Filter>
+    </None>
+    <None Include="shaders\TeapotFragmentShader.fs">
+      <Filter>Shaders\Teapot</Filter>
+    </None>
+    <None Include="shaders\TeapotVertexShader.vs">
+      <Filter>Shaders\Teapot</Filter>
+    </None>
+    <None Include="shaders\HighlightFragmentShader.fs">
+      <Filter>Shaders\Teapot</Filter>
+    </None>
+    <None Include="shaders\HighlightVertexShader.vs">
+      <Filter>Shaders\Teapot</Filter>
     </None>
   </ItemGroup>
 </Project>

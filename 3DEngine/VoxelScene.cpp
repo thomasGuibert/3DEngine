@@ -1,5 +1,4 @@
 #include "VoxelScene.h"
-#include <glm/ext.hpp>
 
 VoxelScene::VoxelScene(VoxelCameraBehavior& manipulator) : Scene(manipulator),
 _voxelShader("./shaders/voxelVertexShader.vs", "./shaders/voxelFragmentShader.fs"),
@@ -18,6 +17,8 @@ _texture()
             chunkManager->AddChunk(_voxelShader, _voxelshaderHighlight, pos);
         }
     }
+
+    manipulator.getCamera().setPosition(glm::vec3(11, 6, 8));
     manipulator.setChunkManager(chunkManager);
     skybox = new Skybox("../Assets/skybox/", manipulator.getCamera());
 }

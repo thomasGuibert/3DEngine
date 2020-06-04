@@ -3,8 +3,6 @@
 #include <ImageTexture.h>
 #include <camera.h>
 #include <Shader.h>
-#include <Model.h>
-#include <ImportedModel.h>
 
 class PostProcessedScene : public DefaultScene
 {

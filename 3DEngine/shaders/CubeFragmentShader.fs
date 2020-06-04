@@ -31,33 +31,36 @@ out vec4 FragColor;
 in vec2 TexCoords;
 in vec3 Normal;
 in vec3 FragPos;
+in vec3 ViewPos;
 
 uniform samplerCube skybox;
-uniform vec3 viewPos;
 uniform Material material;
 uniform DirectionalLight globalLight;
-#define NR_POINT_LIGHTS 1  
+#define NR_POINT_LIGHTS 4  
 uniform PointLight light[NR_POINT_LIGHTS];
 
 vec4 computeGlobalLight();
 vec4 computePointLight(PointLight light);
+
 void main()
 {
-    //FragColor = vec4(0.0f);
-    //FragColor += computeGlobalLight();
-    //for (int i = 0; i < NR_POINT_LIGHTS; ++i) {
-    //    FragColor += computePointLight(light[i]) * 2.0f;
-    //}
-    vec3 I = normalize(FragPos - viewPos);
-    vec3 R = reflect(I, normalize(Normal));
-    FragColor = vec4(texture(skybox, R).rgb, 1.0);
+    FragColor = vec4(0.0f);
+    FragColor = computeGlobalLight();
+    for (int i = 0; i < NR_POINT_LIGHTS; ++i) {
+        FragColor += computePointLight(light[i]) * 2.0f;
+    }
+    //vec3 I = normalize(FragPos - ViewPos);
+    //vec3 R = reflect(I, normalize(Normal));
+    //FragColor = vec4(texture(skybox, R).rgb, 1.0);
+     //FragColor = vec4(vec3(texture(material.diffuse, TexCoords)), 1.0f);
+     //FragColor = vec4(1.0f,0.0f,0.0f, 1.0f);
 }
 
 vec4 computeGlobalLight(){
     vec3 normal = normalize(Normal);
 
     //Ambient
-    vec3 ambient = globalLight.ambient * vec3(texture(material.diffuse, TexCoords));
+    vec3 ambient = globalLight.ambient * vec3(texture(material.diffuse, TexCoords)) * 0.1f;
 
     //Diffuse
     vec3 lightDirection = normalize(-globalLight.direction);
@@ -65,7 +68,7 @@ vec4 computeGlobalLight(){
     vec3 diffuse  = lightDiff * globalLight.diffuse * vec3(texture(material.diffuse, TexCoords));
 
     //Sepcular
-    vec3 viewDir = normalize(viewPos - FragPos);
+    vec3 viewDir = normalize(ViewPos - FragPos);
     vec3 lightReflection = reflect(-lightDirection, normal);
     float lightSpec = pow(max(dot(viewDir, lightReflection), 0.0f), material.shininess);
     vec3 specular = lightSpec * globalLight.specular * vec3(texture(material.specular, TexCoords));
@@ -87,7 +90,7 @@ vec4 computePointLight(PointLight light){
     vec3 diffuse  = lightDiff * attenuation * light.diffuse  * vec3(texture(material.diffuse, TexCoords));
 
     //Specular
-    vec3 viewDir = normalize(viewPos - FragPos);
+    vec3 viewDir = normalize(ViewPos - FragPos);
     vec3 lightReflection = reflect(-lightDirection, normal);
     float lightSpec = pow(max(dot(viewDir, lightReflection), 0.0f), material.shininess);
     vec3 specular = lightSpec * attenuation * light.specular * vec3(texture(material.specular, TexCoords));

@@ -13,8 +13,6 @@
 #include <BaseCameraBehavior.h>
 #include <DefaultCameraBehavior.h>
 #include <Shader.h>
-#include <Model.h>
-#include <ImportedModel.h>
 #include <DefaultScene.h>
 #include <EmptyScene.h>
 #include <PostProcessedScene.h>
@@ -23,8 +21,6 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-
-
 
 GLFWwindow* create_window();
 void cleanup(GLFWwindow * window);
@@ -39,7 +35,6 @@ float lastFrame = 0.0f; // Time of last frame
 Camera camera;
 BaseCameraBehavior* manipulator;
 Scene* scene;
-
 
 int main()
 {
@@ -62,7 +57,6 @@ int main()
         Sleep(100);
 
         cleanup(window);
-
     }
 
     glfwTerminate();
@@ -124,9 +118,9 @@ void ProcessKeyboardInputs(GLFWwindow * window)
     const float cameraSpeed = 2.0f * deltaTime;
     if (glfwGetKey(window, GLFW_KEY_F1) == GLFW_PRESS)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
     if (glfwGetKey(window, GLFW_KEY_F2) == GLFW_PRESS)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
 
     if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS) {
         manipulator = new DefaultCameraBehavior(camera);
@@ -162,6 +156,7 @@ void ProcessKeyboardInputs(GLFWwindow * window)
 
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
         manipulator->processKeyboardAction(Action::ADD);
+
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
         manipulator->processKeyboardAction(Action::REMOVE);
 }
@@ -174,11 +169,13 @@ void cleanup(GLFWwindow * window)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) 
+{
     camera.scrollUpdate(yoffset);
 }
 
-void mouse_callback(GLFWwindow * window, double xpos, double ypos) {
+void mouse_callback(GLFWwindow * window, double xpos, double ypos) 
+{
     camera.mouseUpdate(xpos, ypos);
 }
 

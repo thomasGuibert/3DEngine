@@ -14,6 +14,7 @@ public:
     Shader(std::string vertexShaderPath, std::string fragmentShaderPath);
     void updateUniformMat4(const std::string name, glm::mat4 &value);
     void updateUniformVec3(const std::string name, glm::vec3 &value);
+    void updateUniformVec4(const std::string name, glm::vec4 &value);
     void updateUniformVec3(const std::string name, float x, float y, float z);
     void updateUniformFloat(const std::string name, float value);
     void updateUniformInt(const std::string name, int value);

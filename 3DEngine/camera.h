@@ -13,8 +13,6 @@ struct MousePosition {
 class Camera
 {
 public:
-    bool isMousePressed = true;
-
     Camera();
     ~Camera();
     glm::mat4 lookAt();
@@ -38,6 +36,7 @@ protected:
     glm::vec3 _up = glm::vec3(0.0f, 1.0f, 0.0f);
 
 private:
+    bool _firstMouse = true;
     float _yaw = -90.0f;
     float _pitch = 0.0f;
     float _fov = 45.0f;

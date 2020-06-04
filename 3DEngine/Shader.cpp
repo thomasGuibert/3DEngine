@@ -23,6 +23,12 @@ void Shader::updateUniformVec3(const std::string name, glm::vec3 &value) {
     glUniform3fv(uniformId, 1, glm::value_ptr(value));
 };
 
+void Shader::updateUniformVec4(const std::string name, glm::vec4 &value) {
+    glUseProgram(shaderProgramId);
+    unsigned int uniformId = glGetUniformLocation(shaderProgramId, name.c_str());
+    glUniform4fv(uniformId, 1, glm::value_ptr(value));
+};
+
 void Shader::updateUniformVec3(const std::string name, float x, float y, float z) {
     glm::vec3 value(x, y, z);
     updateUniformVec3(name, value);

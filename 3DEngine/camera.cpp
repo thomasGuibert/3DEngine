@@ -51,7 +51,8 @@ glm::vec3 Camera::getMoveRightPosition(float velocity)
     return _position + glm::normalize(glm::cross(_front, _up)) * velocity;
 }
 
-void Camera::scrollUpdate(double yoffset) {
+void Camera::scrollUpdate(double yoffset) 
+{
     if (_fov >= 1.0f && _fov <= 45.0f)
         _fov -= yoffset;
     else if (_fov < 1.0f)
@@ -60,12 +61,13 @@ void Camera::scrollUpdate(double yoffset) {
         _fov = 45.0f;
 };
 
-void Camera::mouseUpdate(double xpos, double ypos) {
-    if (!isMousePressed)
+void Camera::mouseUpdate(double xpos, double ypos) 
+{
+    if (_firstMouse) // initially set to true
     {
         _lastMousePosition.x = xpos;
         _lastMousePosition.y = ypos;
-        isMousePressed = true;
+        _firstMouse = false;
     }
 
     double xOffset = xpos- _lastMousePosition.x;

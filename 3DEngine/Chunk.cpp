@@ -1,7 +1,6 @@
 #include "Chunk.h"
 #include <iostream>
 
-
 static int SOUTH = 0;
 static int NORTH = 1;
 static int EAST = 2;
@@ -45,7 +44,7 @@ void Chunk::CreateMesh()
         {
             delete[] _voxelsFace[i][j];
         }
-    
+
         delete[] _voxelsFace[i];
     }
     delete[] _voxelsFace;
@@ -61,7 +60,6 @@ void Chunk::CreateMesh()
         }
     }
 
-    //blockRenderer = new GL_Block();
     for (int x = 0; x < CHUNK_SIZE; x++)
     {
         for (int y = 0; y < CHUNK_SIZE; y++)
@@ -73,13 +71,9 @@ void Chunk::CreateMesh()
                     // Don't create triangle data for inactive blocks
                     continue;
                 }
-
-                //glm::vec3 offset(x, y, z);
-                //CreateCube(*blockRenderer, x, y, z, offset);
                 face = new VoxelFace();
                 face->type = m_pBlocks[x][y][z].GetBlockType();
                 _voxelsFace[x][y][z] = *face;
-
             }
         }
     }
@@ -328,7 +322,6 @@ void Chunk::quad(glm::vec3 bottomLeft,
 Block* Chunk::getBlock(const unsigned int x, const unsigned int y, const unsigned int z)
 {
     if ((int)x > -1 && (int)x < CHUNK_SIZE && (int)z > -1 && (int)z < CHUNK_SIZE) {
-        std::cout << "Block: "<< x << " " << y << " " << z << std::endl;
         return &m_pBlocks[x][y][z];
     }
 }
@@ -362,31 +355,6 @@ VoxelFace* Chunk::getVoxelFace(int x, int y, int z, int side) {
     return &_voxelsFace[x][y][z];
 }
 
-void Chunk::CreateCube(GL_Block& blockRenderer, int x, int y, int z, glm::vec3 offset)
-{
-    //  if (x < CHUNK_SIZE - 1 && !m_pBlocks[x + 1][y][z].IsActive() || x == CHUNK_SIZE - 1)
-    //      //_voxelsFace[x][y][z] = new VoxelFace();
-    //      blockRenderer.addFace(FACE.RIGHT_FACE, NORMALS.RIGHT_FACE, offset);
-    //
-    //  if (x > 0 && !m_pBlocks[x - 1][y][z].IsActive() || x == 0)
-    //      blockRenderer.addFace(FACE.LEFT_FACE, NORMALS.LEFT_FACE, offset);
-    //
-    //  if (z > 0 && !m_pBlocks[x][y][z - 1].IsActive() || z == 0)
-    //      blockRenderer.addFace(FACE.BACK_FACE, NORMALS.BACK_FACE, offset);
-    //
-    //  if (z < CHUNK_SIZE - 1 && !m_pBlocks[x][y][z + 1].IsActive() || z == CHUNK_SIZE - 1)
-    //      blockRenderer.addFace(FACE.FRONT_FACE, NORMALS.FRONT_FACE, offset);
-    //
-    //  if (y > 0 && !m_pBlocks[x][y - 1][z].IsActive() || y == 0)
-    //      blockRenderer.addFace(FACE.BOTTOM_FACE, NORMALS.BOTTOM_FACE, offset);
-    //
-    //  if (y < CHUNK_SIZE - 1 && !m_pBlocks[x][y + 1][z].IsActive() || y == CHUNK_SIZE - 1)
-    //      blockRenderer.addFace(FACE.TOP_FACE, NORMALS.TOP_FACE, offset);
-
-
-
-}
-
 void Chunk::Setup_Sphere()
 {
     for (int z = 0; z < CHUNK_SIZE; z++)
@@ -398,8 +366,6 @@ void Chunk::Setup_Sphere()
                 if (sqrt((float)(x - CHUNK_SIZE / 2)*(x - CHUNK_SIZE / 2) + (y - CHUNK_SIZE / 2)*(y - CHUNK_SIZE / 2) + (z - CHUNK_SIZE / 2)*(z - CHUNK_SIZE / 2)) <= CHUNK_SIZE / 2)
                 {
                     m_pBlocks[x][y][z].SetActive(true);
-
-                    // m_pBlocks[x][y][z].SetBlockType(BlockType_Grass);
                 }
             }
         }
@@ -440,6 +406,7 @@ void Chunk::Setup_Landscape()
     {
         for (int z = 0; z < CHUNK_SIZE; z++)
         {
+            /*TO DO*/
             // Use the noise library to get the height value of x, z
             //float height = m_pChunkManager->GetNoiseValue(x, z);
 
@@ -467,39 +434,21 @@ void Chunk::Setup_Landscape()
 
 void Chunk::Render()
 {
-
     if (_hasChanged) {
         _blockRenderer->_vertices.clear();
         CreateMesh();
     }
     _blockRenderer->render(_shader, _shaderHighlight, _position);
-
-    //pRenderer->PushMatrix();
-    //pRenderer->ImmediateColourAlpha(1.0f, 1.0f, 1.0f, 1.0f);
-    //pRenderer->SetRenderMode(RM_TEXTURED_LIGHTING);
-    //
-    //float x = m_position.x;
-    //float y = m_position.y;
-    //float z = m_position.z;
-    //pRenderer->TranslateWorldMatrix(x, y, z);
-    //
-    //if (m_meshID != -1)
-    //{
-    //    pRenderer->RenderMesh(m_meshID);
-    //}
-    //pRenderer->PopMatrix();
 }
 
 void Chunk::setHighlightedBlock(int x, int y, int z)
 {
-    std::cout << "Block " << x << " " << y << " " << z << std::endl;
-
     float vertexBuffer[288] = {
         //FRONT
         -0.01 + x, -0.01 + y, -0.01 + z,
-        1.01 + x, -0.01 + y, -0.01 + z,
-        1.01 + x, 1.01 + y, -0.01 + z,
-        1.01 + x, 1.01 + y, -0.01 + z,
+         1.01 + x, -0.01 + y, -0.01 + z,
+         1.01 + x, 1.01 + y, -0.01 + z,
+         1.01 + x, 1.01 + y, -0.01 + z,
         -0.01 + x, 1.01 + y, -0.01 + z,
         -0.01 + x, -0.01 + y, -0.01 + z,
 
@@ -546,6 +495,7 @@ void Chunk::setHighlightedBlock(int x, int y, int z)
 
 Chunk::~Chunk()
 {
+    /*TO DO*/
     // Delete the blocks
    //for (int i = 0; i < CHUNK_SIZE; ++i)
    //{

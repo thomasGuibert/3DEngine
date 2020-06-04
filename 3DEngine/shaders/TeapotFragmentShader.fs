@@ -31,11 +31,11 @@ out vec4 FragColor;
 
 in vec3 Normal;
 in vec3 FragPos;
+in vec3 ViewPos;
 
-uniform vec3 viewPos;
 uniform Material material;
 uniform DirectionalLight globalLight;
-#define NR_POINT_LIGHTS 1  
+#define NR_POINT_LIGHTS 4
 uniform PointLight light[NR_POINT_LIGHTS];
 
 vec4 computeGlobalLight();
@@ -62,7 +62,7 @@ vec4 computeGlobalLight(){
     vec3 diffuse  = lightDiff * globalLight.diffuse * material.diffuse;
 
     //Sepcular
-    vec3 viewDir = normalize(viewPos - FragPos);
+    vec3 viewDir = normalize(ViewPos - FragPos);
     vec3 lightReflection = reflect(-lightDirection, normal);
     float lightSpec = pow(max(dot(viewDir, lightReflection), 0.0f), material.shininess);
     vec3 specular = lightSpec * globalLight.specular * material.specular;
@@ -84,7 +84,7 @@ vec4 computePointLight(PointLight light){
     vec3 diffuse  = lightDiff * attenuation * light.diffuse  * material.diffuse;
 
     //Specular
-    vec3 viewDir = normalize(viewPos - FragPos);
+    vec3 viewDir = normalize(ViewPos - FragPos);
     vec3 lightReflection = reflect(-lightDirection, normal);
     float lightSpec = pow(max(dot(viewDir, lightReflection), 0.0f), material.shininess);
     vec3 specular = lightSpec * attenuation * light.specular * material.specular;
