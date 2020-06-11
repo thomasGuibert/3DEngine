@@ -59,14 +59,14 @@ void VoxelCameraBehavior::processKeyboardAction(Action action)
 {
     if (action == Action::REMOVE) {
         int dist = 0;
-        while (!_chunkManager->setHighlightedBlock(_camera.getMoveFrontPosition(1) * glm::vec3(dist)) && dist < 5) {
+        while (!_chunkManager->setHighlightedBlock(_camera.getPosition() + _camera.getFront() * glm::vec3(dist)) && dist < 5) {
             dist++;
         }
-        _chunkManager->disableBlock(_camera.getMoveFrontPosition(1) * glm::vec3(dist));
+        _chunkManager->disableBlock(_camera.getPosition() + _camera.getFront() * glm::vec3(dist));
     }
     if (action == Action::ADD) {
         int dist = 0;
-        while (!_chunkManager->setHighlightedBlock(_camera.getMoveFrontPosition(1) * glm::vec3(dist)) && dist < 5) {
+        while (!_chunkManager->setHighlightedBlock(_camera.getPosition() + _camera.getFront() * glm::vec3(dist)) && dist < 5) {
             dist++;
         }
         glm::vec3 nextPosition(_camera.getPosition().x, _camera.getPosition().y + 1, _camera.getPosition().z);
