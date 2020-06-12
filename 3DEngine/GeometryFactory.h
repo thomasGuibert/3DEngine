@@ -7,9 +7,7 @@ class GeometryFactory
 {
 public:
     ~GeometryFactory();
-    static Geometry CreateCube();
-
-    static const std::vector<Vertex> cubeVertices;
-    static const std::vector<unsigned int> cubeIndices;
+    static Geometry CreateCube(float size = 1.0f);
+    static Geometry CreateSphere(float radius = 1.0f, int sub = 3);
 };
 

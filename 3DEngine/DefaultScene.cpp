@@ -1,7 +1,7 @@
 #include "DefaultScene.h"
 
 
-DefaultScene::DefaultScene(BaseCameraBehavior& manipulator) : Scene(manipulator), _cube(GeometryFactory::CreateCube())
+DefaultScene::DefaultScene(BaseCameraBehavior& manipulator) : Scene(manipulator), _cube(GeometryFactory::CreateCube()), _sphere(GeometryFactory::CreateSphere(1.0f, 3))
 {
     glGenBuffers(1, &_uboGlobalVariables);
     glBindBuffer(GL_UNIFORM_BUFFER, _uboGlobalVariables);
@@ -142,7 +142,7 @@ std::vector<PointLight> DefaultScene::buildPointLights() {
     lightAspect.specularColor = pointLightColor;
     lightAspect.shininess = 0.0f;
     Material lightMaterial(lightSourceShader, lightAspect);
-    Mesh light(_cube);
+    Mesh light(_sphere);
     _lightSource = new Model(light, lightMaterial);
     return pointLights;
 };

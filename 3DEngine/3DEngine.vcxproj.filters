@@ -46,6 +46,18 @@
     <Filter Include="Shaders\Teapot">
       <UniqueIdentifier>{1988f994-e17e-4d14-97e3-6429c2e6f051}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Tools\Mesh">
+      <UniqueIdentifier>{3632fdf5-99d8-414a-9ecf-64f7fbfbaf54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Tools\Material">
+      <UniqueIdentifier>{e5acf77a-cea2-4836-b8c4-1dd5275ccf3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Tools\Mesh">
+      <UniqueIdentifier>{7d98ccc8-448a-41e7-a73e-18a6d477b97d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Tools\Material">
+      <UniqueIdentifier>{c33ff288-eb73-42be-bb46-cb3f9ff563c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -66,12 +78,6 @@
     <ClCompile Include="PostProcessedScene.cpp">
       <Filter>Fichiers sources\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="ImageTexture.cpp">
-      <Filter>Fichiers sources\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Fichiers sources\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="SkyBox.cpp">
       <Filter>Fichiers sources\Tools</Filter>
     </ClCompile>
@@ -90,9 +96,6 @@
     <ClCompile Include="VoxelCameraBehavior.cpp">
       <Filter>Fichiers sources\VoxelEngine</Filter>
     </ClCompile>
-    <ClCompile Include="Material.cpp">
-      <Filter>Fichiers sources\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="GL_Renderer.cpp">
       <Filter>Fichiers sources\Tools</Filter>
     </ClCompile>
@@ -108,20 +111,29 @@
     <ClCompile Include="DefaultCameraBehavior.cpp">
       <Filter>Fichiers sources\Tools\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Fichiers sources\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="MeshLoader.cpp">
       <Filter>Fichiers sources\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="GeometryFactory.cpp">
-      <Filter>Fichiers sources</Filter>
+    <ClCompile Include="ImageTexture.cpp">
+      <Filter>Fichiers sources\Tools\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Fichiers sources\Tools\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Fichiers sources\Tools\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Fichiers sources\Tools\Material</Filter>
     </ClCompile>
     <ClCompile Include="Geometry.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\Tools\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="GeometryFactory.cpp">
+      <Filter>Fichiers sources\Tools\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Fichiers sources\Tools\Mesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,9 +145,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Shader.h">
-      <Filter>Fichiers d%27en-tête\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="SkyBox.h">
       <Filter>Fichiers d%27en-tête\Tools</Filter>
     </ClInclude>
@@ -144,9 +153,6 @@
     </ClInclude>
     <ClInclude Include="EmptyScene.h">
       <Filter>Fichiers d%27en-tête\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageTexture.h">
-      <Filter>Fichiers d%27en-tête\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Fichiers d%27en-tête\Scenes</Filter>
@@ -178,9 +184,6 @@
     <ClInclude Include="ChunkManager.h">
       <Filter>Fichiers d%27en-tête\VoxelEngine</Filter>
     </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>Fichiers d%27en-tête\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="GL_Renderer.h">
       <Filter>Fichiers d%27en-tête\Tools</Filter>
     </ClInclude>
@@ -190,17 +193,26 @@
     <ClInclude Include="Mesh.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Fichiers d%27en-tête\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshLoader.h">
-      <Filter>Fichiers d%27en-tête\Tools</Filter>
+    <ClInclude Include="Geometry.h">
+      <Filter>Fichiers d%27en-tête\Tools\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="GeometryFactory.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Fichiers d%27en-tête\Tools\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+    <ClInclude Include="ImageTexture.h">
+      <Filter>Fichiers d%27en-tête\Tools\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Fichiers d%27en-tête\Tools\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshLoader.h">
+      <Filter>Fichiers d%27en-tête\Tools\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Fichiers d%27en-tête\Tools\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Fichiers d%27en-tête\Tools\Material</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

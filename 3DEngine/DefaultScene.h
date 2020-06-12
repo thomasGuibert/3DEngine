@@ -37,6 +37,7 @@ private:
 
     unsigned int _uboGlobalVariables;
     Geometry _cube;
+    Geometry _sphere;
     std::vector<Vertex> _cubeVertices = {
         //   Position                      Normal                        Texture Coords
         {
