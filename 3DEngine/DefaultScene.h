@@ -7,6 +7,9 @@
 #include <MeshLoader.h>
 #include <Skybox.h>
 #include <vector>
+#include <iostream>
+#include <Geometry.h>
+#include <GeometryFactory.h>
 
 class DefaultScene : public Scene
 {
@@ -33,6 +36,7 @@ private:
     void updateGlobalShaderBuffer();
 
     unsigned int _uboGlobalVariables;
+    Geometry _cube;
     std::vector<Vertex> _cubeVertices = {
         //   Position                      Normal                        Texture Coords
         {

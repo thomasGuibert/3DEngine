@@ -88,7 +88,8 @@ Mesh MeshLoader::processMesh(aiMesh *mesh, const aiScene *scene)
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
     }
 
-    return Mesh(vertices, indices, textures);
+    Geometry geom(vertices, indices, textures);
+    return Mesh(geom);
 };
 
 std::vector<ImageTexture> MeshLoader::loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)

@@ -133,6 +133,8 @@
     <ClCompile Include="DefaultCameraBehavior.cpp" />
     <ClCompile Include="DefaultScene.cpp" />
     <ClCompile Include="EmptyScene.cpp" />
+    <ClCompile Include="Geometry.cpp" />
+    <ClCompile Include="GeometryFactory.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="GL_Renderer.cpp" />
     <ClCompile Include="ImageTexture.cpp" />
@@ -162,6 +164,8 @@
     <ClInclude Include="DefaultCameraBehavior.h" />
     <ClInclude Include="DefaultScene.h" />
     <ClInclude Include="EmptyScene.h" />
+    <ClInclude Include="Geometry.h" />
+    <ClInclude Include="GeometryFactory.h" />
     <ClInclude Include="GL_Renderer.h" />
     <ClInclude Include="ImageTexture.h" />
     <ClInclude Include="MeshLoader.h" />

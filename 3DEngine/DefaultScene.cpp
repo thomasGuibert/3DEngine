@@ -1,7 +1,7 @@
 #include "DefaultScene.h"
-#include <iostream>
 
-DefaultScene::DefaultScene(BaseCameraBehavior& manipulator) : Scene(manipulator)
+
+DefaultScene::DefaultScene(BaseCameraBehavior& manipulator) : Scene(manipulator), _cube(GeometryFactory::CreateCube())
 {
     glGenBuffers(1, &_uboGlobalVariables);
     glBindBuffer(GL_UNIFORM_BUFFER, _uboGlobalVariables);
@@ -14,7 +14,6 @@ DefaultScene::DefaultScene(BaseCameraBehavior& manipulator) : Scene(manipulator)
 
     setupCrate(pointLights, directionalLight);
     setupTeapot(pointLights, directionalLight);
-
     skybox = new Skybox("../Assets/skybox/", _manipulator.getCamera());
     manipulator.getCamera().setPosition(glm::vec3(0.5, 1, 1.9));
 
@@ -143,7 +142,7 @@ std::vector<PointLight> DefaultScene::buildPointLights() {
     lightAspect.specularColor = pointLightColor;
     lightAspect.shininess = 0.0f;
     Material lightMaterial(lightSourceShader, lightAspect);
-    Mesh light(_cubeVertices, _cubeIndices);
+    Mesh light(_cube);
     _lightSource = new Model(light, lightMaterial);
     return pointLights;
 };
@@ -173,7 +172,7 @@ void DefaultScene::setupCrate(std::vector<PointLight> &pointLights, const Direct
     Material crateMaterial(crateShader, crateAspect);
     crateMaterial.applyLights(pointLights);
     crateMaterial.applyLight(directionalLight);
-    Mesh crate(_cubeVertices, _cubeIndices);
+    Mesh crate(_cube);
     _crate = new Model(crate, crateMaterial);
 }
 

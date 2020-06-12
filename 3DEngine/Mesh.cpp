@@ -1,24 +1,26 @@
 #include "Mesh.h"
 
-Mesh::Mesh()
-{
-}
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<ImageTexture> textures)
-{
-    _vertices = vertices;
-    _indices = indices;
-    _textures = textures;
+//Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<ImageTexture> textures)
+//{
+//    _vertices = vertices;
+//    _indices = indices;
+//    _textures = textures;
+//
+//    // now that we have all the required data, set the vertex buffers and its attribute pointers.
+//    setupMesh();
+//}
+//Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices)
+//{
+//    _vertices = vertices;
+//    _indices = indices;
+//
+//    setupMesh();
+//}
 
-    // now that we have all the required data, set the vertex buffers and its attribute pointers.
-    setupMesh();
-}
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices)
+Mesh::Mesh(Geometry geometry): _geometry(geometry)
 {
-    _vertices = vertices;
-    _indices = indices;
-
-    setupMesh();
+     setupMesh();
 }
 
 void Mesh::Draw(Material& material, glm::mat4 model)
@@ -26,7 +28,7 @@ void Mesh::Draw(Material& material, glm::mat4 model)
     material.render(model);
     // draw mesh
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, _indices.size(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, _geometry._indices.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 
     // always good practice to set everything back to defaults once configured.
@@ -48,10 +50,10 @@ void Mesh::setupMesh()
     // A great thing about structs is that their memory layout is sequential for all its items.
     // The effect is that we can simply pass a pointer to the struct and it translates perfectly to a glm::vec3/2 array which
     // again translates to 3/2 floats which translates to a byte array.
-    glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(Vertex), &_vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, _geometry.getVertices().size() * sizeof(Vertex), &_geometry.getVertices()[0], GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indices.size() * sizeof(unsigned int), &_indices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, _geometry.getIndices().size() * sizeof(unsigned int), &_geometry.getIndices()[0], GL_STATIC_DRAW);
 
     // set the vertex attribute pointers
     // vertex Positions
