@@ -146,6 +146,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="PostProcessedScene.cpp" />
     <ClCompile Include="GL_Block.cpp" />
+    <ClCompile Include="RayTracingScene.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SkyBox.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="PostProcessedScene.h" />
     <ClInclude Include="GL_Block.h" />
+    <ClInclude Include="RayTracingScene.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SkyBox.h" />
@@ -188,6 +190,8 @@
     <None Include="shaders\HighlightVertexShader.vs" />
     <None Include="shaders\LightSourceVertexShader.vs" />
     <None Include="shaders\LightSourceFragmentShader.fs" />
+    <None Include="shaders\RayTracingFragmentShader.fs" />
+    <None Include="shaders\RayTracingVertexShader .vs" />
     <None Include="shaders\ScreenFragmentShader.fs" />
     <None Include="shaders\ScreenVertexShader.vs" />
     <None Include="shaders\SkyboxFragmentShader.fs" />

@@ -17,6 +17,7 @@
 #include <EmptyScene.h>
 #include <PostProcessedScene.h>
 #include <VoxelScene.h>
+#include <RayTracingScene.h>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -40,7 +41,7 @@ int main()
 {
     GLFWwindow* window = create_window();
     manipulator = new DefaultCameraBehavior(camera);
-    scene = new DefaultScene(static_cast<DefaultCameraBehavior&>(*manipulator));
+    scene = new RayTracingScene(static_cast<DefaultCameraBehavior&>(*manipulator));
 
     while (!glfwWindowShouldClose(window))
     {
@@ -138,6 +139,11 @@ void ProcessKeyboardInputs(GLFWwindow * window)
     }
 
     if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
+        manipulator = new DefaultCameraBehavior(camera);
+        scene = new RayTracingScene(static_cast<DefaultCameraBehavior&>(*manipulator));
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
         manipulator = new VoxelCameraBehavior(camera);
         scene = new VoxelScene(static_cast<VoxelCameraBehavior&>(*manipulator));
     }

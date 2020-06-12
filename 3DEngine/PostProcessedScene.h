@@ -18,7 +18,7 @@ private:
     glm::vec3 _positions[1] = {
         glm::vec3(0.0f,  0.0f,  0.0f)
     };
-    float _quadVertices[30] = {
+    std::vector<float> _quadVertices = {
         // positions          // texCoords
         -1.0f,  1.0f,  0.0f,  0.0f, 1.0f,
         -1.0f, -1.0f,  0.0f,  0.0f, 0.0f,

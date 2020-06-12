@@ -30,17 +30,10 @@ _screenShader("shaders/ScreenVertexShader.vs", "shaders/ScreenFragmentShader.fs"
         std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-
-    unsigned int quadVBO;
     glGenVertexArrays(1, &quadVAO);
-    glGenBuffers(1, &quadVBO);
-    glBindVertexArray(quadVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quadVertices), &_quadVertices, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    GL_Renderer::Instance()->fillBufferData(quadVAO, _quadVertices);
+    GL_Renderer::Instance()->bindVertexAttrib(0, AttribType::VEC3, 5, 0);
+    GL_Renderer::Instance()->bindVertexAttrib(1, AttribType::VEC2, 5, 3);
 
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, _textureColorbuffer);
@@ -55,7 +48,7 @@ void PostProcessedScene::render()
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    DefaultScene::render();
+    //DefaultScene::render();
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glDisable(GL_DEPTH_TEST);

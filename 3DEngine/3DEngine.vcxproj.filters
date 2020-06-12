@@ -135,6 +135,9 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>Fichiers sources\Tools\Mesh</Filter>
     </ClCompile>
+    <ClCompile Include="RayTracingScene.cpp">
+      <Filter>Fichiers sources\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\container.jpg">
@@ -214,6 +217,9 @@
     <ClInclude Include="Shader.h">
       <Filter>Fichiers d%27en-tête\Tools\Material</Filter>
     </ClInclude>
+    <ClInclude Include="RayTracingScene.h">
+      <Filter>Fichiers d%27en-tête\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\CubeFragmentShader.fs">
@@ -263,6 +269,12 @@
     </None>
     <None Include="shaders\HighlightVertexShader.vs">
       <Filter>Shaders\Teapot</Filter>
+    </None>
+    <None Include="shaders\RayTracingFragmentShader.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\RayTracingVertexShader .vs">
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>
