@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "Shader.h"
+#include "Ray.h"
 #include "GL_Renderer.h"
 #include "Geometry.h"
 #include "GeometryFactory.h"
@@ -25,13 +26,13 @@ private:
     ImageTexture _texture;
     std::vector<float> _quadVertices = {
         // positions          // texCoords
-        -1.0f,  1.0f,  0.0f,  0.0f, 1.0f,
-        -1.0f, -1.0f,  0.0f,  0.0f, 0.0f,
-         1.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+        -1.0f,  1.0f,  1.0f,  0.0f, 1.0f,
+        -1.0f, -1.0f,  1.0f,  0.0f, 0.0f,
+         1.0f, -1.0f,  1.0f,  1.0f, 0.0f,
 
-        -1.0f,  1.0f,  0.0f,  0.0f, 1.0f,
-         1.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-         1.0f,  1.0f,  0.0f,  1.0f, 1.0f
+        -1.0f,  1.0f,  1.0f,  0.0f, 1.0f,
+         1.0f, -1.0f,  1.0f,  1.0f, 0.0f,
+         1.0f,  1.0f,  1.0f,  1.0f, 1.0f
     };
 };
 

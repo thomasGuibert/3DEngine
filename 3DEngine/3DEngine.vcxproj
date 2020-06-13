@@ -146,6 +146,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="PostProcessedScene.cpp" />
     <ClCompile Include="GL_Block.cpp" />
+    <ClCompile Include="Ray.cpp" />
     <ClCompile Include="RayTracingScene.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="PostProcessedScene.h" />
     <ClInclude Include="GL_Block.h" />
+    <ClInclude Include="Ray.h" />
     <ClInclude Include="RayTracingScene.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
