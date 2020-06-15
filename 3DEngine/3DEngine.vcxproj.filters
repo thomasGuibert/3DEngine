@@ -58,6 +58,12 @@
     <Filter Include="Fichiers sources\Tools\Material">
       <UniqueIdentifier>{c33ff288-eb73-42be-bb46-cb3f9ff563c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\RayTracerEngine">
+      <UniqueIdentifier>{528a8bf8-d6a6-46e2-9e98-9106ca044e0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\RayTracerEngine">
+      <UniqueIdentifier>{03b6d8fa-5c60-4a8e-8f38-ad0bbba3cf7a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -139,6 +145,12 @@
       <Filter>Fichiers sources\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Ray.cpp">
+      <Filter>Fichiers sources\RayTracerEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Fichiers sources\RayTracerEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="HittableList.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -224,6 +236,15 @@
       <Filter>Fichiers d%27en-tête\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Ray.h">
+      <Filter>Fichiers d%27en-tête\RayTracerEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="IHittable.h">
+      <Filter>Fichiers d%27en-tête\RayTracerEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Fichiers d%27en-tête\RayTracerEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="HittableList.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

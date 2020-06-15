@@ -137,6 +137,7 @@
     <ClCompile Include="GeometryFactory.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="GL_Renderer.cpp" />
+    <ClCompile Include="HittableList.cpp" />
     <ClCompile Include="ImageTexture.cpp" />
     <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -151,6 +152,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="VoxelCameraBehavior.cpp" />
     <ClCompile Include="VoxelScene.cpp" />
   </ItemGroup>
@@ -169,6 +171,8 @@
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="GeometryFactory.h" />
     <ClInclude Include="GL_Renderer.h" />
+    <ClInclude Include="HittableList.h" />
+    <ClInclude Include="IHittable.h" />
     <ClInclude Include="ImageTexture.h" />
     <ClInclude Include="MeshLoader.h" />
     <ClInclude Include="BaseCameraBehavior.h" />
@@ -182,6 +186,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="VoxelCameraBehavior.h" />
     <ClInclude Include="VoxelScene.h" />
   </ItemGroup>
