@@ -6,18 +6,13 @@
 #include <iostream>
 #include <memory>
 
-float hit_sphere(const glm::vec3& center, double radius, const Ray& r) {
-    glm::vec3 oc = r.origin() - center;
-    auto a = dot(r.direction(), r.direction());
-    auto b = 2.0 * dot(oc, r.direction());
-    auto c = dot(oc, oc) - radius * radius;
-    auto discriminant = b * b - 4 * a*c;
-    if (discriminant < 0) {
-        return -1.0;
-    }
-    else {
-        return (-b - sqrt(discriminant)) / (2.0*a);
-    }
+#include <random>
+
+float random_float() {
+    static std::uniform_real_distribution<float> distribution(0.0, 1.0);
+    static std::mt19937 generator;
+    //return 0.0f;
+    return distribution(generator);
 }
 
 glm::vec4 ray_color(const Ray& r, const IHittable& world) {
@@ -30,6 +25,12 @@ glm::vec4 ray_color(const Ray& r, const IHittable& world) {
     float t = 0.5f*(unit_direction.y + 1.0);
     glm::vec3 color = (1.0f - t)*glm::vec3(1.0, 1.0, 1.0) + t * glm::vec3(0.5, 0.7, 1.0);
     return glm::vec4(color.r, color.g, color.b, 1.0f);
+}
+
+float clamp(float x, float min = 0.0f, float max = 0.999f) {
+    if (x < min) return min;
+    if (x > max) return max;
+    return x;
 }
 
 RayTracingScene::RayTracingScene(BaseCameraBehavior& manipulator) : Scene(manipulator),
@@ -49,18 +50,30 @@ _texture(ImageTexture(SCR_WIDTH, SCR_HEIGHT))
     world.add(std::make_shared<Sphere>(glm::vec3(0, 0, -1), 0.5));
     world.add(std::make_shared<Sphere>(glm::vec3(0, -100.5, -1), 100));
 
+    unsigned int samples_per_pixel = 5;
+
     for (unsigned int i = 0; i < SCR_HEIGHT; ++i) {
         std::cerr << "\rScanlines remaining: " << SCR_HEIGHT - i - 1 << ' ' << std::flush;
         for (unsigned int j = 0; j < SCR_WIDTH; ++j) {
+
+            glm::vec4 pixelColor(0.0f, 0.0f, 0.0f, 1.0f);
+            int s = 1;
+            do {
+                float u = (j + random_float()) / (SCR_WIDTH - 1);
+                float v = (i + random_float()) / (SCR_HEIGHT - 1);
+                Ray r(origin, lower_left_corner + u * horizontal + v * vertical - origin);
+                pixelColor += ray_color(r, world);
+                ++s;
+            } while (s < samples_per_pixel);
+
             glm::vec2 position(i, j);
-            float u = float(j) / (SCR_WIDTH - 1);
-            float v = float(i) / (SCR_HEIGHT - 1);
-            Ray r(origin, lower_left_corner + u * horizontal + v * vertical - origin);
-            glm::vec4 pixel_color = ray_color(r, world);
 
-
-            //glm::vec4 color(0.0f, 1.0f, 1.0f, 1.0f);
-            _texture.setPixel(position, pixel_color);
+            auto scale = 1.0 / samples_per_pixel;
+            float r = clamp(pixelColor.r * scale);
+            float g = clamp(pixelColor.g * scale);
+            float b = clamp(pixelColor.b * scale);
+            glm::vec4 clampedPixelColor(r, g, b, 1.0f);
+            _texture.setPixel(position, clampedPixelColor);
         }
     }
 
