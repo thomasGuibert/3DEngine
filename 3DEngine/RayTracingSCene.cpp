@@ -2,28 +2,62 @@
 #include "IHittable.h"
 #include "HittableList.h"
 #include "Sphere.h"
+#include <glm/gtc/random.hpp>
+#include <glm/gtx/norm.hpp>
 
 #include <iostream>
 #include <memory>
 
 #include <random>
 
-float random_float() {
-    static std::uniform_real_distribution<float> distribution(0.0, 1.0);
+float getRandomFloat(float min = 0.0f, float max = 1.0f) {
+    static std::uniform_real_distribution<float> distribution(min, max);
     static std::mt19937 generator;
-    //return 0.0f;
     return distribution(generator);
 }
 
-glm::vec4 ray_color(const Ray& r, const IHittable& world) {
+glm::vec3 getRandomUnitVector() {
+    float a = getRandomFloat(0, 2 * pi);
+    float z = getRandomFloat();
+    float r = glm::sqrt(1 - z * z);
+    return glm::vec3(r*cos(a), r*sin(a), z);
+}
+
+glm::vec3 getRandomInUnitSphere() {
+    while (true) {
+        glm::vec3 p = glm::vec3(getRandomFloat(), getRandomFloat(), getRandomFloat());
+        if (glm::length2(p) >= 1) continue;
+        return p;
+    }
+}
+
+glm::vec3 getRandomInHemisphere(const glm::vec3& normal) {
+    glm::vec3 in_unit_sphere = getRandomInUnitSphere();
+    if (dot(in_unit_sphere, normal) > 0.0) // In the same hemisphere as the normal
+        return in_unit_sphere;
+    else
+        return -in_unit_sphere;
+}
+
+
+glm::vec4 ray_color(const Ray& r, const IHittable& world, int depth) {
+    // If we've exceeded the ray bounce limit, no more light is gathered.
+    if (depth <= 0.0f)
+        return glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+
     hit_record rec;
-    if (world.hit(r, 0, infinity, rec)) {
-        glm::vec3 color = 0.5f * (rec.normal + glm::vec3(1.0f, 1.0f, 1.0f));
+    if (world.hit(r, 0.001f, infinity, rec)) {
+        //glm::vec3 target = rec.position + rec.normal + getRandomUnitVector();
+        //glm::vec3 target = rec.position + rec.normal + getRandomInUnitSphere();
+        glm::vec3 target = rec.position + getRandomInHemisphere(rec.normal);
+    
+        glm::vec3 color = 0.5f * ray_color(Ray(rec.position, target - rec.position), world, depth - 1);
+    
         return glm::vec4(color.r, color.g, color.b, 1.0f);
     }
     glm::vec3 unit_direction = glm::normalize(r.direction());
-    float t = 0.5f*(unit_direction.y + 1.0);
-    glm::vec3 color = (1.0f - t)*glm::vec3(1.0, 1.0, 1.0) + t * glm::vec3(0.5, 0.7, 1.0);
+    float t = 0.5f*(unit_direction.y + 1.0f);
+    glm::vec3 color = (1.0f - t)*glm::vec3(1.0f, 1.0f, 1.0f) + t * glm::vec3(0.5f, 0.7f, 1.0f);
     return glm::vec4(color.r, color.g, color.b, 1.0f);
 }
 
@@ -50,7 +84,9 @@ _texture(ImageTexture(SCR_WIDTH, SCR_HEIGHT))
     world.add(std::make_shared<Sphere>(glm::vec3(0, 0, -1), 0.5));
     world.add(std::make_shared<Sphere>(glm::vec3(0, -100.5, -1), 100));
 
-    unsigned int samples_per_pixel = 5;
+    unsigned int samples_per_pixel = 10;
+    float gamma = 0.5f;
+    unsigned int depth = 10;
 
     for (unsigned int i = 0; i < SCR_HEIGHT; ++i) {
         std::cerr << "\rScanlines remaining: " << SCR_HEIGHT - i - 1 << ' ' << std::flush;
@@ -59,19 +95,19 @@ _texture(ImageTexture(SCR_WIDTH, SCR_HEIGHT))
             glm::vec4 pixelColor(0.0f, 0.0f, 0.0f, 1.0f);
             int s = 1;
             do {
-                float u = (j + random_float()) / (SCR_WIDTH - 1);
-                float v = (i + random_float()) / (SCR_HEIGHT - 1);
+                float u = (j + getRandomFloat()) / (SCR_WIDTH - 1);
+                float v = (i + getRandomFloat()) / (SCR_HEIGHT - 1);
                 Ray r(origin, lower_left_corner + u * horizontal + v * vertical - origin);
-                pixelColor += ray_color(r, world);
+                pixelColor += ray_color(r, world, depth);
                 ++s;
             } while (s < samples_per_pixel);
 
             glm::vec2 position(i, j);
 
             auto scale = 1.0 / samples_per_pixel;
-            float r = clamp(pixelColor.r * scale);
-            float g = clamp(pixelColor.g * scale);
-            float b = clamp(pixelColor.b * scale);
+            float r = glm::pow(clamp(pixelColor.r * scale), gamma);
+            float g = glm::pow(clamp(pixelColor.g * scale), gamma);
+            float b = glm::pow(clamp(pixelColor.b * scale), gamma);
             glm::vec4 clampedPixelColor(r, g, b, 1.0f);
             _texture.setPixel(position, clampedPixelColor);
         }

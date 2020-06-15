@@ -1,5 +1,6 @@
 #pragma once
 #include "IHittable.h"
+#include <glm/gtx/norm.hpp>
 
 class Sphere: public IHittable
 {

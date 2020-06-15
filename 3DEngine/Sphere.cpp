@@ -1,5 +1,4 @@
 #include "Sphere.h"
-#include <glm/gtx/norm.hpp>
 
 Sphere::Sphere(glm::vec3 cen, float r) : center(cen), radius(r) 
 {
