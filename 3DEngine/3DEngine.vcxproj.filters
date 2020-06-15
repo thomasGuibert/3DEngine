@@ -153,6 +153,18 @@
     <ClCompile Include="HittableList.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Lambertian.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="RT_Material.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Metal.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Dielectric.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\container.jpg">
@@ -232,9 +244,6 @@
     <ClInclude Include="Shader.h">
       <Filter>Fichiers d%27en-tête\Tools\Material</Filter>
     </ClInclude>
-    <ClInclude Include="RayTracingScene.h">
-      <Filter>Fichiers d%27en-tête\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Ray.h">
       <Filter>Fichiers d%27en-tête\RayTracerEngine</Filter>
     </ClInclude>
@@ -244,7 +253,22 @@
     <ClInclude Include="Sphere.h">
       <Filter>Fichiers d%27en-tête\RayTracerEngine</Filter>
     </ClInclude>
+    <ClInclude Include="RT_Material.h">
+      <Filter>Fichiers d%27en-tête\RayTracerEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Lambertian.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Metal.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
     <ClInclude Include="HittableList.h">
+      <Filter>Fichiers d%27en-tête\RayTracerEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="RayTracingScene.h">
+      <Filter>Fichiers d%27en-tête\RayTracerEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Dielectric.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

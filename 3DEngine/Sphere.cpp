@@ -1,6 +1,6 @@
 #include "Sphere.h"
 
-Sphere::Sphere(glm::vec3 cen, float r) : center(cen), radius(r) 
+Sphere::Sphere(glm::vec3 cen, float r, std::shared_ptr<RT_Material> m) : center(cen), radius(r), mat_ptr(m)
 {
 }
 
@@ -25,6 +25,7 @@ bool Sphere::hit(const Ray & r, float t_min, float t_max, hit_record & rec) cons
             rec.normal = (rec.position - center) / radius;
             glm::vec3 outward_normal = (rec.position - center) / radius;
             rec.set_face_normal(r, outward_normal);
+            rec.mat_ptr = mat_ptr;
             return true;
         }
         temp = (-b + root) / (2*a);
@@ -34,6 +35,7 @@ bool Sphere::hit(const Ray & r, float t_min, float t_max, hit_record & rec) cons
             rec.normal = (rec.position - center) / radius;
             glm::vec3 outward_normal = (rec.position - center) / radius;
             rec.set_face_normal(r, outward_normal);
+            rec.mat_ptr = mat_ptr;
             return true;
         }
     }

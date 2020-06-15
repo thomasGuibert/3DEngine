@@ -5,6 +5,19 @@
 #include "GL_Renderer.h"
 #include "Geometry.h"
 #include "GeometryFactory.h"
+#include "IHittable.h"
+#include "HittableList.h"
+#include "Sphere.h"
+#include "Lambertian.h"
+#include "Metal.h"
+#include "Dielectric.h"
+#include <glm/gtc/random.hpp>
+#include <glm/gtx/norm.hpp>
+
+#include <iostream>
+#include <memory>
+
+#include <random>
 
 // Constants
 
@@ -22,14 +35,17 @@ class RayTracingScene :
 public:
     RayTracingScene(BaseCameraBehavior& manipulator);
     ~RayTracingScene();
+    static float getRandomFloat(float min = 0.0f, float max = 1.0f);
+    static glm::vec3 getRandomUnitVector();
+    static glm::vec3 getRandomInHemisphere(const glm::vec3& normal);
+    static glm::vec3 getRandomInUnitSphere();
+    static float clamp(float x, float min = 0.0f, float max = 0.999f);
+    static glm::vec4 ray_color(const Ray& r, const IHittable& world, int depth);
 
     void render();
 private:
-    void setupRayTracedTexture();
     void setupQuadScreen();
 
-    Geometry _cube;
-    Geometry _sphere;
     Shader _rayTracingShader;
     unsigned int _textureRayTracing;
     unsigned int _quadVAO;
