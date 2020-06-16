@@ -1,27 +1,61 @@
 #include "RayTracingSCene.h"
 
+unsigned int samples_per_pixel = 20;
+float gamma = 0.5f;
+unsigned int depth = 20;
+int sphereCount = 10;
+
 RayTracingScene::RayTracingScene(BaseCameraBehavior& manipulator) : Scene(manipulator),
 _rayTracingShader("shaders/RayTracingVertexShader .vs", "shaders/RayTracingFragmentShader.fs"),
 _texture(ImageTexture(SCR_WIDTH, SCR_HEIGHT))
 {
     setupQuadScreen();
 
-    glm::vec3 origin = glm::vec3(0, 0, 1);
+    manipulator.getCamera().setPosition(glm::vec3(0, 2, 3));
+    glm::vec3 origin = manipulator.getCamera().getPosition();
     glm::vec3 horizontal = glm::vec3((4.0f / 3.0f) * 2.0f, 0, 0);
     glm::vec3 vertical = glm::vec3(0, 2.0, 0);
-    glm::vec3 lower_left_corner = origin - horizontal / 2.0f - vertical / 2.0f - glm::vec3(0, 0, 1);
+    glm::vec3 lower_left_corner = origin - horizontal / 2.0f - vertical / 2.0f - glm::normalize(origin- glm::vec3(0, 0, 1));
 
     HittableList world;
-    world.add(std::make_shared<Sphere>(glm::vec3(0, 0, -1), 0.5, std::make_shared<Lambertian>(glm::vec4(1, 0.5, 0.3, 1.0))));
+    world.add(std::make_shared<Sphere>(glm::vec3(0, 0, -1), 1, std::make_shared<Lambertian>(glm::vec4(1, 0.5, 0.3, 1.0))));
     world.add(std::make_shared<Sphere>(glm::vec3(0, -100.5, -1), 100, std::make_shared<Lambertian>(glm::vec4(0.8, 0.8, 0.0, 1.0))));
-    world.add(std::make_shared<Sphere>(glm::vec3(1, 0, -1), 0.5, std::make_shared<Metal>(glm::vec4(.8, .6, .2, 1.0), 1.0)));
-    world.add(std::make_shared<Sphere>(glm::vec3(-1, 0, -1), 0.5, std::make_shared<Metal>(glm::vec4(.8, .8, .8, 1.0), 0.5)));
-    world.add(std::make_shared<Sphere>(glm::vec3(-2, 0, -1), 0.5, std::make_shared<Dielectric>(1.5)));
-    world.add(std::make_shared<Sphere>(glm::vec3(2, 0, -1), -0.45, std::make_shared<Dielectric>(1.5)));
+    world.add(std::make_shared<Sphere>(glm::vec3(2.0, 0, -1), 1, std::make_shared<Metal>(glm::vec4(.8, .6, .2, 1.0), 1.0)));
+    world.add(std::make_shared<Sphere>(glm::vec3(-1.5, 0, -1), 0.5, std::make_shared<Metal>(glm::vec4(.8, .8, .8, 1.0), 0.5)));
+    world.add(std::make_shared<Sphere>(glm::vec3(-3.5, 0, -1), 1, std::make_shared<Dielectric>(1.5)));
+    world.add(std::make_shared<Sphere>(glm::vec3(3.5, 0, -1), -0.45, std::make_shared<Dielectric>(1.5)));
 
-    unsigned int samples_per_pixel = 4;
-    float gamma = 0.5f;
-    unsigned int depth = 10;
+    for (int a = -sphereCount/2; a < sphereCount/2; a++) {
+        for (int b = -sphereCount/2; b < sphereCount/2; b++) {
+            float choose_mat = getRandomFloat();
+            glm::vec3 center(a + 0.9*getRandomFloat(), -0.2, b + 0.9*getRandomFloat());
+    
+            if ((center - glm::vec3(4, 0.0, 0)).length() > 0.9) {
+                std::shared_ptr<RT_Material> sphere_material;
+    
+                if (choose_mat < 0.8) {
+                    // diffuse
+                    auto albedo = glm::vec4(getRandomFloat(), getRandomFloat(), getRandomFloat(), 1.0f);
+                    sphere_material = std::make_shared<Lambertian>(albedo);
+                    world.add(std::make_shared<Sphere>(center, 0.2, sphere_material));
+                }
+                else if (choose_mat < 0.95) {
+                    // metal
+                    auto albedo = glm::vec4(getRandomFloat(), getRandomFloat(), getRandomFloat(), 1.0f);
+                    auto fuzz = getRandomFloat(0, 0.5);
+                    sphere_material = std::make_shared<Metal>(albedo, fuzz);
+                    world.add(std::make_shared<Sphere>(center, 0.2, sphere_material));
+                }
+                else {
+                    // glass
+                    sphere_material = std::make_shared<Dielectric>(1.5);
+                    world.add(std::make_shared<Sphere>(center, 0.2, sphere_material));
+                }
+            }
+        }
+    }
+
+
 
     for (unsigned int i = 0; i < SCR_HEIGHT; ++i) {
         std::cerr << "\rScanlines remaining: " << SCR_HEIGHT - i - 1 << ' ' << std::flush;
