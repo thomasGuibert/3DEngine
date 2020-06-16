@@ -141,29 +141,29 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>Fichiers sources\Tools\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="RayTracingScene.cpp">
-      <Filter>Fichiers sources\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Ray.cpp">
       <Filter>Fichiers sources\RayTracerEngine</Filter>
     </ClCompile>
     <ClCompile Include="Sphere.cpp">
       <Filter>Fichiers sources\RayTracerEngine</Filter>
     </ClCompile>
-    <ClCompile Include="HittableList.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Lambertian.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="RT_Material.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\RayTracerEngine</Filter>
     </ClCompile>
     <ClCompile Include="Metal.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\RayTracerEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Lambertian.cpp">
+      <Filter>Fichiers sources\RayTracerEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="HittableList.cpp">
+      <Filter>Fichiers sources\RayTracerEngine</Filter>
     </ClCompile>
     <ClCompile Include="Dielectric.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\RayTracerEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="RayTracingScene.cpp">
+      <Filter>Fichiers sources\RayTracerEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -256,12 +256,6 @@
     <ClInclude Include="RT_Material.h">
       <Filter>Fichiers d%27en-tête\RayTracerEngine</Filter>
     </ClInclude>
-    <ClInclude Include="Lambertian.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Metal.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="HittableList.h">
       <Filter>Fichiers d%27en-tête\RayTracerEngine</Filter>
     </ClInclude>
@@ -269,7 +263,13 @@
       <Filter>Fichiers d%27en-tête\RayTracerEngine</Filter>
     </ClInclude>
     <ClInclude Include="Dielectric.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Fichiers d%27en-tête\RayTracerEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Lambertian.h">
+      <Filter>Fichiers d%27en-tête\RayTracerEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Metal.h">
+      <Filter>Fichiers d%27en-tête\RayTracerEngine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
