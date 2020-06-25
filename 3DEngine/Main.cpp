@@ -40,8 +40,9 @@ Scene* scene;
 int main()
 {
     GLFWwindow* window = create_window();
-    manipulator = new DefaultCameraBehavior(camera);
-    scene = new RayTracingScene(static_cast<DefaultCameraBehavior&>(*manipulator));
+    manipulator = new VoxelCameraBehavior(camera);
+    scene = new VoxelScene(static_cast<VoxelCameraBehavior&>(*manipulator));
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -126,26 +127,31 @@ void ProcessKeyboardInputs(GLFWwindow * window)
     if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS) {
         manipulator = new DefaultCameraBehavior(camera);
         scene = new EmptyScene(static_cast<DefaultCameraBehavior&>(*manipulator));
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
 
     if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
         manipulator = new DefaultCameraBehavior(camera);
         scene = new DefaultScene(static_cast<DefaultCameraBehavior&>(*manipulator));
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
 
     if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
         manipulator = new DefaultCameraBehavior(camera);
         scene = new PostProcessedScene(static_cast<DefaultCameraBehavior&>(*manipulator));
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
 
     if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
         manipulator = new DefaultCameraBehavior(camera);
         scene = new RayTracingScene(static_cast<DefaultCameraBehavior&>(*manipulator));
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
 
     if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
         manipulator = new VoxelCameraBehavior(camera);
         scene = new VoxelScene(static_cast<VoxelCameraBehavior&>(*manipulator));
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
@@ -175,12 +181,12 @@ void cleanup(GLFWwindow * window)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) 
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
     camera.scrollUpdate(yoffset);
 }
 
-void mouse_callback(GLFWwindow * window, double xpos, double ypos) 
+void mouse_callback(GLFWwindow * window, double xpos, double ypos)
 {
     camera.mouseUpdate(xpos, ypos);
 }

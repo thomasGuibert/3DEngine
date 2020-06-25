@@ -213,6 +213,9 @@
     <None Include="shaders\SkyboxVertexShader.vs" />
     <None Include="shaders\TeapotFragmentShader.fs" />
     <None Include="shaders\TeapotVertexShader.vs" />
+    <None Include="shaders\ViewfinderFragmentShader.fs" />
+    <None Include="shaders\ViewfinderGeometryShader.gs" />
+    <None Include="shaders\ViewfinderVertexShader.vs" />
     <None Include="shaders\VoxelFragmentShader.fs" />
     <None Include="shaders\VoxelFragmentShaderHighlight.fs" />
     <None Include="shaders\VoxelVertexShader.vs" />

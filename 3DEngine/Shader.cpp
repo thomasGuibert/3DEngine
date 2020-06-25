@@ -11,6 +11,21 @@ Shader::Shader(std::string vertexShaderPath, std::string fragmentShaderPath) {
     glDeleteShader(fsId);
 };
 
+Shader::Shader(std::string vertexShaderPath, std::string fragmentShaderPath, std::string geometryShaderPath)
+{
+    std::string vsCode = _readShaderFile(vertexShaderPath);
+    int vsId = _compileShader(vsCode.c_str(), GL_VERTEX_SHADER);
+    std::string gsCode = _readShaderFile(geometryShaderPath);
+    int gsId = _compileShader(gsCode.c_str(), GL_GEOMETRY_SHADER);
+    std::string fsCode = _readShaderFile(fragmentShaderPath);
+    int fsId = _compileShader(fsCode.c_str(), GL_FRAGMENT_SHADER);
+
+    shaderProgramId = _createShaderProgram(vsId, fsId, gsId);
+    glDeleteShader(vsId);
+    glDeleteShader(gsId);
+    glDeleteShader(fsId);
+};
+
 void Shader::updateUniformMat4(const std::string name, glm::mat4 &value) {
     glUseProgram(shaderProgramId);
     unsigned int uniformId = glGetUniformLocation(shaderProgramId, name.c_str());
@@ -81,10 +96,15 @@ int Shader::_compileShader(const char *shaderSource, GLenum shaderType) {
     return shaderId;
 };
 
-int Shader::_createShaderProgram(int vertexShaderId, int fragmentShaderId) {
+int Shader::_createShaderProgram(int vertexShaderId, int fragmentShaderId, int geometryShaderId) {
     int shaderProgramId = glCreateProgram();
     glAttachShader(shaderProgramId, vertexShaderId);
+
+    if(geometryShaderId!=-1)
+        glAttachShader(shaderProgramId, geometryShaderId);
+
     glAttachShader(shaderProgramId, fragmentShaderId);
+
     glLinkProgram(shaderProgramId);
 
     // check for linking errors

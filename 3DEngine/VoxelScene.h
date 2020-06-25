@@ -14,16 +14,19 @@ public:
     Skybox* skybox;
 
     VoxelScene(VoxelCameraBehavior& manipulator);
-    
+
     void render();
     
     ~VoxelScene();
 
 private:
     Shader _voxelShader;
-    Shader _voxelshaderHighlight;
+    Shader _voxelShaderHighlight;
+    Shader _viewfinderShader;
     ImageTexture* _texture;
     ChunkManager* chunkManager;
+    unsigned int _cursorVAO;
 
+    void createCursor();
 };
 

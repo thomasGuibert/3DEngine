@@ -327,5 +327,14 @@
     <None Include="shaders\RayTracingVertexShader .vs">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="shaders\ViewfinderFragmentShader.fs">
+      <Filter>Shaders\Voxel</Filter>
+    </None>
+    <None Include="shaders\ViewfinderVertexShader.vs">
+      <Filter>Shaders\Voxel</Filter>
+    </None>
+    <None Include="shaders\ViewfinderGeometryShader.gs">
+      <Filter>Shaders\Voxel</Filter>
+    </None>
   </ItemGroup>
 </Project>
