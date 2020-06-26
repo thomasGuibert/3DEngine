@@ -16,8 +16,9 @@ struct Face {
 const Face FACE;
 
 struct TextureCoords {
-    const std::vector<float> COORDS = { 0, 0,  1, 0,  1, 1,  1 ,1,  0, 1,  0, 0 };
+    const std::vector<float> COORDS = { 1, 0,  1, 1,  0, 1,  0 ,1,  0, 0,  1, 0 };
 };
+
 const TextureCoords TEXTURE;
 
 struct Normals {
@@ -33,7 +34,7 @@ const Normals NORMALS;
 class GL_Block
 {
 public:
-    void addFace(const float* faceVertices, const float* faceNormal, int type);
+    void addFace(const float* faceVertices, const float* faceNormal, const float* textCoords, int type);
     void addHighlight(const float* faceVertices);
     void build();
     void buildHighlight();

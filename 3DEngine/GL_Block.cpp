@@ -1,6 +1,6 @@
 #include "GL_Block.h"
 
-void GL_Block::addFace(const float* faceVertices, const float* faceNormals, int type)
+void GL_Block::addFace(const float* faceVertices, const float* faceNormals, const float* textCoords, int type)
 {
     unsigned int verticesCount = 6;
     unsigned int faceVerticeIndex = 0;
@@ -13,8 +13,8 @@ void GL_Block::addFace(const float* faceVertices, const float* faceNormals, int 
         _vertices.push_back(faceVertices[faceVerticeIndex++]);
         _vertices.push_back(faceVertices[faceVerticeIndex++]);
 
-        _vertices.push_back(TEXTURE.COORDS[textureVerticeIndex++]);
-        _vertices.push_back(TEXTURE.COORDS[textureVerticeIndex++]);
+        _vertices.push_back(textCoords[textureVerticeIndex++]);
+        _vertices.push_back(textCoords[textureVerticeIndex++]);
 
         _vertices.push_back(faceNormals[normalVerticeIndex++]);
         _vertices.push_back(faceNormals[normalVerticeIndex++]);

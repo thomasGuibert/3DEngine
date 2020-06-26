@@ -16,9 +16,9 @@ void main()
    float intencity = getIntencityBasedOnNormal();
    
    vec2 tileOffset = getTypePosition();
-   vec2 tileCoord = (TexCoords+tileOffset)/16;
-   vec2 texCoord = tileCoord+tileOffset;
-   FragColor = vec4(texture(Texture, texCoord).rgb*intencity, 1.0f);
+   vec2 tileCoord = (vec2(mod(TexCoords.x,1), mod(TexCoords.y,1))+tileOffset)/16;
+
+   FragColor = vec4(texture(Texture, tileCoord).rgb*intencity, 1.0f);
 }
 
 vec2 getTypePosition(){

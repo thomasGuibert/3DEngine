@@ -291,12 +291,12 @@ void Chunk::quad(glm::vec3 bottomLeft,
     bool backFace) {
 
     float vertexBuffer[18] = {
-    bottomRight.x, bottomRight.y, bottomRight.z,
-    bottomLeft.x, bottomLeft.y, bottomLeft.z,
-    topLeft.x, topLeft.y, topLeft.z,
-    topLeft.x, topLeft.y, topLeft.z,
-    topRight.x, topRight.y, topRight.z,
-    bottomRight.x, bottomRight.y, bottomRight.z };
+        topLeft.x, topLeft.y, topLeft.z,
+        topRight.x, topRight.y, topRight.z,
+        bottomRight.x, bottomRight.y, bottomRight.z,
+        bottomRight.x, bottomRight.y, bottomRight.z,
+        bottomLeft.x, bottomLeft.y, bottomLeft.z,
+        topLeft.x, topLeft.y, topLeft.z };
 
     glm::vec3 directionRight = bottomRight - bottomLeft;
     glm::vec3 directionTop = topRight - bottomRight;
@@ -316,7 +316,16 @@ void Chunk::quad(glm::vec3 bottomLeft,
         normal.x,normal.y,normal.z
     };
 
-    _blockRenderer->addFace(vertexBuffer, normalBuffer, voxel->type);
+    int index = 0;
+    float textCoordsBuffer[12] = {
+    TEXTURE.COORDS[index++] * width, TEXTURE.COORDS[index++] * height,
+    TEXTURE.COORDS[index++] * width, TEXTURE.COORDS[index++] * height,
+    TEXTURE.COORDS[index++] * width, TEXTURE.COORDS[index++] * height,
+    TEXTURE.COORDS[index++] * width, TEXTURE.COORDS[index++] * height,
+    TEXTURE.COORDS[index++] * width, TEXTURE.COORDS[index++] * height,
+    TEXTURE.COORDS[index++] * width, TEXTURE.COORDS[index++] * height };
+
+    _blockRenderer->addFace(vertexBuffer, normalBuffer, textCoordsBuffer, voxel->type);
 }
 
 Block* Chunk::getBlock(const unsigned int x, const unsigned int y, const unsigned int z)
