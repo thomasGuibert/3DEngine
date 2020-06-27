@@ -44,8 +44,21 @@ int main()
     scene = new VoxelScene(static_cast<VoxelCameraBehavior&>(*manipulator));
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
+    double lastTime = glfwGetTime();
+    int nbFrames = 0;
+
     while (!glfwWindowShouldClose(window))
     {
+        double currentTime = glfwGetTime();
+        double elaspsedTime = currentTime - lastTime;
+        nbFrames++;
+        if (elaspsedTime >= 1.0) { // If last prinf() was more than 1 sec ago
+            // printf and reset timer
+            printf("%f FPS (%f ms/frame)\n", (nbFrames) / elaspsedTime, 1000.0 / double(nbFrames));
+            nbFrames = 0;
+            lastTime += 1.0;
+        }
+
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LESS);
         glEnable(GL_STENCIL_TEST);
@@ -55,8 +68,6 @@ int main()
         processInputForNextIteration(window);
 
         scene->render();
-
-        Sleep(100);
 
         cleanup(window);
     }
