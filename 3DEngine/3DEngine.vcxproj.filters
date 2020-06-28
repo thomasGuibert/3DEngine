@@ -165,6 +165,9 @@
     <ClCompile Include="RayTracingScene.cpp">
       <Filter>Fichiers sources\RayTracerEngine</Filter>
     </ClCompile>
+    <ClCompile Include="TextRenderer.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\container.jpg">
@@ -271,6 +274,9 @@
     <ClInclude Include="Metal.h">
       <Filter>Fichiers d%27en-tête\RayTracerEngine</Filter>
     </ClInclude>
+    <ClInclude Include="TextRenderer.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\CubeFragmentShader.fs">
@@ -335,6 +341,12 @@
     </None>
     <None Include="shaders\ViewfinderGeometryShader.gs">
       <Filter>Shaders\Voxel</Filter>
+    </None>
+    <None Include="shaders\GlypheFragmentShader.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\GlypheVertexShader.vs">
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

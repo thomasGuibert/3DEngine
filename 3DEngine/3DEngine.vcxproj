@@ -85,7 +85,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>assimp-vc141-mt.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc141-mt.lib;glfw3.lib;opengl32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -108,7 +108,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>assimp-vc141-mt.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc141-mt.lib;glfw3.lib;opengl32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -157,6 +157,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="Sphere.cpp" />
+    <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="VoxelCameraBehavior.cpp" />
     <ClCompile Include="VoxelScene.cpp" />
   </ItemGroup>
@@ -195,12 +196,15 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="Sphere.h" />
+    <ClInclude Include="TextRenderer.h" />
     <ClInclude Include="VoxelCameraBehavior.h" />
     <ClInclude Include="VoxelScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\CubeFragmentShader.fs" />
     <None Include="shaders\CubeVertexShader.vs" />
+    <None Include="shaders\GlypheFragmentShader.fs" />
+    <None Include="shaders\GlypheVertexShader.vs" />
     <None Include="shaders\HighlightFragmentShader.fs" />
     <None Include="shaders\HighlightVertexShader.vs" />
     <None Include="shaders\LightSourceVertexShader.vs" />

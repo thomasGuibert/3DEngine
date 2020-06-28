@@ -8,8 +8,8 @@ _texture()
 {
     _texture = new ImageTexture("../Assets/terrain.png", "texture_diffuse");
 
-    _texture->Enable(0);
-    _voxelShader.updateUniformInt("voxelTexture", 0);
+    //_texture->Enable(0);
+    //_voxelShader.updateUniformInt("voxelTexture", 0);
     chunkManager = new ChunkManager();
     glm::vec3 pos = glm::vec3(0, 0, 0);
     for (float x = 0.0f; x < chunkManager->SIZE; ++x) {
@@ -58,7 +58,7 @@ void VoxelScene::render()
     while (!chunkManager->setHighlightedBlock(_manipulator.getCamera().getPosition() + _manipulator.getCamera().getFront() * glm::vec3(dist)) && dist < 5) {
         dist++;
     }
-
+    _texture->Enable(0);
     chunkManager->Update();
 
     glm::vec3 position = _manipulator.getCamera().getPosition() + _manipulator.getCamera().getFront();

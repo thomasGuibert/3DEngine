@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <exception>
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -18,6 +19,7 @@
 #include <PostProcessedScene.h>
 #include <VoxelScene.h>
 #include <RayTracingScene.h>
+#include <TextRenderer.h>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -36,14 +38,16 @@ float lastFrame = 0.0f; // Time of last frame
 Camera camera;
 BaseCameraBehavior* manipulator;
 Scene* scene;
+TextRenderer* textRenderer;
 
 int main()
 {
     GLFWwindow* window = create_window();
     manipulator = new VoxelCameraBehavior(camera);
+    textRenderer = new TextRenderer();
+
     scene = new VoxelScene(static_cast<VoxelCameraBehavior&>(*manipulator));
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
     double lastTime = glfwGetTime();
     int nbFrames = 0;
 
@@ -53,8 +57,6 @@ int main()
         double elaspsedTime = currentTime - lastTime;
         nbFrames++;
         if (elaspsedTime >= 1.0) { // If last prinf() was more than 1 sec ago
-            // printf and reset timer
-            printf("%f FPS (%f ms/frame)\n", (nbFrames) / elaspsedTime, 1000.0 / double(nbFrames));
             nbFrames = 0;
             lastTime += 1.0;
         }
@@ -66,8 +68,12 @@ int main()
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         processInputForNextIteration(window);
-
         scene->render();
+        int fps = (nbFrames) / elaspsedTime;
+        int spf = 1000.0 / double(nbFrames);
+        std::stringstream message;
+        message << fps << "FPS (" << spf << "ms/frame)";
+        textRenderer->renderText(message.str(), 550.0f, 550.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
 
         cleanup(window);
     }
