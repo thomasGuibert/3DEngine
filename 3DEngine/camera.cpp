@@ -29,6 +29,17 @@ glm::vec3 Camera::getFront()
 void Camera::setPosition(glm::vec3 position)
 {
     _position = position;
+    _hasMoved = true;
+}
+
+bool Camera::hasMoved() 
+{
+    return _hasMoved;
+}
+
+void Camera::begin()
+{
+    _hasMoved = false;
 }
 
 glm::vec3 Camera::getMoveFrontPosition(float velocity)

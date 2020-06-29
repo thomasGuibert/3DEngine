@@ -20,6 +20,8 @@ public:
     glm::vec3 getPosition();
     glm::vec3 getDirection();
     glm::vec3 getFront();
+    bool hasMoved();
+    void begin();
     void setPosition(glm::vec3 position);
 
     glm::vec3 getMoveFrontPosition(float velocity);
@@ -40,6 +42,7 @@ private:
     float _yaw = -90.0f;
     float _pitch = 0.0f;
     float _fov = 45.0f;
+    bool _hasMoved = false;
 
     MousePosition _lastMousePosition;
 };

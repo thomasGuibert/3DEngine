@@ -8,19 +8,18 @@ _texture()
 {
     _texture = new ImageTexture("../Assets/terrain.png", "texture_diffuse");
 
-    //_texture->Enable(0);
-    //_voxelShader.updateUniformInt("voxelTexture", 0);
-    chunkManager = new ChunkManager();
+    _chunkManager = new ChunkManager();
     glm::vec3 pos = glm::vec3(0, 0, 0);
-    for (float x = 0.0f; x < chunkManager->SIZE; ++x) {
-        for (float z = 0.0f; z < chunkManager->SIZE; ++z) {
+    glm::vec3 cameraPosition = _manipulator.getCamera().getPosition();
+    for (float x =0; x < _chunkManager->SIZE; ++x) {
+        for (float z = 0; z < _chunkManager->SIZE; ++z) {
             pos = glm::vec3(x * 16, 0, z * 16);
-            chunkManager->AddChunk(_voxelShader, _voxelShaderHighlight, pos);
+            _chunkManager->AddChunk(_voxelShader, _voxelShaderHighlight, pos);
         }
     }
 
     manipulator.getCamera().setPosition(glm::vec3(11, 6, 8));
-    manipulator.setChunkManager(chunkManager);
+    manipulator.setChunkManager(_chunkManager);
     skybox = new Skybox("../Assets/skybox/", manipulator.getCamera());
 
     createCursor();
@@ -46,6 +45,16 @@ void VoxelScene::render()
     glm::mat4 view;
     glm::mat4 projection;
 
+    if (_manipulator.getCamera().hasMoved()) {
+        glm::vec3 pos = glm::vec3(0, 0, 0);
+        glm::vec3 cameraBlockPosition = _chunkManager->getBlock(_manipulator.getCamera().getPosition());
+        for (float x = cameraBlockPosition.x - _chunkManager->SIZE; x < cameraBlockPosition.x + _chunkManager->SIZE; ++x) {
+            for (float z = cameraBlockPosition.y - _chunkManager->SIZE; z < cameraBlockPosition.y + _chunkManager->SIZE; ++z) {
+                pos = glm::vec3(x * 16, 0, z * 16);
+                _chunkManager->AddChunk(_voxelShader, _voxelShaderHighlight, pos);
+            }
+        }
+    }
     skybox->render();
     projection = _manipulator.getCamera().perspective();
     view = _manipulator.getCamera().lookAt();
@@ -55,11 +64,11 @@ void VoxelScene::render()
     _voxelShaderHighlight.updateUniformMat4("view", view);
 
     int dist = 0;
-    while (!chunkManager->setHighlightedBlock(_manipulator.getCamera().getPosition() + _manipulator.getCamera().getFront() * glm::vec3(dist)) && dist < 5) {
+    while (!_chunkManager->setHighlightedBlock(_manipulator.getCamera().getPosition() + _manipulator.getCamera().getFront() * glm::vec3(dist)) && dist < 5) {
         dist++;
     }
     _texture->Enable(0);
-    chunkManager->Update();
+    _chunkManager->Update();
 
     glm::vec3 position = _manipulator.getCamera().getPosition() + _manipulator.getCamera().getFront();
     glm::mat4 model(1.0f);

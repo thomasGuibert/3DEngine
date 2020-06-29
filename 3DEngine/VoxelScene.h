@@ -24,7 +24,7 @@ private:
     Shader _voxelShaderHighlight;
     Shader _viewfinderShader;
     ImageTexture* _texture;
-    ChunkManager* chunkManager;
+    ChunkManager* _chunkManager;
     unsigned int _cursorVAO;
 
     void createCursor();
