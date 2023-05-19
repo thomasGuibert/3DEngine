@@ -42,15 +42,15 @@ void VoxelCameraBehavior::processKeyboardDirection(Direction direction, float de
         break;
     }
 
-    //if (!_chunkManager->isActivatedBlock(nextPosition))
+    if (!_chunkManager->isActivatedBlock(nextPosition))
         currentPosition = nextPosition;
-    //else
-      //  std::cout << "blocked" << std::endl;
+    else
+        std::cout << "blocked" << std::endl;
 
-    //currentPosition.y = 0;
-    //while (currentPosition.y < 16 && _chunkManager->isActivatedBlock(currentPosition))
-    //    currentPosition = glm::vec3(currentPosition.x, currentPosition.y + 1, currentPosition.z);
-    //currentPosition = glm::vec3(currentPosition.x, currentPosition.y + 1, currentPosition.z);
+    currentPosition.y = 0;
+    while (currentPosition.y < 16 && _chunkManager->isActivatedBlock(currentPosition))
+        currentPosition = glm::vec3(currentPosition.x, currentPosition.y + 1, currentPosition.z);
+    currentPosition = glm::vec3(currentPosition.x, currentPosition.y + 1, currentPosition.z);
 
     _camera.setPosition(currentPosition);
 }
